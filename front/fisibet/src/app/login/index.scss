@@ -1,9 +1,22 @@
+@import "../../../resources/styles/variables.scss";
 .login--page--container {
   display: flex;
   align-items: center;
   height: 100vh;
   gap: 30px;
-  .login--form--container {
-    max-width: 420px;
+}
+
+@media (max-width: $desktop) {
+  .login--page--container {
+    .login--page--hero--image {
+      width: 400px;
+    }
+  }
+}
+@media (max-width: $tablet) {
+  .login--page--container {
+    .login--page--hero--image {
+      display: none;
+    }
   }
 }

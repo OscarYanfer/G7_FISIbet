@@ -8,7 +8,11 @@ import "./index.scss";
 const LoginPage = () => {
   return (
     <div className="login--page--container page--container">
-      <Image src={LoginImage} alt="login-image" />
+      <Image
+        className="login--page--hero--image"
+        src={LoginImage}
+        alt="login-image"
+      />
       <LoginForm />
     </div>
   );
