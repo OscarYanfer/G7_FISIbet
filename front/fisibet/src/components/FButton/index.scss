@@ -1,0 +1,43 @@
+@import "../../../resources/styles/variables.scss";
+
+@mixin buttonProperties($bgColor, $textColor) {
+  background-color: $bgColor;
+  color: $textColor;
+  border-color: $textColor;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-size: 16px;
+
+  svg {
+    font-size: 20px;
+  }
+
+  &--primaryBtn {
+    @include buttonProperties($primary-color, white);
+    &:hover {
+      @include buttonProperties(white, $primary-color);
+    }
+  }
+  &--secondaryBtn {
+    @include buttonProperties($secondary-color, white);
+    &:hover {
+      @include buttonProperties(white, $secondary-color);
+    }
+  }
+  &:disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}

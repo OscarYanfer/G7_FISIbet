@@ -1,0 +1,33 @@
+@import "../../../resources/styles/variables.scss";
+
+.login--form--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding: 10px;
+  strong {
+    font-size: $gigant-text;
+    color: $primary-color;
+  }
+  .login--form--separator {
+    border-top: 1px solid #f2f2f2;
+    width: 100%;
+    max-width: 600px;
+    & + span {
+      color: #f2f2f2;
+      transform: translateY(-28px);
+      z-index: 1;
+      background-color: white;
+      padding: 10px;
+    }
+  }
+  .login--form--options {
+    color: #3d3d3e;
+    margin: 15px 0;
+    font-size: 14px;
+    text-align: center;
+    line-height: 35px;
+  }
+}

@@ -1,0 +1,41 @@
+@import "../../../resources/styles/variables.scss";
+.input--form--container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .input--form--error {
+    color: $text-danger;
+    font-size: 12px;
+    min-height: 14px;
+  }
+  .input--form--item {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    border: 2px solid transparent;
+    gap: 15px;
+    padding: 12px 15px;
+    transition: all 0.2s;
+    border-radius: 10px;
+    input {
+      background-color: transparent;
+      width: 100%;
+      display: flex;
+    }
+    .input--form--icon {
+      color: #313131;
+      font-size: 18px;
+    }
+    &:has(input:focus) {
+      border-color: $primary-color;
+      .input--form--icon {
+        color: $primary-color;
+      }
+    }
+  }
+}
