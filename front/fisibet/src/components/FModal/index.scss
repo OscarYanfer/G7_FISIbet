@@ -1,0 +1,38 @@
+@import "../../../resources/styles/variables.scss";
+.modal--container--mask {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  place-items: center;
+}
+.modal--main--container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  z-index: 12;
+  .modal--content--container {
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px 30px;
+    .modal--close--button {
+      align-self: flex-end;
+      cursor: pointer;
+      color: $secondary-color;
+      font-size: 30px;
+    }
+  }
+}

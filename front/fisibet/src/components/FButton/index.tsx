@@ -3,7 +3,7 @@ import React from "react";
 import "./index.scss";
 
 interface FButtonProps {
-  type?: "primaryBtn" | "secondaryBtn" | "tertiaryBtn";
+  type?: "primaryBtn" | "primaryBtn--inner" | "secondaryBtn";
   text?: string;
   disabled?: boolean;
   icon?: React.ReactNode;

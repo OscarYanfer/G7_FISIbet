@@ -20,8 +20,6 @@ const FInputForm = ({
   icon,
 }: FInputFormProps) => {
   const [field, meta, helpers] = useField(name);
-
-  console.log("xd", field.value);
   return (
     <div className="input--form--container">
       <label>{label}</label>

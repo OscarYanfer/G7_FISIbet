@@ -30,6 +30,12 @@
       @include buttonProperties(white, $primary-color);
     }
   }
+  &--primaryBtn--inner {
+    @include buttonProperties(white, $primary-color);
+    &:hover {
+      @include buttonProperties($primary-color, white);
+    }
+  }
   &--secondaryBtn {
     @include buttonProperties($secondary-color, white);
     &:hover {

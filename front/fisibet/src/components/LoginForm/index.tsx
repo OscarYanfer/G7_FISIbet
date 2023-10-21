@@ -7,6 +7,7 @@ import { FInputForm, FButton } from "@/components";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import "./index.scss";
+import Link from "next/link";
 
 const initialValuesLoginForm: LoginFormTypes = {
   email: "",
@@ -51,13 +52,9 @@ const LoginForm = () => {
         }}
       </Formik>
       <div className="login--form--options">
-        <p>¿Olvidaste tu contraseña?</p>
-        <p>
-          ¿No tienes una cuenta?{" "}
-          <a href="/">
-            <b>Registrate aquí</b>
-          </a>
-        </p>
+        <Link href="/home">
+          <b>¿Olvidaste tu contraseña?</b>
+        </Link>
       </div>
     </div>
   );
