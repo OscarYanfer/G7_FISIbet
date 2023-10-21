@@ -1,4 +1,5 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
+import Navbar from './../components/FNavbar/index';
 import './globals.scss'
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <nav>Crear header component e insertarlo aca...</nav>
+        <Navbar/>
         {children}
         </body>
     </html>
