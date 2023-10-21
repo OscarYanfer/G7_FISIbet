@@ -1,146 +1,113 @@
 "use client";
-import React from "react";
-import styles from "./index.module.scss";
-import { Button } from "@mui/material";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
-import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
-import SportsBaseballIcon from "@mui/icons-material/SportsBaseball";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-// import ShieldIcon from '@mui/icons-material/Shield';
+import React, { useState } from "react";
+import {
+  MdOutlineSportsSoccer,
+  MdOutlineSportsVolleyball,
+  MdGolfCourse,
+} from "react-icons/md";
+import { BetCard } from "@/components";
+import "./index.scss";
+
+const sportTypes = [
+  {
+    id: 1,
+    name: "Fútbol",
+    icon: <MdOutlineSportsSoccer />,
+  },
+  { id: 2, name: "Volleyball", icon: <MdOutlineSportsVolleyball /> },
+  { id: 3, name: "Golf", icon: <MdGolfCourse /> },
+];
 
 const HomePage = () => {
-  const [events, setEvents] = React.useState([1, 1, 1, 1, 1, 1]);
-
-  const eventList = (events: any) => {
-    return events.map((item: any, index: any) => {
-      return (
-        <div key={index} className={styles.eventCard}>
-          <h4>Partido A</h4>
-          <div className={styles.eventCounters}>
-            <img src="images/peru.png" alt="" />
-            <h1>VS</h1>
-            <img src="images/argentina.png" alt="" />
-          </div>
-          <div className={styles.eventBets}>
-            <button className={styles.buttonBet}>
-              <span>
-                Perú <br /> <strong>10.00</strong>
-              </span>
-            </button>
-            <button className={styles.buttonBet}>
-              <span>
-                Empate <br /> <strong>10.00</strong>
-              </span>
-            </button>
-            <button className={styles.buttonBet}>
-              <span>
-                Argentina <br /> <strong>10.00</strong>
-              </span>
-            </button>
-          </div>
-        </div>
-      );
-    });
-  };
-
+  const [sportType, setSportType] = useState<string>(sportTypes[0].name);
   return (
-    <div className={styles.homeContainer}>
-      <div className={styles.tabContainer}>
-        <ul className={styles.tabs}>
-          <li>
-            <p>Deportes disponibles</p>
-          </li>
-          <li>
-            <Button className={styles.buttonTab}>
-              <SportsSoccerIcon />
-              Futbol
-            </Button>
-          </li>
-          <li>
-            <Button className={styles.buttonTab}>
-              <SportsVolleyballIcon />
-              Voley
-            </Button>
-          </li>
-          <li>
-            <Button className={styles.buttonTab}>
-              <SportsBaseballIcon />
-              Básket
-            </Button>
-          </li>
-          <li>
-            <Button className={styles.buttonTab}>
-              <SportsEsportsIcon />
-              Videojuegos
-            </Button>
-          </li>
-        </ul>
+    <div className="home--page--container page--container">
+      <div className="events--sports--list">
+        {sportTypes &&
+          sportTypes.map((sport) => {
+            return (
+              <div
+                key={sport?.id}
+                className={
+                  sportType === sport.name
+                    ? "event--sport--item active"
+                    : "event--sport--item"
+                }
+                onClick={() => setSportType(sport?.name)}
+              >
+                {sport?.icon}
+                <p>{sport?.name}</p>
+              </div>
+            );
+          })}
       </div>
-      <div className={styles.eventContainer}>{eventList(events)}</div>
-      <div className={styles.ticketContainer}>
-        <ul className={styles.ticketTabs}>
-          <li>
-            <Button className={styles.buttonTicketTab}>
-              Cupon de apuestas
-            </Button>
-          </li>
-          <li>
-            <Button className={styles.buttonTicketTab}>Mis apuestas</Button>
-          </li>
-        </ul>
-
-        <hr />
-
-        <div className={styles.betCard}>
-          <div>
-            <strong>Perú</strong>
-            <br />
-            <span>Resultado final</span>
-            <br />
-            <span>Gana local</span>
-          </div>
-          <div>
-            <strong>S/ 10.00</strong>
-          </div>
-        </div>
-        <div className={styles.betCard}>
-          <div>
-            <strong>Perú</strong>
-            <br />
-            <span>Resultado final</span>
-            <br />
-            <span>Gana local</span>
-          </div>
-          <div>
-            <strong>S/ 10.00</strong>
-          </div>
-        </div>
-        <div className={styles.betCard}>
-          <div>
-            <strong>Perú</strong>
-            <br />
-            <span>Resultado final</span>
-            <br />
-            <span>Gana local</span>
-          </div>
-          <div>
-            <strong>S/ 10.00</strong>
-          </div>
-        </div>
-
-        <div>
-          <span>Cuora total: S/10.00</span>
-          <span>Cantidad: S/</span>
-          <input />
-        </div>
-
-        <hr />
-        <div className={styles.buttonTicketContainer}>
-          <span>Ganancias potenciales S/ 10.00</span>
-          <button className={styles.buttonTicket}>
-            Apuesta ahora S/ 10.00
-          </button>
-        </div>
+      <div className="event--bets--list">
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
+        <BetCard
+          teamA="Calvary FC"
+          teamApays={1.12}
+          teamAscore={1}
+          teamB="FC Pacific Greater Victoria"
+          teamBpays={30.05}
+          teamBscore={2}
+          drawPays={10.01}
+          league="Tercera División Francia"
+          date="05:00"
+        />
       </div>
     </div>
   );

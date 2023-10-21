@@ -1,0 +1,46 @@
+@import "../../../resources/styles/variables.scss";
+.bet--card--container {
+  background-color: $tertiary-color;
+  padding: 0 12px;
+  color: white;
+  font-size: 12px;
+  .bet--card--extra--info {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid black;
+  }
+  .bet--card--teams--info {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    padding: 12px 0;
+    .bet--card--team--score {
+      display: flex;
+      justify-content: space-between;
+      span {
+        background-color: $quartery-color;
+        padding: 2px 8px;
+        border-radius: 2px;
+      }
+    }
+  }
+  .bet--card--pays--info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    padding-bottom: 15px;
+    .pay-info {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0;
+      border: 1px solid white;
+      transition: all 0.2s;
+      cursor: pointer;
+      border-radius: 5px;
+      &:hover {
+        border-color: $primary-color;
+      }
+    }
+  }
+}
