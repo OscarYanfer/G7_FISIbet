@@ -26,21 +26,23 @@ const FModal = ({ isOpen, onClose, content, maxWidth }: FModalProps) => {
             transition={{ duration: 0.3, delay: 0.1 }}
             exit={{ opacity: 0 }}
           ></motion.div>
-          <div className="modal--main--container">
-            <motion.div
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -10, opacity: 0 }}
-              transition={{ duration: 0.2, delay: 0.1 }}
-              ref={outSideModalRef}
-              style={{ maxWidth: maxWidth + "px" }}
-              className="modal--content--container"
-            >
-              <div className="modal--close--button" onClick={onClose}>
-                <MdOutlineClose />
-              </div>
-              {content}
-            </motion.div>
+          <div className="modal--super--container">
+            <div className="modal--main--container">
+              <motion.div
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
+                ref={outSideModalRef}
+                style={{ maxWidth: maxWidth + "px" }}
+                className="modal--content--container"
+              >
+                <div className="modal--close--button" onClick={onClose}>
+                  <MdOutlineClose />
+                </div>
+                {content}
+              </motion.div>
+            </div>
           </div>
         </>
       )}

@@ -30,3 +30,9 @@ input {
   padding: 20px;
   margin: auto;
 }
+
+@media (max-width: $mobile) {
+  .page--container {
+    padding: 10px 5px;
+  }
+}

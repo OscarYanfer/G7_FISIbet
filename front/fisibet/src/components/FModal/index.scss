@@ -7,32 +7,44 @@
   right: 0;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  place-items: center;
 }
-.modal--main--container {
+.modal--super--container {
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: scroll;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
+  display: flex;
   background: transparent;
+  overflow-y: scroll;
   z-index: 12;
-  .modal--content--container {
-    background-color: white;
-    border-radius: 10px;
+  .modal--main--container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: scroll;
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px 30px;
-    .modal--close--button {
-      align-self: flex-end;
-      cursor: pointer;
-      color: $secondary-color;
-      font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    .modal--content--container {
+      border-radius: 10px;
+      display: flex;
+      margin: auto;
+      align-self: center;
+      flex-direction: column;
+      background-color: white;
+      width: 100%;
+      padding: 20px 30px;
+      .modal--close--button {
+        align-self: flex-end;
+        cursor: pointer;
+        color: $secondary-color;
+        font-size: 30px;
+      }
     }
   }
 }
