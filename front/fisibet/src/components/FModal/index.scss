@@ -48,3 +48,13 @@
     }
   }
 }
+
+@media (max-width: $mobile) {
+  .modal--super--container {
+    .modal--main--container {
+      .modal--content--container {
+        border-radius: 0;
+      }
+    }
+  }
+}

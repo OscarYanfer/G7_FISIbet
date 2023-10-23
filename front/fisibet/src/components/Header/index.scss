@@ -68,3 +68,19 @@
     }
   }
 }
+
+@media (max-width: $mobile) {
+  .header--container {
+    .header--left--container {
+      img {
+        width: 60px;
+      }
+    }
+    .header--cta--container {
+      button {
+        font-size: 12px;
+        padding: 12px 10px;
+      }
+    }
+  }
+}
