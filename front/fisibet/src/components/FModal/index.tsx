@@ -1,9 +1,9 @@
 "use client";
-import React, { useRef, useState } from "react";
-import "./index.scss";
+import React, { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOnClickOutside } from "@/hooks/useClickOutside";
 import { MdOutlineClose } from "react-icons/md";
+import "./index.scss";
 
 interface FModalProps {
   content: React.ReactNode;

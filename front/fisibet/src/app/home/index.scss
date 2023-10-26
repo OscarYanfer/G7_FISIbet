@@ -1,14 +1,28 @@
 @import "../../../resources/styles/variables.scss";
 
 .home--page--container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 10px;
+  grid-template-columns: 2fr 6fr 2fr;
+  background-color: $background-color;
+  height: 100vh;
+  .home--page--main--container {
+    width: 100%;
+  }
   .event--bets--list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
     gap: 10px;
+    height: calc(100vh - 180px); // revalue
+    overflow-y: scroll;
     background-color: $fifth-color;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #eeeeee;
+      border-radius: 5px;
+    }
   }
   .events--sports--list {
     display: flex;
@@ -44,6 +58,20 @@
           visibility: visible;
         }
       }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .home--page--container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    .event--bets--list {
+      display: flex;
+      flex-direction: column;
+      height: auto; // revalue
+      overflow-y: initial;
     }
   }
 }

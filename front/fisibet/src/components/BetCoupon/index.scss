@@ -1,0 +1,161 @@
+@import "../../../resources/styles/variables.scss";
+.bet--coupon--container {
+  background-color: $fifth-color;
+  min-width: 300px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  overflow: hidden;
+
+  .bet--coupon--header {
+    display: flex;
+    padding: 10px 0;
+    gap: 10px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid $quartery-color;
+    background-color: $tertiary-color;
+    svg {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      right: 15px;
+      color: $primary-color;
+    }
+    .bet--coupon--count {
+      background-color: $primary-color;
+      aspect-ratio: 1/1;
+      min-width: 30px;
+      padding: 5px;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        font-size: $medium-text;
+        margin-bottom: 2.5px;
+      }
+    }
+  }
+  .bet--coupon--actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+    background-color: $tertiary-color;
+    border-bottom: 1px solid $fifth-color;
+    align-items: center;
+    padding: 8px 15px;
+    p {
+      padding: 5px 15px;
+      font-size: $medium-text;
+      border: 1px solid white;
+      border-radius: 8px;
+    }
+    .bet--coupon--buttons {
+      display: flex;
+      gap: 8px;
+    }
+  }
+  .bet--coupon--main {
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #eeeeee;
+      border-radius: 5px;
+    }
+    .bet--coupon--items--list {
+      padding: 0 5px;
+      padding-top: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      &:has(> .bet--coupon--item--container:nth-child(2)) {
+        & + .bet--coupon--footer {
+          .bet--coupon--amount--input {
+            input {
+              width: 100%;
+              margin: 0;
+              margin-top: 5px;
+            }
+          }
+        }
+        .bet--coupon--item--container {
+          border-radius: 5px;
+        }
+      }
+      &:not(:has(> .bet--coupon--item--container:nth-child(2))) {
+        .bet--coupon--item--container {
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+        }
+      }
+    }
+    .bet--coupon--footer {
+      .bet--coupon--amount--input {
+        input {
+          width: calc(100% - 10px);
+          margin: 5px;
+          padding: 18px 10px;
+          margin-top: 0;
+          background-color: $sixth-color;
+          color: white;
+          &::placeholder {
+            color: white;
+          }
+        }
+      }
+      .bet--coupon--summary {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: $small-text;
+        background-color: $tertiary-color;
+        .bet--coupon--summary--item {
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          b {
+            font-size: $medium-text;
+          }
+          &:nth-child(3) {
+            b {
+              color: $primary-color;
+            }
+          }
+        }
+        .bet--coupon--bet--button {
+          background-color: $tertiary-color;
+          padding: 8px;
+          button {
+            border-width: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .bet--coupon--container {
+    position: fixed;
+    border-radius: 0;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .bet--coupon--bet--button {
+      margin: 20px 10px;
+    }
+    .bet--coupon--header {
+      svg {
+        display: block;
+      }
+    }
+  }
+}

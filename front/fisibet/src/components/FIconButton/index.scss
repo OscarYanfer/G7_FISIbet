@@ -1,0 +1,13 @@
+@import "../../../resources/styles/variables.scss";
+
+.icon--button--container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 3px;
+  background-color: $fifth-color;
+  border-radius: 5px;
+  svg {
+    font-size: $regular-icon;
+  }
+}

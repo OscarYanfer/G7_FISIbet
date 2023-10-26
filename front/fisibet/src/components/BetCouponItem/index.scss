@@ -1,0 +1,70 @@
+@import "../../../resources/styles/variables.scss";
+.bet--coupon--item--container {
+  background-color: $tertiary-color;
+  color: white;
+  font-size: $small-text;
+  .bet--coupon--item--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid $secondary-color;
+    + p {
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+      overflow: hidden;
+    }
+    .bet--coupon--item--actions {
+      display: flex;
+      gap: 8px;
+      position: relative;
+      .bet--coupon--item--full--info {
+        position: absolute;
+        background-color: $tertiary-color;
+        border: 1px solid $quartery-color;
+        z-index: 1;
+        border-radius: 5px;
+        bottom: -127px;
+        min-width: 270px;
+        right: 0;
+        padding: 10px;
+        p {
+          overflow-wrap: break-word;
+          width: 250px;
+          padding: 10px;
+          &:first-child {
+            border-bottom: 1px solid $quartery-color;
+          }
+        }
+      }
+    }
+  }
+  .bet--coupon--item--info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    .bet--coupon--item--teams,
+    .bet--coupon--item--schedule,
+    .bet--coupon--item--result {
+      display: flex;
+      gap: 5px;
+      justify-content: space-between;
+      align-items: center;
+      p,
+      b,
+      span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-wrap: nowrap;
+      }
+    }
+  }
+  .bet--coupon--item--result {
+    b {
+      background-color: $primary-color;
+      padding: 4px 10px;
+      border-radius: 5px;
+    }
+  }
+}

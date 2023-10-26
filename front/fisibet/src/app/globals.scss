@@ -2,7 +2,6 @@
 
 :root {
   font-family: $font-poppins-regular;
-  font-size: $small-text;
 }
 
 * {
@@ -26,13 +25,14 @@ input {
 }
 
 .page--container {
-  max-width: 1200px;
   padding: 20px;
+  padding-top: 90px;
   margin: auto;
 }
 
 @media (max-width: $mobile) {
   .page--container {
     padding: 10px 5px;
+    padding-top: 80px;
   }
 }

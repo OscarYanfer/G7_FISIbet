@@ -4,3 +4,6 @@ export { default as LoginForm } from "./LoginForm/index";
 export { default as RegisterForm } from "./RegisterForm/index";
 export { default as Header } from "./Header/index";
 export { default as BetCard } from "./BetCard/index";
+export { default as BetCouponItem } from "./BetCouponItem/index";
+export { default as BetCoupon } from "./BetCoupon/index";
+export { default as FIconButton } from "./FIconButton/index";

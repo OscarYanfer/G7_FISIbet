@@ -3,6 +3,8 @@ $secondary-color: #000000;
 $tertiary-color: #202020;
 $quartery-color: #2e2e2e;
 $fifth-color: #101010;
+$sixth-color: #383838;
+$background-color: #4c4c4c;
 $text-danger: #f2371e;
 /*Fuentes*/
 
@@ -23,10 +25,16 @@ $font-poppins-medium-italic: "Poppins-MediumItalic", sans-serif;
 $font-poppins-semibold-italic: "Poppins-SemiBoldItalic", sans-serif;
 
 /*Size-text*/
-$small-text: 14px;
+$small-text: 12px;
+$medium-text: 14px;
 $regular-text: 16px;
 $title-text: 25px;
 $gigant-text: 45px;
+
+/*Icon-sizes*/
+$small-icon: 14px;
+$regular-icon: 20px;
+$big-icon: 28px;
 
 /*Responsive devices*/
 
