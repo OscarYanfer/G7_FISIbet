@@ -40,9 +40,9 @@ const BetCouponItem = ({
             {showInfo && (
               <motion.div
                 ref={outSideModalRef}
-                initial={{ opacity: 0, scale: 0.8, right: 0 }}
-                animate={{ opacity: 1, scale: 1, right: 20 }}
-                exit={{ opacity: 0, scale: 0.8, right: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 className="bet--coupon--item--full--info"
               >
                 <p>{league}</p>

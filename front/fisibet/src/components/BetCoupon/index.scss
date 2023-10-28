@@ -138,6 +138,18 @@
     }
   }
 }
+.bet--coupon--modal--button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none;
+  .icon--button {
+    padding: 10px;
+    svg {
+      font-size: $big-icon;
+    }
+  }
+}
 
 @media (max-width: $tablet) {
   .bet--coupon--container {
@@ -148,6 +160,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 20;
 
     .bet--coupon--bet--button {
       margin: 20px 10px;
@@ -157,5 +170,9 @@
         display: block;
       }
     }
+  }
+  .bet--coupon--modal--button {
+    display: block;
+    z-index: 1;
   }
 }

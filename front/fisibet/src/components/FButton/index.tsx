@@ -3,7 +3,7 @@ import React from "react";
 import "./index.scss";
 
 interface FButtonProps {
-  type?: "primaryBtn" | "primaryBtn--inner" | "secondaryBtn";
+  type?: "primary" | "primary--inner" | "secondary";
   text?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
@@ -12,7 +12,7 @@ interface FButtonProps {
 }
 
 const FButton = ({
-  type = "primaryBtn",
+  type = "primary",
   text = "Botón",
   disabled = false,
   icon,
@@ -25,7 +25,7 @@ const FButton = ({
       disabled={disabled}
       onClick={onClick}
       style={{ flexDirection: direction }}
-      className={`button button--${type}`}
+      className={`button button--${type}Btn`}
     >
       {text}
       {icon}

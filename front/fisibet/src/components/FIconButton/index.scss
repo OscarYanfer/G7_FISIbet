@@ -1,13 +1,37 @@
 @import "../../../resources/styles/variables.scss";
 
-.icon--button--container {
+@mixin iconButtonProperties($bgColor, $textColor) {
+  background-color: $bgColor;
+  color: $textColor;
+}
+
+.icon--button {
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 3px;
-  background-color: $fifth-color;
   border-radius: 5px;
   svg {
     font-size: $regular-icon;
+  }
+  &--primaryIconBtn {
+    @include iconButtonProperties($primary-color, white);
+  }
+  &--secondaryIconBtn {
+    @include iconButtonProperties($secondary-color, white);
+  }
+
+  &--tertiaryIconBtn {
+    @include iconButtonProperties($tertiary-color, white);
+  }
+
+  &--quarteryIconBtn {
+    @include iconButtonProperties($quartery-color, white);
+  }
+  &--fifthIconBtn {
+    @include iconButtonProperties($fifth-color, white);
+  }
+  &--sixthIconBtn {
+    @include iconButtonProperties($sixth-color, white);
   }
 }

@@ -2,7 +2,7 @@
 import React from "react";
 import "./index.scss";
 
-interface BetCardProps {
+interface EventCardProps {
   teamA: string;
   teamAscore: number;
   teamApays: number;
@@ -14,7 +14,7 @@ interface BetCardProps {
   date: string;
 }
 
-const BetCard = ({
+const EventCard = ({
   teamA,
   teamB,
   teamApays,
@@ -24,24 +24,24 @@ const BetCard = ({
   drawPays,
   league,
   date,
-}: BetCardProps) => {
+}: EventCardProps) => {
   return (
-    <div className="bet--card--container">
-      <div className="bet--card--extra--info">
-        <p className="bet--card--league">{league}</p>
-        <p className="bet--card--schedule">{date}</p>
+    <div className="event--card--container">
+      <div className="event--card--extra--info">
+        <p className="event--card--league">{league}</p>
+        <p className="event--card--schedule">{date}</p>
       </div>
-      <div className="bet--card--teams--info">
-        <div className="bet--card--team--score">
+      <div className="event--card--teams--info">
+        <div className="event--card--team--score">
           <p>{teamA}</p>
           <span>{teamAscore}</span>
         </div>
-        <div className="bet--card--team--score">
+        <div className="event--card--team--score">
           <p>{teamB}</p>
           <span>{teamBscore}</span>
         </div>
       </div>
-      <div className="bet--card--pays--info">
+      <div className="event--card--pays--info">
         <div className="pay-info">
           <span>{teamApays}</span>
         </div>
@@ -56,4 +56,4 @@ const BetCard = ({
   );
 };
 
-export default BetCard;
+export default EventCard;

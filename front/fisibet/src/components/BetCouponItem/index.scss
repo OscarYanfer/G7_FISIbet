@@ -9,6 +9,7 @@
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid $secondary-color;
+    position: relative;
     + p {
       text-overflow: ellipsis;
       text-wrap: nowrap;
@@ -17,21 +18,20 @@
     .bet--coupon--item--actions {
       display: flex;
       gap: 8px;
-      position: relative;
       .bet--coupon--item--full--info {
         position: absolute;
         background-color: $tertiary-color;
         border: 1px solid $quartery-color;
-        z-index: 1;
+        z-index: 10;
         border-radius: 5px;
-        bottom: -127px;
-        min-width: 270px;
-        right: 0;
-        padding: 10px;
+        top: 40px;
+        right: 20px;
+        left: 20px;
+        padding: 5px;
         p {
           overflow-wrap: break-word;
           width: 250px;
-          padding: 10px;
+          padding: 5px;
           &:first-child {
             border-bottom: 1px solid $quartery-color;
           }

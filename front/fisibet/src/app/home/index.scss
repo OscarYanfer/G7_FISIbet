@@ -6,16 +6,14 @@
   grid-template-columns: 2fr 6fr 2fr;
   background-color: $background-color;
   height: 100vh;
-  .home--page--main--container {
-    width: 100%;
-  }
-  .event--bets--list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 10px;
-    height: calc(100vh - 180px); // revalue
+  .home--page--left--side {
+    background-color: $tertiary-color;
+    border-radius: 7px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
     overflow-y: scroll;
-    background-color: $fifth-color;
+    gap: 5px;
     &::-webkit-scrollbar {
       width: 4px;
     }
@@ -24,38 +22,47 @@
       border-radius: 5px;
     }
   }
-  .events--sports--list {
-    display: flex;
-    gap: 20px;
+  .home--page--center--container {
+    border-radius: 7px;
+    overflow: hidden;
     background-color: $fifth-color;
-    padding: 20px 10px;
-    .event--sport--item {
-      color: white;
-      padding: 10px;
-      border-radius: 100%;
-      transition: all 0.2s;
+    width: 100%;
+    & > .event--bets--list {
+      height: calc(100vh - 180px); // revalue
+    }
+    .events--sports--list {
       display: flex;
-      align-items: center;
-      background-color: $tertiary-color;
-      cursor: pointer;
-      p {
+      gap: 20px;
+      background-color: $fifth-color;
+      padding: 20px 10px;
+      .event--sport--item {
+        color: white;
+        padding: 10px;
+        border-radius: 100%;
         transition: all 0.2s;
-        width: 0;
-        opacity: 0;
-        visibility: hidden;
-      }
-      svg {
-        font-size: 20px;
-      }
-      &:hover,
-      &.active {
-        border-radius: 10px;
-        background-color: $primary-color;
+        display: flex;
+        align-items: center;
+        background-color: $tertiary-color;
+        cursor: pointer;
         p {
-          width: auto;
-          padding-left: 5px;
-          opacity: 1;
-          visibility: visible;
+          transition: all 0.2s;
+          width: 0;
+          opacity: 0;
+          visibility: hidden;
+        }
+        svg {
+          font-size: 20px;
+        }
+        &:hover,
+        &.active {
+          border-radius: 10px;
+          background-color: $primary-color;
+          p {
+            width: auto;
+            padding-left: 5px;
+            opacity: 1;
+            visibility: visible;
+          }
         }
       }
     }
@@ -67,11 +74,10 @@
     display: flex;
     flex-direction: column;
     height: auto;
-    .event--bets--list {
-      display: flex;
-      flex-direction: column;
-      height: auto; // revalue
-      overflow-y: initial;
+    .home--page--center--container {
+      & > .event--bets--list {
+        height: auto; // revalue
+      }
     }
   }
 }

@@ -1,21 +1,21 @@
 @import "../../../resources/styles/variables.scss";
-.bet--card--container {
+.event--card--container {
   background-color: $tertiary-color;
   padding: 0 12px;
   color: white;
   font-size: $small-text;
-  .bet--card--extra--info {
+  .event--card--extra--info {
     display: flex;
     justify-content: space-between;
     padding: 15px 0;
     border-bottom: 1px solid black;
   }
-  .bet--card--teams--info {
+  .event--card--teams--info {
     display: flex;
     gap: 12px;
     flex-direction: column;
     padding: 12px 0;
-    .bet--card--team--score {
+    .event--card--team--score {
       display: flex;
       justify-content: space-between;
       span {
@@ -25,7 +25,7 @@
       }
     }
   }
-  .bet--card--pays--info {
+  .event--card--pays--info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;

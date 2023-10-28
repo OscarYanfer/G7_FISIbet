@@ -1,0 +1,23 @@
+@import "../../../resources/styles/variables.scss";
+
+.event--bets--list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 10px;
+  overflow-y: scroll;
+  background-color: $fifth-color;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #eeeeee;
+    border-radius: 5px;
+  }
+}
+@media (max-width: $tablet) {
+  .event--bets--list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: initial;
+  }
+}

@@ -34,7 +34,7 @@ const Header = () => {
         <span></span>
         <FButton
           onClick={() => setShowRegisterModal(true)}
-          type="primaryBtn--inner"
+          type="primary--inner"
           text="Registrarse"
         />
       </div>

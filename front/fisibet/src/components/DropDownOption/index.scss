@@ -1,0 +1,39 @@
+@import "../../../resources/styles/variables.scss";
+
+.drop--down--option--container {
+  color: white;
+  background-color: $fifth-color;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  .drop--down--option--header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 17px;
+    font-size: $medium-text;
+    cursor: pointer;
+    .drop--arrow {
+      font-size: $regular-icon;
+      transition: all 0.2s;
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+    &:has(.open) {
+      border-bottom: 1px solid $quartery-color;
+    }
+  }
+  .drop--down--list {
+    font-size: $small-text;
+    margin: 10px;
+    .drop--down--item {
+      padding: 12px 8px;
+      border-radius: 5px;
+      transition: all 0.2s;
+      cursor: pointer;
+      &:hover {
+        background-color: $tertiary-color;
+      }
+    }
+  }
+}

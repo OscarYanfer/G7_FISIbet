@@ -59,6 +59,9 @@
       }
     }
   }
+  .header--coupon--modal--container {
+    position: fixed;
+  }
 }
 
 @media (max-width: $tablet) {
