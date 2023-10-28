@@ -10,6 +10,7 @@
     padding: 10px;
     border-bottom: 1px solid $secondary-color;
     position: relative;
+    z-index: 1;
     + p {
       text-overflow: ellipsis;
       text-wrap: nowrap;

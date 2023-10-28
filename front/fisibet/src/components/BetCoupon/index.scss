@@ -12,7 +12,6 @@
     display: flex;
     padding: 10px 0;
     gap: 10px;
-    position: relative;
     justify-content: center;
     align-items: center;
     border-bottom: 2px solid $quartery-color;
@@ -160,7 +159,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 20;
+    z-index: 2;
 
     .bet--coupon--bet--button {
       margin: 20px 10px;

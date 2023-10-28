@@ -8,6 +8,7 @@
   height: 100vh;
   .home--page--left--side {
     background-color: $tertiary-color;
+    min-width: 220px;
     border-radius: 7px;
     padding: 10px;
     display: flex;

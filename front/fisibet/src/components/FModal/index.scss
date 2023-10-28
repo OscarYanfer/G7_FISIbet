@@ -1,47 +1,37 @@
 @import "../../../resources/styles/variables.scss";
 .modal--container--mask {
   position: fixed;
-  bottom: 0;
-  top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-.modal--super--container {
-  position: fixed;
-  overflow-y: scroll;
-  bottom: 0;
   top: 0;
-  left: 0;
-  right: 0;
+  bottom: 0;
   display: flex;
-  background: transparent;
-  overflow-y: scroll;
-  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10;
   .modal--main--container {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: scroll;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0;
+    overflow-y: scroll;
+    height: 100vh;
     .modal--content--container {
-      border-radius: 10px;
-      display: flex;
-      margin: auto;
-      align-self: center;
-      flex-direction: column;
-      background-color: white;
       width: 100%;
+      border-radius: 10px;
+      max-height: calc(100% - 20px);
+      background-color: white;
       padding: 20px 30px;
+      margin: 20px 0;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
       .modal--close--button {
-        align-self: flex-end;
         cursor: pointer;
+        display: flex;
+        justify-content: flex-end;
         color: $secondary-color;
         font-size: 30px;
       }
@@ -50,7 +40,7 @@
 }
 
 @media (max-width: $mobile) {
-  .modal--super--container {
+  .modal--container--mask {
     .modal--main--container {
       .modal--content--container {
         border-radius: 0;

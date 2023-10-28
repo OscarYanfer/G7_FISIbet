@@ -42,13 +42,7 @@ const BetCoupon = ({}) => {
     <>
       <AnimatePresence>
         {showCoupon && (
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.3 }}
-            exit={{ y: "100%" }}
-            className="bet--coupon--container"
-          >
+          <div className="bet--coupon--container">
             <div className="bet--coupon--header">
               <b>Cupón</b>
               <div className="bet--coupon--count">
@@ -126,7 +120,7 @@ const BetCoupon = ({}) => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
       <div className="bet--coupon--modal--button">

@@ -5,7 +5,7 @@ import "./index.scss";
 interface DropDownOptionProps {
   //leagueListbyOption
   optionTitle: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 const DropDownOption = ({ optionTitle }: DropDownOptionProps) => {
