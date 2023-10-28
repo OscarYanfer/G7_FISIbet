@@ -11,7 +11,8 @@ const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showRegisterModal, setShowRegisterModal] = useState<boolean>(false);
   return (
-    <nav className="header--container">
+    <>
+        <nav className="header--container">
       <div className="header--left--container">
         <Image src={LogoFisibet} alt="logo-fisibet" />
         <ul className="header--nav--links">
@@ -38,7 +39,8 @@ const Header = () => {
           text="Registrarse"
         />
       </div>
-      <FModal
+    </nav>
+          <FModal
         isOpen={showLoginModal}
         maxWidth={500}
         onClose={() => setShowLoginModal(false)}
@@ -50,7 +52,8 @@ const Header = () => {
         onClose={() => setShowRegisterModal(false)}
         content={<RegisterForm />}
       />
-    </nav>
+    </>
+
   );
 };
 

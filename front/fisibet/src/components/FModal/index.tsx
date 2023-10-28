@@ -23,7 +23,7 @@ const FModal = ({ isOpen, onClose, content, maxWidth }: FModalProps) => {
             className="modal--container--mask"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.1, delay: 0.1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             exit={{ opacity: 0 }}
           >
             <div className="modal--main--container">

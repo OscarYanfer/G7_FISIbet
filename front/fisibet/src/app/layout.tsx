@@ -1,6 +1,6 @@
 "use client";
-import "./globals.scss";
 import { Header } from "@/components";
+import "./globals.scss";
 
 export default function RootLayout({
   children,
