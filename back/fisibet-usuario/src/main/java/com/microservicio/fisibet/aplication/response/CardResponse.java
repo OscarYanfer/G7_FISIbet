@@ -1,15 +1,15 @@
-package com.microservicio.fisibet.domain.entity;
+package com.microservicio.fisibet.aplication.response;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class WalletEntity {
+public class CardResponse {
     private Integer id;
-    private BigDecimal balance;
-    private String accountNumber;
+    private Integer idAccount;
+    private String cardNumber;
     private String name;
     private String surname;
     private Integer cvv;
+    private String expirationMonthYear;
     private Integer status;
     private LocalDateTime registeredOn;
     private LocalDateTime updatedOn;
@@ -22,20 +22,20 @@ public class WalletEntity {
         this.id = id;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public Integer getIdAccount() {
+        return idAccount;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setIdAccount(Integer idAccount) {
+        this.idAccount = idAccount;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public String getName() {
@@ -60,6 +60,14 @@ public class WalletEntity {
 
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
+    }
+
+    public String getExpirationMonthYear() {
+        return expirationMonthYear;
+    }
+
+    public void setExpirationMonthYear(String expirationMonthYear) {
+        this.expirationMonthYear = expirationMonthYear;
     }
 
     public Integer getStatus() {

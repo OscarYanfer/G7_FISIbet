@@ -17,7 +17,7 @@ public class AccountUserMySQLPort implements AccountUserPort {
 
     private AccountUserSpringPort accountUserSpringPort;
     private AccountUserInfraMapper accountUserInfraMapper;
-    private KafkaTemplate<String, AccountUserEvent> kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     public AccountUserMySQLPort(AccountUserSpringPort accountUserSpringPort,
                                 AccountUserInfraMapper accountUserInfraMapper,

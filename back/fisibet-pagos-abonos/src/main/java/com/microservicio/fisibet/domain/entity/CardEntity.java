@@ -1,32 +1,17 @@
-package com.microservicio.fisibet.infraestructure.model;
+package com.microservicio.fisibet.domain.entity;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "billetera")
-public class WalletModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class CardEntity {
     private Integer id;
-
-    @Column(name = "balance")
-    private BigDecimal balance;
-    @Column(name = "accountNumber")
-    private String accountNumber;
-    @Column(name = "name")
+    private Integer idAccount;
+    private String cardNumber;
     private String name;
-    @Column(name = "surname")
     private String surname;
-    @Column(name = "cvv")
     private Integer cvv;
-    @Column(name = "status")
+    private String expirationMonthYear;
     private Integer status;
-    @Column(name = "registeredOn")
     private LocalDateTime registeredOn;
-    @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
     public Integer getId() {
@@ -37,20 +22,20 @@ public class WalletModel {
         this.id = id;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public Integer getIdAccount() {
+        return idAccount;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setIdAccount(Integer idAccount) {
+        this.idAccount = idAccount;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
     public String getName() {
@@ -75,6 +60,14 @@ public class WalletModel {
 
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
+    }
+
+    public String getExpirationMonthYear() {
+        return expirationMonthYear;
+    }
+
+    public void setExpirationMonthYear(String expirationMonthYear) {
+        this.expirationMonthYear = expirationMonthYear;
     }
 
     public Integer getStatus() {
