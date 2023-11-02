@@ -12,12 +12,12 @@ const Footer = () => {
             <Link href="/home">Política de privacidad</Link>
           </li>
           <li>
-            <Link href="/home">Términos y condiciones</Link>
+            <Link href="/home">Contactanos</Link>
           </li>
         </ul>
       </div>
       <div className="footer--right--container">
-        <p>&copy; {new Date().getFullYear()} Tu Empresa</p>
+        <p>&copy; {new Date().getFullYear()} FISIbet</p>
       </div>
     </footer>
   );
