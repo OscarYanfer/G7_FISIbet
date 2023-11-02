@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { Slice } from "./slice";
+import { couponSlice } from "./slice";
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    valores: Slice.reducer,
+    coupon: couponSlice.reducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;

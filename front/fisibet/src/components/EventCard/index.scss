@@ -38,6 +38,10 @@
       transition: all 0.2s;
       cursor: pointer;
       border-radius: 5px;
+      &.onbet {
+        background-color: $primary-color;
+        border-color: $primary-color;
+      }
       &:hover {
         border-color: $primary-color;
       }

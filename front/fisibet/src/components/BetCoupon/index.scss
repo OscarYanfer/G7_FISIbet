@@ -1,7 +1,7 @@
 @import "../../../resources/styles/variables.scss";
 .bet--coupon--container {
   background-color: $fifth-color;
-  min-width: 300px;
+  min-width: 280px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -133,6 +133,31 @@
             border-width: 0;
           }
         }
+      }
+    }
+    &:has(.bet--coupon--no--bets) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+    }
+    .bet--coupon--no--bets {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      height: 100%;
+      padding: 20px;
+      svg {
+        font-size: $gigant-icon;
+      }
+      b {
+        font-size: $title-text;
+      }
+      p {
+        font-size: $medium-text;
       }
     }
   }

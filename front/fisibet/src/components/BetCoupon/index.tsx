@@ -5,16 +5,18 @@ import { MdSettings } from "react-icons/md";
 import { RiDeleteBin5Fill, RiCoupon5Line } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaHeartBroken } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducerTypes } from "@/interfaces";
+import { getTotalCuoteFromCoupon } from "@/helpers";
+import { clearBetsFromCoupon } from "@/store/slice";
 import "./index.scss";
-import { useSelector } from "react-redux";
 
-interface BetCouponProps {
-  //totalCoupons  -> Aca se dara la lista de cupones del estado global de la webapp
-}
-
-const BetCoupon = ({}) => {
+const BetCoupon = () => {
   const [amountValue, setAmountValue] = useState<string>("");
   const [showCoupon, setShowCoupon] = useState<boolean>(true);
+  const coupon = useSelector((state: RootReducerTypes) => state.coupon);
+  const dispatch = useDispatch();
 
   const handleAmountChange = (value: string) => {
     const regex = /^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/;
@@ -47,79 +49,75 @@ const BetCoupon = ({}) => {
             <div className="bet--coupon--header">
               <b>Cupón</b>
               <div className="bet--coupon--count">
-                <span>10</span>
+                <span>{coupon.bets.length}</span>
               </div>
               <AiOutlineClose onClick={() => setShowCoupon(false)} />
             </div>
             <div className="bet--coupon--actions">
-              <p>Múltiple</p>
+              {coupon.bets.length === 0 ? null : (
+                <p>{coupon.bets.length === 1 ? "Simple" : "Multiple"}</p>
+              )}
               <div className="bet--coupon--buttons">
                 <FIconButton icon={<MdSettings />} />
-                <FIconButton icon={<RiDeleteBin5Fill />} />
+                <FIconButton
+                  onClick={() => dispatch(clearBetsFromCoupon([]))}
+                  icon={<RiDeleteBin5Fill />}
+                />
               </div>
             </div>
             <div className="bet--coupon--main">
-              <div className="bet--coupon--items--list">
-                <BetCouponItem
-                  teamA="Calvary FC"
-                  teamB="FC Pacific Greater Victoria"
-                  league="Tercera División Francia"
-                  date="05:00"
-                  result="W1"
-                  resultCuote={2.93}
-                />
-                <BetCouponItem
-                  teamA="Calvary FC"
-                  teamB="FC Pacific Greater Victoria"
-                  league="Tercera División Francia"
-                  date="05:00"
-                  result="W1"
-                  resultCuote={2.93}
-                />
-                <BetCouponItem
-                  teamA="Calvary FC"
-                  teamB="FC Pacific Greater Victoria"
-                  league="Tercera División Francia"
-                  date="05:00"
-                  result="W1"
-                  resultCuote={2.93}
-                />
-                <BetCouponItem
-                  teamA="Calvary FC"
-                  teamB="FC Pacific Greater Victoria"
-                  league="Tercera División Francia"
-                  date="05:00"
-                  result="W1"
-                  resultCuote={2.93}
-                />
-              </div>
-              <div className="bet--coupon--footer">
-                <div className="bet--coupon--amount--input">
-                  <input
-                    onChange={(e) => handleAmountChange(e.target.value)}
-                    value={amountValue}
-                    placeholder="Apuesta"
-                    type="text"
-                  ></input>
+              {coupon.bets.length > 0 ? (
+                <>
+                  <div className="bet--coupon--items--list">
+                    {coupon &&
+                      coupon.bets.map((bet) => {
+                        return (
+                          <BetCouponItem key={bet.id} betOnCouponData={bet} />
+                        );
+                      })}
+                  </div>
+                  <div className="bet--coupon--footer">
+                    <div className="bet--coupon--amount--input">
+                      <input
+                        onChange={(e) => handleAmountChange(e.target.value)}
+                        value={amountValue}
+                        placeholder="Apuesta"
+                        type="text"
+                      ></input>
+                    </div>
+                    <div className="bet--coupon--summary">
+                      <div className="bet--coupon--summary--item">
+                        <span>Total de cuotas</span>
+                        <b>{getTotalCuoteFromCoupon(coupon.bets).toFixed(2)}</b>
+                      </div>
+                      <div className="bet--coupon--summary--item">
+                        <span>Apuesta</span>
+                        <b>{amountValue || 0}</b>
+                      </div>
+                      <div className="bet--coupon--summary--item">
+                        <span>Total Return</span>
+                        <b>
+                          {(
+                            getTotalCuoteFromCoupon(coupon.bets) *
+                            Number(amountValue)
+                          ).toFixed(2)}
+                        </b>
+                      </div>
+                      <div className="bet--coupon--bet--button">
+                        <FButton text="Terminar apuesta" />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="bet--coupon--no--bets">
+                  <FaHeartBroken />
+                  <b>No hay apuestas por mostrar</b>
+                  <p>
+                    Al parecer aún no has seleccionado tus jugadas ganadoras.
+                  </p>
                 </div>
-                <div className="bet--coupon--summary">
-                  <div className="bet--coupon--summary--item">
-                    <span>Total de cuotas</span>
-                    <b>3.225</b>
-                  </div>
-                  <div className="bet--coupon--summary--item">
-                    <span>Apuesta</span>
-                    <b>{amountValue || 0}</b>
-                  </div>
-                  <div className="bet--coupon--summary--item">
-                    <span>Total Return</span>
-                    <b>{(3.225 * Number(amountValue)).toFixed(3)}</b>
-                  </div>
-                  <div className="bet--coupon--bet--button">
-                    <FButton text="Terminar apuesta" />
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}

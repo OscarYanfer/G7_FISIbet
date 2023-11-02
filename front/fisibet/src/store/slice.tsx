@@ -1,20 +1,29 @@
-import { BetOnCouponTypes } from "@/interfaces";
+import { BetOnCouponTypes, betCouponReducerTypes } from "@/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface betCouponInitialStateTypes {
-  bets: BetOnCouponTypes[];
-}
-
-const betCouponInitialState: betCouponInitialStateTypes = {
+const betCouponInitialState: betCouponReducerTypes = {
   bets: [],
 };
 
-export const Slice = createSlice({
+export const couponSlice = createSlice({
   name: "coupon",
   initialState: betCouponInitialState,
   reducers: {
     addBetToCoupon: (state, action) => {
-      state.bets = [...state.bets, action.payload];
+      const isAlreadyOnCoupon = state.bets.find(
+        (bet) => bet.id === action.payload.id
+      );
+      isAlreadyOnCoupon
+        ? (state.bets = state.bets.map((bet: BetOnCouponTypes) =>
+            bet.id === action.payload.id
+              ? {
+                  ...bet,
+                  result: action.payload.result,
+                  resultCuote: action.payload.resultCuote,
+                }
+              : bet
+          ))
+        : (state.bets = [...state.bets, action.payload]);
     },
     removeBetFromCoupon: (state, action) => {
       const updateCoupon = state.bets.filter(
@@ -22,7 +31,11 @@ export const Slice = createSlice({
       );
       state.bets = updateCoupon;
     },
+    clearBetsFromCoupon: (state, action) => {
+      state.bets = action.payload;
+    },
   },
 });
 
-export const { addBetToCoupon, removeBetFromCoupon } = Slice.actions;
+export const { addBetToCoupon, removeBetFromCoupon, clearBetsFromCoupon } =
+  couponSlice.actions;

@@ -2,30 +2,25 @@ import React, { useRef, useState } from "react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { HiInformationCircle } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
-import "./index.scss";
 import { useOnClickOutside } from "@/hooks/useClickOutside";
 import { FIconButton } from "@/components";
+import { useDispatch } from "react-redux";
+import { removeBetFromCoupon } from "@/store/slice";
+import { BetOnCouponTypes } from "@/interfaces";
+import "./index.scss";
 
 interface BetCouponItemProps {
-  league: string;
-  teamA: string;
-  teamB: string;
-  result: "W1" | "W2" | "Empate";
-  resultCuote: number;
-  date: string;
+  betOnCouponData: BetOnCouponTypes;
 }
 
-const BetCouponItem = ({
-  league,
-  teamA,
-  teamB,
-  result,
-  resultCuote,
-  date,
-}: BetCouponItemProps) => {
+const BetCouponItem = ({ betOnCouponData }: BetCouponItemProps) => {
+  const { id, league, teamA, teamB, result, resultCuote, date } =
+    betOnCouponData;
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const outSideModalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   useOnClickOutside(outSideModalRef, () => setShowInfo(false));
+  const dispatch = useDispatch();
+
   return (
     <div className="bet--coupon--item--container">
       <div className="bet--coupon--item--header">
@@ -35,7 +30,10 @@ const BetCouponItem = ({
             onClick={() => setShowInfo(!showInfo)}
             icon={<HiInformationCircle />}
           />
-          <FIconButton icon={<RiDeleteBin5Fill />} />
+          <FIconButton
+            icon={<RiDeleteBin5Fill />}
+            onClick={() => dispatch(removeBetFromCoupon(id))}
+          />
           <AnimatePresence>
             {showInfo && (
               <motion.div

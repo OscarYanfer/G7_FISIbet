@@ -29,7 +29,7 @@
     background-color: $fifth-color;
     width: 100%;
     & > .event--bets--list {
-      height: calc(100vh - 180px); // revalue
+      max-height: calc(100vh - 180px); // revalue
     }
     .events--sports--list {
       display: flex;
