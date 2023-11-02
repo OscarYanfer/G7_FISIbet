@@ -6,6 +6,7 @@ import { RiDeleteBin5Fill, RiCoupon5Line } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import { AnimatePresence, motion } from "framer-motion";
 import "./index.scss";
+import { useSelector } from "react-redux";
 
 interface BetCouponProps {
   //totalCoupons  -> Aca se dara la lista de cupones del estado global de la webapp
