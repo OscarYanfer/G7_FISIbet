@@ -12,7 +12,7 @@ const Footer = () => {
             <Link href="/home">Política de privacidad</Link>
           </li>
           <li>
-            <Link href="/home">Contactanos</Link>
+            <Link href="/home">Contáctanos</Link>
           </li>
         </ul>
       </div>

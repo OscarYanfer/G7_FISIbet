@@ -11,9 +11,11 @@
 
   .footer--left--container {
     display: flex;
+    flex-direction: column;
 
     .footer--nav--links {
       display: flex;
+      flex-direction: column;
       gap: 10px;
 
       li {
@@ -55,6 +57,7 @@
   .footer--right--container {
     p {
       color: white;
+      font-size: $small-text;
     }
   }
 }
@@ -71,7 +74,11 @@
 
 @media (max-width: $mobile) {
   .footer--container {
+    flex-direction: column;
+
     .footer--left--container {
+      margin-bottom: 10px;
+
       a {
         font-size: $small-text;
       }
