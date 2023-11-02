@@ -1,0 +1,86 @@
+@import "../../../resources/styles/variables.scss";
+
+.footer--container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $secondary-color;
+  height: 70px;
+  width: 100%;
+  padding: 0 10px;
+
+  .footer--left--container {
+    display: flex;
+
+    .footer--nav--links {
+      display: flex;
+      gap: 10px;
+
+      li {
+        position: relative;
+
+        a {
+          transition: all 0.3s;
+          height: 100%;
+          font-size: $small-text;
+          display: flex;
+          color: white;
+          align-items: center;
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+
+        &::after {
+          position: absolute;
+          transition: all 0.3s;
+          bottom: 0;
+          left: 0;
+          content: "";
+          height: 3px;
+          width: 0;
+          background-color: $primary-color;
+        }
+
+        &:hover {
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .footer--right--container {
+    p {
+      color: white;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .footer--container {
+    .footer--left--container {
+      .footer--nav--links {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .footer--container {
+    .footer--left--container {
+      a {
+        font-size: $small-text;
+      }
+    }
+
+    .footer--right--container {
+      p {
+        font-size: $small-text;
+      }
+    }
+  }
+}
