@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class TicketBetMySQLPort implements TicketBetPort {
-    private TicketBetInfraMapper ticketBetInfraMapper;
-    private TicketBetSpringPort ticketBetSpringPort;
+    private final TicketBetInfraMapper ticketBetInfraMapper;
+    private final TicketBetSpringPort ticketBetSpringPort;
     public TicketBetMySQLPort(
             TicketBetInfraMapper ticketBetInfraMapper,
             TicketBetSpringPort ticketBetSpringPort
@@ -24,7 +24,7 @@ public class TicketBetMySQLPort implements TicketBetPort {
     @Override
     public Integer createTicketBet(TicketBetEntity ticketBetEntity) {
         ticketBetEntity.setStatus(1);
-        ticketBetEntity.setRegistered(LocalDateTime.now());
+        ticketBetEntity.setRegisteredOn(LocalDateTime.now());
         TicketBetModel ticketBetModel = this.ticketBetInfraMapper.convertTicketBetEntityToTicketBetModel(ticketBetEntity);
         TicketBetModel ticketBetModeNew = this.ticketBetSpringPort.save(ticketBetModel);
         return ticketBetModeNew.getId();

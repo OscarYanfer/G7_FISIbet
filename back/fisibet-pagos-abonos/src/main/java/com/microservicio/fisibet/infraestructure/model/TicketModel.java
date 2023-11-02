@@ -89,4 +89,18 @@ public class TicketModel {
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
+
+    @Override
+    public String toString() {
+        return "TicketModel{" +
+                "id=" + id +
+                ", amountBet=" + amountBet +
+                ", idAccountUser=" + idAccountUser +
+                ", number='" + number + '\'' +
+                ", totalFee=" + totalFee +
+                ", status=" + status +
+                ", registeredOn=" + registeredOn +
+                ", updatedOn=" + updatedOn +
+                '}';
+    }
 }

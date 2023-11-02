@@ -23,9 +23,9 @@ public class TicketModel {
     @Column(name = "totalFee")
     private BigDecimal totalFee;
     @Column(name = "registered")
-    private LocalDateTime registered;
+    private LocalDateTime registeredOn;
     @Column(name = "updated")
-    private LocalDateTime updated;
+    private LocalDateTime updatedOn;
 
     public Integer getId() {
         return id;
@@ -75,19 +75,19 @@ public class TicketModel {
         this.totalFee = totalFee;
     }
 
-    public LocalDateTime getRegistered() {
-        return registered;
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
     }
 
-    public void setRegistered(LocalDateTime registered) {
-        this.registered = registered;
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 
-    public LocalDateTime getUpdated() {
-        return updated;
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
     }
 }
