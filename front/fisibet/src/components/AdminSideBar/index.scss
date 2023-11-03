@@ -1,0 +1,77 @@
+@import "../../../resources/styles/variables.scss";
+
+.admin--sidebar--container {
+  background-color: $fifth-color;
+  color: white;
+  transition: all 0.3s;
+  width: 320px;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  .admin--sidebar--content {
+    .admin--sidebar--links--list {
+      li {
+        display: flex;
+        align-items: center;
+        padding: 18px 15px;
+        transition: all 0.3s;
+        svg {
+          font-size: $big-icon;
+        }
+        span {
+          margin-left: 15px;
+        }
+
+        &.active {
+          border-right: 5px solid white;
+          background-color: $secondary-color;
+        }
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+  .admin--sidebar--button {
+    display: flex;
+    position: absolute;
+    padding: 15px;
+    top: 45%;
+    right: 0;
+    border-radius: 100%;
+    background-color: $secondary-color;
+    border: 2px solid white;
+    transition: all 0.3s;
+    transform: translateX(30px);
+    svg {
+      font-size: $big-icon;
+      color: white;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    &.resized {
+      transform: rotate(180deg) translateX(-30px);
+    }
+  }
+  &.resized {
+    width: 100px;
+    .admin--sidebar--content {
+      .admin--sidebar--links--list {
+        li {
+          justify-content: center;
+          svg {
+            font-size: $big-icon;
+          }
+          span {
+            width: 0;
+            opacity: 0;
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}

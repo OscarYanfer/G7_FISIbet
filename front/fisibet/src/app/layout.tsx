@@ -1,7 +1,6 @@
 "use client";
-import { Footer, Header } from "@/components";
-import "./globals.scss";
 import { Providers } from "@/store/provider";
+import "./globals.scss";
 
 export default function RootLayout({
   children,
@@ -11,11 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body>
-          <Header />
-          {children}
-          <Footer />
-        </body>
+        <body>{children}</body>
       </Providers>
     </html>
   );
