@@ -1,4 +1,5 @@
 import { BetOnCouponTypes, EventCardTypes } from "@/interfaces";
+import { routes } from "./navigation";
 
 export const getBetInfo = (
   event: EventCardTypes,
@@ -44,4 +45,15 @@ export const checkResultOnCoupon = (
 ): "W1" | "Empate" | "W2" | "" => {
   const betResult = betsOnCoupon.find((bet) => bet.id === id);
   return betResult?.result || "";
+};
+
+export const getLabelFromPath = (path: string): string => {
+  let label: string = "";
+  for (const prop in routes) {
+    if (routes[prop].path === path) {
+      label = routes[prop].label;
+      break;
+    }
+  }
+  return label;
 };

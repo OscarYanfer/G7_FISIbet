@@ -1,0 +1,15 @@
+@import "../../../resources/styles/variables.scss";
+.addevent--form--container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  strong {
+    font-size: $gigant-text;
+    padding-bottom: 20px;
+  }
+  .addevent--form--cuotes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}

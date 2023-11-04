@@ -1,0 +1,54 @@
+@import "../../../../resources/styles/variables.scss";
+.admin--events--page--container {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .admin--events--page--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    .admin--events--page--count {
+      line-height: 25px;
+    }
+    button {
+      width: max-content;
+    }
+  }
+  .admin--events--page--table {
+    border-top: 1px solid #f3f3f3;
+    font-size: $medium-text;
+    .admin--events--page--table--header {
+      display: grid;
+      grid-template-columns: 0.5fr 0.5fr 2fr 2fr 1fr 2fr 2fr 2fr;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f3f3f3;
+      span {
+        &:last-of-type {
+          text-align: center;
+        }
+      }
+    }
+    .admin--events--page--table--body {
+      .admin--events--page--table--item {
+        display: grid;
+        padding: 10px 0;
+        grid-template-columns: 0.5fr 0.5fr 2fr 2fr 1fr 2fr 2fr 2fr;
+        align-items: center;
+        span {
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .admin--events--page--table--item--actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          place-items: center;
+        }
+      }
+    }
+  }
+}

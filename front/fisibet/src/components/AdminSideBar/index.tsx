@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { RiHome5Line, RiCoupon5Line } from "react-icons/ri";
 import { BiCalendarEvent } from "react-icons/bi";
 import { TbUsers } from "react-icons/tb";
 import "./index.scss";
+import { routes } from "@/helpers/navigation";
 const AdminSideBar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [resize, setResize] = useState<boolean>(false);
+  console.log(pathname);
+
   return (
     <div
       className={
@@ -18,21 +22,33 @@ const AdminSideBar = () => {
     >
       <div className="admin--sidebar--content">
         <ul className="admin--sidebar--links--list">
-          <li onClick={() => router.push("/admin/events")} className="active">
+          <li
+            onClick={() => router.push(routes.dashboard.path)}
+            className={pathname === routes.dashboard.path ? "active" : ""}
+          >
             <RiHome5Line />
-            <span>Inicio</span>
+            <span>{routes.dashboard.label}</span>
           </li>
-          <li onClick={() => router.push("/admin/events")}>
+          <li
+            onClick={() => router.push(routes.events.path)}
+            className={pathname === routes.events.path ? "active" : ""}
+          >
             <BiCalendarEvent />
-            <span>Eventos</span>
+            <span>{routes.events.label}</span>
           </li>
-          <li>
+          <li
+            onClick={() => router.push(routes.users.path)}
+            className={pathname === routes.users.path ? "active" : ""}
+          >
             <TbUsers />
-            <span>Usuarios</span>
+            <span>{routes.users.label}</span>
           </li>
-          <li>
+          <li
+            onClick={() => router.push(routes.coupons.path)}
+            className={pathname === routes.coupons.path ? "active" : ""}
+          >
             <RiCoupon5Line />
-            <span>Cupones</span>
+            <span>{routes.coupons.label}</span>
           </li>
         </ul>
       </div>

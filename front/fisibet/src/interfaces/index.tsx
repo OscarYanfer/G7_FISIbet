@@ -39,3 +39,12 @@ export interface RootReducerTypes {
 export interface betCouponReducerTypes {
   bets: BetOnCouponTypes[];
 }
+
+export interface AddEventFormTypes {
+  date: string;
+  league: string;
+  teamA: string;
+  teamB: string;
+  cuoteA: string;
+  cuoteB: string;
+}

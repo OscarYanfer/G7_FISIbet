@@ -9,17 +9,30 @@ interface FInputFormProps {
   name: string;
   label: string;
   icon?: React.ReactNode;
-  type: "text" | "password" | "email";
+  type: "text" | "password" | "email" | "date" | "datetime-local";
+  regex?: RegExp;
 }
 
 const FInputForm = ({
   placeholder = "Input",
+  regex,
   name,
   type,
   label,
   icon,
 }: FInputFormProps) => {
   const [field, meta, helpers] = useField(name);
+  const handleChange = (value: string) => {
+    if (regex) {
+      if (regex.test(value)) {
+        helpers.setValue(value);
+      } else if (value.length === 0) {
+        helpers.setValue("");
+      }
+    } else {
+      helpers.setValue(value);
+    }
+  };
   return (
     <div className="input--form--container">
       <label>{label}</label>
@@ -27,7 +40,7 @@ const FInputForm = ({
         {icon && <span className="input--form--icon">{icon}</span>}
         <input
           type={type}
-          onChange={(e) => helpers.setValue(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           placeholder={placeholder}
           name={field.name}
           value={field.value}

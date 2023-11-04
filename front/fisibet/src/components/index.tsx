@@ -11,3 +11,5 @@ export { default as EventList } from "./EventList/index";
 export { default as DropDownOption } from "./DropDownOption/index";
 export { default as Footer } from "./Footer/index";
 export { default as AdminSideBar } from "./AdminSideBar/index";
+export { default as AdminBreadCumb } from "./AdminBreadCumb/index";
+export { default as AddEventForm } from "./AddEventForm/index";

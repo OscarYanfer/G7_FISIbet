@@ -18,3 +18,12 @@ export const registerFormSchema = Yup.object().shape({
     .required("Porfavor digite de nuevo su contraseña")
     .oneOf([Yup.ref("password")], "Las contraseñas deben coincidir"),
 });
+
+export const AddEventFormSchema = Yup.object().shape({
+  date: Yup.string().required("Digite una fecha válida"),
+  league: Yup.string().required("Es necesario completar"),
+  teamA: Yup.string().required("Es necesario completar"),
+  teamB: Yup.string().required("Es necesario completar"),
+  cuoteA: Yup.string().required("Digite una cuota válida"),
+  cuoteB: Yup.string().required("Digite una cuota válida"),
+});

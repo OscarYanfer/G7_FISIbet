@@ -29,10 +29,19 @@ input {
   padding-top: 90px;
   margin: auto;
 }
+.form--input--group--double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
 @media (max-width: $mobile) {
   .page--container {
     padding: 10px 5px;
     padding-top: 80px;
+  }
+  .form--input--group--double {
+    display: flex;
+    flex-direction: column;
   }
 }
