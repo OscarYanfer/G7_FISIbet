@@ -1,16 +1,17 @@
-package com.app.ecom.web;
+package com.microservicio.fisibet.aplication.controller;
 
-import com.app.ecom.dto.ProductoRequest;
-import com.app.ecom.entities.Categoria;
-import com.app.ecom.entities.Producto;
-import com.app.ecom.repository.CategoriaRepository;
-import com.app.ecom.repository.ProductoRepository;
+
+import com.microservicio.fisibet.aplication.request.CreateEventRequest;
+import com.microservicio.fisibet.infraestructure.model.EventModel;
+import com.microservicio.fisibet.infraestructure.port.spring.BetSpringPort;
+import com.microservicio.fisibet.infraestructure.port.spring.EventSpringPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,49 +19,35 @@ import java.util.UUID;
 public class ProductoGraphQLController {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private EventSpringPort eventSpringPort;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private BetSpringPort betSpringPort;
 
     @QueryMapping
-    public List<Producto> listarProductos(){
-        return productoRepository.findAll();
+    public List<EventModel> listarEventos(){
+        return eventSpringPort.findAll();
     }
 
     @QueryMapping
-    public Producto listarProductoPorId(@Argument String id){
-        return productoRepository.findById(id).orElseThrow(
+    public EventModel listarEventoPorId(@Argument Long id){
+        return eventSpringPort.findById(id).orElseThrow(
                 () -> new RuntimeException(String.format("Producto %s no encontrado",id))
         );
     }
 
-    @QueryMapping
-    public List<Categoria> listarCategorias(){
-        return categoriaRepository.findAll();
-    }
-
-    @QueryMapping
-    public Categoria listarCategoriaPorId(@Argument Long id){
-        return categoriaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(String.format("Categoria %s no encontrada",id))
-        );
-    }
-
     @MutationMapping
-    public Producto guardarProducto(@Argument ProductoRequest productoRequest){
-        Categoria categoria = categoriaRepository.findById(productoRequest.categoriaId()).orElse(null);
-        Producto productoBBDD = new Producto();
-        productoBBDD.setId(UUID.randomUUID().toString());
-        productoBBDD.setNombre(productoRequest.nombre());
-        productoBBDD.setPrecio(productoRequest.precio());
-        productoBBDD.setCantidad(productoRequest.cantidad());
-        productoBBDD.setCategoria(categoria);
+    public EventModel guardarEvento(@Argument CreateEventRequest createEventRequest){
+        EventModel eventModel = new EventModel();
+        eventModel.setName(createEventRequest.getName());
+        eventModel.setDescription(createEventRequest.getDescription());
+        eventModel.setStatus(1);
+        eventModel.setRegistered(LocalDateTime.now());
 
-        return productoRepository.save(productoBBDD);
+        return eventSpringPort.save(eventModel);
     }
 
-    @MutationMapping
+    /*@MutationMapping
     public Producto actualizarProducto(@Argument String id,@Argument ProductoRequest productoRequest){
         Categoria categoria = categoriaRepository.findById(productoRequest.categoriaId()).orElse(null);
         Producto productoBBDD = new Producto();
@@ -76,5 +63,5 @@ public class ProductoGraphQLController {
     @MutationMapping
     public void eliminarProducto(@Argument String id){
         productoRepository.deleteById(id);
-    }
+    }*/
 }

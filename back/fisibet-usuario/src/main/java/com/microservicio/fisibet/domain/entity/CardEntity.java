@@ -14,6 +14,8 @@ public class CardEntity {
     private LocalDateTime registeredOn;
     private LocalDateTime updatedOn;
 
+
+
     public Integer getId() {
         return id;
     }

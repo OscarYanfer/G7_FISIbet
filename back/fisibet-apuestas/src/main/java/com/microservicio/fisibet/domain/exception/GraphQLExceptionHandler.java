@@ -1,4 +1,4 @@
-package com.app.ecom.exceptions;
+package com.microservicio.fisibet.domain.exception;
 
 import graphql.ErrorClassification;
 import graphql.GraphQLError;
