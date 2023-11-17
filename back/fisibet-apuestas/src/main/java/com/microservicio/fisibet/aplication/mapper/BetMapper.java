@@ -1,5 +1,6 @@
 package com.microservicio.fisibet.aplication.mapper;
 
+import com.microservicio.fisibet.aplication.dto.BetDto;
 import com.microservicio.fisibet.aplication.dto.CreateBetDto;
 import com.microservicio.fisibet.aplication.dto.GetBetDto;
 import com.microservicio.fisibet.aplication.request.CreateBetRequest;
@@ -16,7 +17,9 @@ public interface BetMapper {
     BetEntity convertCreateBetDtoToBetEntity(CreateBetDto createBetDto);
     CreateBetResponse convertCreateBetDtoToCreateBetResponse(CreateBetDto createBetDto);
     List<GetBetDto> convertBetEntitiesToGetBetDtos(List<BetEntity> betEntities);
-
     List<GetBetResponse> convertGetBetDtosToGetBetResponses(List<GetBetDto> betDtos);
+    BetEntity convertBetDtoToBetEntity(BetDto betDto);
+    BetDto convetBetEntityToBetDto(BetEntity betEntity);
+    List<BetDto> convertBetEntitiesToBetDtos(List<BetEntity> betEntities);
 
 }

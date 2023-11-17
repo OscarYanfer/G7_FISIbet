@@ -1,20 +1,93 @@
 type Mutation{
-    guardarEvento(createEventRequest:CreateEventRequest):EventModel,
-}
-type Query{
-    listarEventos : [EventModel]
+    guardarEvento(createEventRequest:CreateEventRequest):EventGraphQLResponse,
+    actualizarEvento(id:Int, updateEventRequest:UpdateEventRequest):EventGraphQLResponse,
+    eliminarEvento(id: Int): Event
 }
 
+type Query{
+    listarEventos : EventsGraphQLResponse,
+    obtenerEventoPorId(id: Int): GetEventGraphQLResponse
+}
+
+type EventGraphQLResponse{
+    eventType: String,
+    content: Event
+}
+type EventsGraphQLResponse{
+    eventType: String,
+    content: [Event]
+}
+type GetEventGraphQLResponse{
+    eventType: String,
+    content: GetEvent
+}
+
+type GetEvent{
+    id : Int,
+    name : String,
+    description : String,
+    equipoA: String,
+    equipoB: String,
+    liga: String,
+    fechaHora: String,
+    status : Int,
+    bets: [Bet],
+    registeredOn: String,
+    updatedOn: String
+}
+
+type Bet{
+    id: Int,
+    eventId: Int
+    name: String
+    description: String,
+    pay: Float,
+    status: Int,
+    registeredOn: String,
+    updatedOn: String
+}
+
+
 type EventModel{
-    id : String,
+    id : Int,
     name : String,
     description : String,
     status : Int,
-    registered: String,
-    updated: String
+    registeredOn: String,
+    updatedOn: String
+}
+
+type Event{
+    id : Int,
+    name : String,
+    description : String,
+    equipoA: String,
+    equipoB: String,
+    liga: String,
+    fechaHora: String,
+    status : Int,
+    registeredOn: String,
+    updatedOn: String
 }
 
 input CreateEventRequest{
+    equipoA: String,
+    equipoB: String,
+    liga: String,
+    fechaHora: String,
+    payEquipoA: Float,
+    payEquipoB: Float,
+}
+
+input UpdateEventRequest{
     name: String,
-    description: String
+    description: String,
+    equipoA: String,
+    equipoB: String,
+    liga: String,
+    fechaHora: String,
+    payEquipoA: Float,
+    payEquipoB: Float
+    betIdEquipoA: Int,
+    betIdEquipoB: Int
 }

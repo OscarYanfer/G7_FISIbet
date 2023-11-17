@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface EventPort {
     List<EventEntity> GetEventsEnabled();
-    Integer registerEvent(EventEntity eventEntity);
+    EventEntity registerEvent(EventEntity eventEntity);
+    EventEntity updateEventById(EventEntity eventEntity, Integer eventId);
+    EventEntity getEventById(Integer id);
 }

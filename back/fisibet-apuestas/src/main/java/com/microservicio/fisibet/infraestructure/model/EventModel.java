@@ -1,6 +1,7 @@
 package com.microservicio.fisibet.infraestructure.model;
 
 
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,21 +12,27 @@ public class EventModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     @Column(name = "name")
     private String name;
-
     @Column(name = "description")
     private String description;
+    @Column(name = "equipoA")
+    private String equipoA;
+    @Column(name = "equipoB")
+    private String equipoB;
+    @Column(name = "liga")
+    private String liga;
 
+    @Column(name = "fechaHora")
+    private LocalDateTime fechaHora;
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "registered")
-    private LocalDateTime registered;
+    @Column(name = "registeredOn")
+    private LocalDateTime registeredOn;
 
-    @Column(name = "updated")
-    private LocalDateTime updated;
+    @Column(name = "updatedOn")
+    private LocalDateTime updatedOn;
 
 
     public Integer getId() {
@@ -52,6 +59,38 @@ public class EventModel {
         this.description = description;
     }
 
+    public String getEquipoA() {
+        return equipoA;
+    }
+
+    public void setEquipoA(String equipoA) {
+        this.equipoA = equipoA;
+    }
+
+    public String getEquipoB() {
+        return equipoB;
+    }
+
+    public void setEquipoB(String equipoB) {
+        this.equipoB = equipoB;
+    }
+
+    public String getLiga() {
+        return liga;
+    }
+
+    public void setLiga(String liga) {
+        this.liga = liga;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -60,20 +99,19 @@ public class EventModel {
         this.status = status;
     }
 
-    public LocalDateTime getRegistered() {
-        return registered;
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
     }
 
-    public void setRegistered(LocalDateTime registered) {
-        this.registered = registered;
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
     }
 
-    public LocalDateTime getUpdated() {
-        return updated;
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
     }
-
 }

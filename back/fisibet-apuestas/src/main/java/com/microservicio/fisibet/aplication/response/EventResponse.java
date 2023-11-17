@@ -1,10 +1,8 @@
-package com.microservicio.fisibet.aplication.dto;
+package com.microservicio.fisibet.aplication.response;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class GetEventDto {
+public class EventResponse {
     public Integer id;
     public String name;
     public String description;
@@ -13,7 +11,6 @@ public class GetEventDto {
     public String liga;
     public LocalDateTime fechaHora;
     public Integer status;
-    public List<BetDto> bets;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
 
@@ -95,13 +92,5 @@ public class GetEventDto {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
-    }
-
-    public List<BetDto> getBets() {
-        return bets;
-    }
-
-    public void setBets(List<BetDto> bets) {
-        this.bets = bets;
     }
 }

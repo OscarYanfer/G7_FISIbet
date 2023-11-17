@@ -1,10 +1,18 @@
 package com.microservicio.fisibet.aplication.dto;
 
+import java.time.LocalDateTime;
+
 public class CreateEventDto {
     public Integer id;
     public String name;
     public String description;
+    public String equipoA;
+    public String equipoB;
+    public String liga;
+    public LocalDateTime fechaHora;
     public Integer status;
+    public LocalDateTime registeredOn;
+    public LocalDateTime updatedOn;
 
     public Integer getId() {
         return id;
@@ -30,11 +38,59 @@ public class CreateEventDto {
         this.description = description;
     }
 
+    public String getEquipoA() {
+        return equipoA;
+    }
+
+    public void setEquipoA(String equipoA) {
+        this.equipoA = equipoA;
+    }
+
+    public String getEquipoB() {
+        return equipoB;
+    }
+
+    public void setEquipoB(String equipoB) {
+        this.equipoB = equipoB;
+    }
+
+    public String getLiga() {
+        return liga;
+    }
+
+    public void setLiga(String liga) {
+        this.liga = liga;
+    }
+
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public LocalDateTime getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public void setRegisteredOn(LocalDateTime registeredOn) {
+        this.registeredOn = registeredOn;
+    }
+
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
     }
 }

@@ -1,15 +1,17 @@
 package com.microservicio.fisibet.aplication.request;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.List;
 
-public class CreateEventRequest {
+public class UpdateEventRequest {
     public String equipoA;
     public String equipoB;
     public String liga;
     public String fechaHora;
     public BigDecimal payEquipoA;
     public BigDecimal payEquipoB;
+    public Integer betIdEquipoA;
+    public Integer betIdEquipoB;
 
     public String getEquipoA() {
         return equipoA;
@@ -57,5 +59,21 @@ public class CreateEventRequest {
 
     public void setPayEquipoB(BigDecimal payEquipoB) {
         this.payEquipoB = payEquipoB;
+    }
+
+    public Integer getBetIdEquipoA() {
+        return betIdEquipoA;
+    }
+
+    public void setBetIdEquipoA(Integer betIdEquipoA) {
+        this.betIdEquipoA = betIdEquipoA;
+    }
+
+    public Integer getBetIdEquipoB() {
+        return betIdEquipoB;
+    }
+
+    public void setBetIdEquipoB(Integer betIdEquipoB) {
+        this.betIdEquipoB = betIdEquipoB;
     }
 }

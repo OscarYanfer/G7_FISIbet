@@ -1,34 +1,36 @@
 package com.microservicio.fisibet.aplication.usecase;
 
 import com.microservicio.fisibet.aplication.dto.CreateEventDto;
+import com.microservicio.fisibet.aplication.dto.EventDto;
 import com.microservicio.fisibet.aplication.mapper.EventMapper;
 import com.microservicio.fisibet.aplication.port.ConnectionPort;
 import com.microservicio.fisibet.aplication.port.EventPort;
+import com.microservicio.fisibet.aplication.response.EventResponse;
 import com.microservicio.fisibet.domain.entity.EventEntity;
 import com.microservicio.fisibet.domain.exception.ErrorLevel;
 import com.microservicio.fisibet.domain.exception.ErrorStatus;
 import com.microservicio.fisibet.domain.exception.GenericException;
 
-public class CreateEventUseCase {
+
+public class UpdateEventUseCase {
     private final ConnectionPort connectionPort;
     private final EventMapper eventMapper;
     private final EventPort eventPort;
 
-    public CreateEventUseCase(ConnectionPort connectionPort,
-                              EventMapper eventMapper,
+    public UpdateEventUseCase(ConnectionPort connectionPort, EventMapper eventMapper,
                               EventPort eventPort){
         this.connectionPort = connectionPort;
         this.eventMapper = eventMapper;
         this.eventPort = eventPort;
     }
 
-    public CreateEventDto run(CreateEventDto request) throws GenericException {
+    public EventDto run(EventDto request, Integer eventId) throws GenericException {
         try{
             this.connectionPort.begin();
-            CreateEventDto createEventDto = this.eventMapper.convertEventEntityToCreateEventDto(createEvent(request));
+            EventDto eventDto = updateEvent(request, eventId);
             this.connectionPort.commit();{
             }
-            return createEventDto;
+            return eventDto;
         }catch (Exception ex){
             this.connectionPort.rollback();
             throw new GenericException(
@@ -36,15 +38,15 @@ public class CreateEventUseCase {
                     ErrorStatus.UNAUTHORIZED,
                     ErrorLevel.ERROR,
                     ex.getMessage(),
-                    "Ocurrió un error al crear el evento. Por favor, comunícate con el administrador"
+                    "Ocurrió un error al actualizar el evento. Por favor, comunícate con el administrador"
             );
         } finally {
             this.connectionPort.close();
         }
     }
 
-    private EventEntity createEvent(CreateEventDto request){
-        EventEntity eventEntity = this.eventMapper.convertCreateEventDtoToEventEntity(request);
-        return this.eventPort.registerEvent(eventEntity);
+    private EventDto updateEvent(EventDto request, Integer eventId){
+        EventEntity eventEntity = this.eventMapper.convertEventDtoToEventEntity(request);
+        return this.eventMapper.convertEventDtoToEventEntity(this.eventPort.updateEventById(eventEntity, eventId));
     }
 }

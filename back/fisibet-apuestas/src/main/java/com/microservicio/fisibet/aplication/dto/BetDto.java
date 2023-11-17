@@ -1,19 +1,15 @@
 package com.microservicio.fisibet.aplication.dto;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class GetEventDto {
+public class BetDto {
     public Integer id;
+    public Integer eventId;
     public String name;
     public String description;
-    public String equipoA;
-    public String equipoB;
-    public String liga;
-    public LocalDateTime fechaHora;
+    public BigDecimal pay;
     public Integer status;
-    public List<BetDto> bets;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
 
@@ -23,6 +19,14 @@ public class GetEventDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
     }
 
     public String getName() {
@@ -41,36 +45,12 @@ public class GetEventDto {
         this.description = description;
     }
 
-    public String getEquipoA() {
-        return equipoA;
+    public BigDecimal getPay() {
+        return pay;
     }
 
-    public void setEquipoA(String equipoA) {
-        this.equipoA = equipoA;
-    }
-
-    public String getEquipoB() {
-        return equipoB;
-    }
-
-    public void setEquipoB(String equipoB) {
-        this.equipoB = equipoB;
-    }
-
-    public String getLiga() {
-        return liga;
-    }
-
-    public void setLiga(String liga) {
-        this.liga = liga;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setPay(BigDecimal pay) {
+        this.pay = pay;
     }
 
     public Integer getStatus() {
@@ -95,13 +75,5 @@ public class GetEventDto {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
-    }
-
-    public List<BetDto> getBets() {
-        return bets;
-    }
-
-    public void setBets(List<BetDto> bets) {
-        this.bets = bets;
     }
 }

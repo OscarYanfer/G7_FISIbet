@@ -22,7 +22,7 @@ public class BetMySQLPort implements BetPort {
     @Override
     public Integer registerBet(BetEntity betEntity) {
         betEntity.setStatus(1);
-        betEntity.setRegistered(LocalDateTime.now());
+        betEntity.setRegisteredOn(LocalDateTime.now());
         BetModel betModel = this.betInfraMapper.convertBetEntityToBetModel(betEntity);
         BetModel newBetModel = this.betSpringPort.save(betModel);
         return newBetModel.getId();
@@ -31,6 +31,22 @@ public class BetMySQLPort implements BetPort {
     @Override
     public List<BetEntity> getBets() {
         List<BetModel> betModels = this.betSpringPort.getBetsEnabled();
+        return this.betInfraMapper.convertBetModelsToBetEntities(betModels);
+    }
+
+    @Override
+    public BetEntity updateBetByEvent(BetEntity betEntity) {
+        BetModel betModel = this.betSpringPort.findById(betEntity.getId()).orElse(null);;
+        betModel.setName(betEntity.getName());
+        betModel.setPay(betEntity.getPay());
+        betModel.setStatus(1);
+        betModel.setUpdatedOn(LocalDateTime.now());
+        return this.betInfraMapper.convertBetModelToBetEntity(this.betSpringPort.save(betModel));
+    }
+
+    @Override
+    public List<BetEntity> getBetsByEventId(Integer eventId) {
+        List<BetModel> betModels = this.betSpringPort.getBetByEventId(eventId);
         return this.betInfraMapper.convertBetModelsToBetEntities(betModels);
     }
 }

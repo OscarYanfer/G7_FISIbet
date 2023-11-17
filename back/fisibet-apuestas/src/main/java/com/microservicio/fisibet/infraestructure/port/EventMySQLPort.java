@@ -26,11 +26,31 @@ public class EventMySQLPort implements EventPort {
     }
 
     @Override
-    public Integer registerEvent(EventEntity eventEntity) {
+    public EventEntity registerEvent(EventEntity eventEntity) {
         eventEntity.setStatus(1);
-        eventEntity.setRegistered(LocalDateTime.now());
-        EventModel eventModel = this.eventInfraMapper.convetEventEntityToEventModel(eventEntity);
+        eventEntity.setRegisteredOn(LocalDateTime.now());
+        EventModel eventModel = this.eventInfraMapper.convertEventEntityToEventModel(eventEntity);
         EventModel newEventModel = this.eventSpringPort.save(eventModel);
-        return newEventModel.getId();
+        return this.eventInfraMapper.convertEventModelToEventEntity(newEventModel);
+    }
+
+    @Override
+    public EventEntity updateEventById(EventEntity eventEntity, Integer eventId) {
+        EventModel eventModel = this.eventSpringPort.findById(eventId).orElse(null);
+        eventModel.setEquipoA(eventEntity.getEquipoA());
+        eventModel.setEquipoB(eventEntity.getEquipoB());
+        eventModel.setFechaHora(eventEntity.getFechaHora());
+        eventModel.setLiga(eventEntity.getLiga());
+        eventModel.setUpdatedOn(LocalDateTime.now());
+        eventModel.setStatus(1);
+        return this.eventInfraMapper.convertEventModelToEventEntity(this.eventSpringPort.save(eventModel));
+    }
+
+    @Override
+    public EventEntity getEventById(Integer id) {
+        EventModel eventModel = this.eventSpringPort.findById(id).orElseThrow(
+                () -> new RuntimeException(String.format("Evento %s no encontrado",id))
+        );
+        return this.eventInfraMapper.convertEventModelToEventEntity(eventModel);
     }
 }

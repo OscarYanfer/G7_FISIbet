@@ -1,6 +1,6 @@
 package com.microservicio.fisibet.aplication.usecase;
 
-import com.microservicio.fisibet.aplication.dto.CreateEventDto;
+import com.microservicio.fisibet.aplication.dto.GetEventDto;
 import com.microservicio.fisibet.aplication.mapper.EventMapper;
 import com.microservicio.fisibet.aplication.port.ConnectionPort;
 import com.microservicio.fisibet.aplication.port.EventPort;
@@ -9,26 +9,28 @@ import com.microservicio.fisibet.domain.exception.ErrorLevel;
 import com.microservicio.fisibet.domain.exception.ErrorStatus;
 import com.microservicio.fisibet.domain.exception.GenericException;
 
-public class CreateEventUseCase {
-    private final ConnectionPort connectionPort;
-    private final EventMapper eventMapper;
-    private final EventPort eventPort;
 
-    public CreateEventUseCase(ConnectionPort connectionPort,
-                              EventMapper eventMapper,
-                              EventPort eventPort){
+public class GetEventUseCase {
+    private final ConnectionPort connectionPort;
+    private final EventPort eventPort;
+    private final EventMapper eventMapper;
+
+    public GetEventUseCase(ConnectionPort connectionPort,
+                            EventPort eventPort,
+                            EventMapper eventMapper){
         this.connectionPort = connectionPort;
-        this.eventMapper = eventMapper;
         this.eventPort = eventPort;
+        this.eventMapper = eventMapper;
     }
 
-    public CreateEventDto run(CreateEventDto request) throws GenericException {
+    public GetEventDto run(Integer id) throws GenericException {
         try{
             this.connectionPort.begin();
-            CreateEventDto createEventDto = this.eventMapper.convertEventEntityToCreateEventDto(createEvent(request));
+            GetEventDto getEventDto = getEventDto(id);
             this.connectionPort.commit();{
+
             }
-            return createEventDto;
+            return getEventDto;
         }catch (Exception ex){
             this.connectionPort.rollback();
             throw new GenericException(
@@ -36,15 +38,15 @@ public class CreateEventUseCase {
                     ErrorStatus.UNAUTHORIZED,
                     ErrorLevel.ERROR,
                     ex.getMessage(),
-                    "Ocurrió un error al crear el evento. Por favor, comunícate con el administrador"
+                    "Ocurrió un error al obtener la lista de eventos. Por favor, comunícate con el administrador"
             );
         } finally {
             this.connectionPort.close();
         }
     }
 
-    private EventEntity createEvent(CreateEventDto request){
-        EventEntity eventEntity = this.eventMapper.convertCreateEventDtoToEventEntity(request);
-        return this.eventPort.registerEvent(eventEntity);
+    private GetEventDto getEventDto(Integer id){
+        EventEntity eventEntity = this.eventPort.getEventById(id);
+        return this.eventMapper.convertEventEntityToGetEventDto(eventEntity);
     }
 }

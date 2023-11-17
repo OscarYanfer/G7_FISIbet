@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface EventSpringPort extends JpaRepository<EventModel, Long> {
+public interface EventSpringPort extends JpaRepository<EventModel, Integer> {
     @Query(value = "SELECT * FROM Evento WHERE status = 1", nativeQuery = true)
     List<EventModel> getEventsEnabled();
 

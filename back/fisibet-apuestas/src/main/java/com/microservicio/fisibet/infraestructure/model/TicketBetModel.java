@@ -21,10 +21,10 @@ public class TicketBetModel {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "registered")
+    @Column(name = "registeredOn")
     private LocalDateTime registeredOn;
 
-    @Column(name = "updated")
+    @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
     public Integer getId() {
