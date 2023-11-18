@@ -1,7 +1,5 @@
 package com.microservicio.fisibet.infraestructure.port;
 
-import com.microservicio.fisibet.infraestructure.model.Animal;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service

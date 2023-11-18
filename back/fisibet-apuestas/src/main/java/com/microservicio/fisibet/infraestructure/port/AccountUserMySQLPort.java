@@ -26,12 +26,14 @@ public class AccountUserMySQLPort implements AccountUserPort {
 
     @KafkaListener(topics = "account-user-topic", groupId = "Group1003",containerFactory = "accountListener")
     public void processProductEvents(AccountUserEvent accountUserEvent){
-
         AccountUserModel accountUserModel = accountUserEvent.getAccountUser();
-        System.out.println("Calve: gaaaa "+ accountUserModel);
+        System.out.println("Recepcionando: "+accountUserModel.toString());
         if(accountUserEvent.getEventType().equals("CreateAccountUser")){
             this.accountUserSpringPort.save(accountUserModel);
-            System.out.println("Con feee: " + accountUserEvent.getEventType());
+            System.out.println("Creando: " + accountUserEvent.getEventType());
+        }else if(accountUserEvent.getEventType().equals("UpdateAccountUser")){
+            this.accountUserSpringPort.save(accountUserModel);
+            System.out.println("Actualizando: " + accountUserEvent.getEventType());
         }
     }
 }

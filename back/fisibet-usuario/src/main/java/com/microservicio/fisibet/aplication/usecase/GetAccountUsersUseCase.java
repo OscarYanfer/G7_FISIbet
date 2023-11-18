@@ -1,35 +1,34 @@
 package com.microservicio.fisibet.aplication.usecase;
 
 import com.microservicio.fisibet.aplication.dto.AccountUserDto;
-import com.microservicio.fisibet.aplication.dto.CreateAccountUserDto;
 import com.microservicio.fisibet.aplication.mapper.AccountUserMapper;
 import com.microservicio.fisibet.aplication.port.AccountUserPort;
 import com.microservicio.fisibet.aplication.port.ConnectionPort;
-import com.microservicio.fisibet.domain.entity.AccountUserEntity;
-import com.microservicio.fisibet.domain.entity.AccountUserEventEntity;
 import com.microservicio.fisibet.domain.exception.ErrorLevel;
 import com.microservicio.fisibet.domain.exception.ErrorStatus;
 import com.microservicio.fisibet.domain.exception.GenericException;
 
-public class CreateAccountUserUseCase {
+import java.util.List;
+
+public class GetAccountUsersUseCase {
     private AccountUserPort accountUserPort;
     private AccountUserMapper accountUserMapper;
     private ConnectionPort connectionPort;
-    public CreateAccountUserUseCase(AccountUserMapper accountUserMapper,
-                                    AccountUserPort accountUserPort,
-                                    ConnectionPort connectionPort){
+    public GetAccountUsersUseCase(AccountUserMapper accountUserMapper,
+                                     AccountUserPort accountUserPort,
+                                     ConnectionPort connectionPort){
         this.accountUserMapper = accountUserMapper;
         this.accountUserPort = accountUserPort;
         this.connectionPort = connectionPort;
     }
 
-    public AccountUserDto run(AccountUserDto request) throws GenericException {
+    public List<AccountUserDto> run() throws GenericException {
         try{
             this.connectionPort.begin();
-            AccountUserDto accountUserDto = createAccountUser(request);
+            List<AccountUserDto> accountUserDtos = getAccountUsers();
 
             this.connectionPort.commit();
-            return accountUserDto;
+            return accountUserDtos;
         }catch (Exception ex){
             this.connectionPort.rollback();
             throw new GenericException(
@@ -44,8 +43,7 @@ public class CreateAccountUserUseCase {
         }
     }
 
-    public AccountUserDto createAccountUser(AccountUserDto request){
-        AccountUserEntity accountUserEntity = this.accountUserMapper.convertAccountUserDtoToAccountUserEntity(request);
-        return this.accountUserMapper.convertAccountUserEntityToAccountUserDto(this.accountUserPort.createAccountUser(accountUserEntity));
+    public List<AccountUserDto> getAccountUsers(){
+        return this.accountUserMapper.convertAccountUserEntitiesToAccountUserDtos(this.accountUserPort.getAccountUsers());
     };
 }

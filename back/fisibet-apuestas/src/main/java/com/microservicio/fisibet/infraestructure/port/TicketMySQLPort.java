@@ -11,6 +11,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class TicketMySQLPort implements TicketPort {
     @Autowired
@@ -33,5 +35,17 @@ public class TicketMySQLPort implements TicketPort {
         ticketEvent.setTicket(ticketModelNew);
         this.kafkaTemplate.send("ticket-topic", ticketEvent);
         return this.ticketInfraMapper.convertTicketModelToTicketEntity(ticketModelNew);
+    }
+
+    @Override
+    public TicketEntity getTicketById(Integer id) {
+        TicketModel ticketModel = this.ticketSpringPort.findById(id).orElse(null);
+        return this.ticketInfraMapper.convertTicketModelToTicketEntity(ticketModel);
+    }
+
+    @Override
+    public List<TicketEntity> getTickets() {
+        List<TicketModel> ticketModels = this.ticketSpringPort.findAll();
+        return this.ticketInfraMapper.convertTicketModelsToTicketEntities(ticketModels);
     }
 }

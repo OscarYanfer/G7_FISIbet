@@ -6,9 +6,12 @@ import com.microservicio.fisibet.infraestructure.model.AccountUserEvent;
 import com.microservicio.fisibet.infraestructure.model.AccountUserModel;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface AccountUserInfraMapper {
     AccountUserModel convertAccountUserEntityToAccountUserModel(AccountUserEntity accountUserEntity);
     AccountUserEntity convertAccountUserModelToAccountUserEntity(AccountUserModel accountUserModel);
     AccountUserEvent convertAccountUserEventEntityToAccountUserEvent(AccountUserEventEntity accountUserEventEntity);
+    List<AccountUserEntity> convertAccountUserModelsToAccountUserEntities(List<AccountUserModel> accountUserModels);
 }
