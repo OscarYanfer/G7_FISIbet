@@ -7,12 +7,13 @@ import "./index.scss";
 
 interface FModalProps {
   content: React.ReactNode;
+  title: string;
   isOpen: boolean;
   onClose(): void;
   maxWidth?: number;
 }
 
-const FModal = ({ isOpen, onClose, content, maxWidth }: FModalProps) => {
+const FModal = ({ isOpen, onClose, content, maxWidth, title }: FModalProps) => {
   const outSideModalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   useOnClickOutside(outSideModalRef, onClose);
   return (
@@ -39,6 +40,7 @@ const FModal = ({ isOpen, onClose, content, maxWidth }: FModalProps) => {
                 <div className="modal--close--button" onClick={onClose}>
                   <MdOutlineClose />
                 </div>
+                <strong className="modal--title">{title}</strong>
                 {content}
               </motion.div>
             </div>

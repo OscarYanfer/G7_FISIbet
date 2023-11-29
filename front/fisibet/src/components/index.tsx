@@ -13,3 +13,7 @@ export { default as Footer } from "./Footer/index";
 export { default as AdminSideBar } from "./AdminSideBar/index";
 export { default as AdminBreadCumb } from "./AdminBreadCumb/index";
 export { default as AddEventForm } from "./AddEventForm/index";
+export { default as FSelectForm } from "./FSelectForm";
+export { default as FModal } from "./FModal";
+export { default as FStatus } from "./FStatus";
+export { default as ActionsHub } from "./ActionsHub";

@@ -7,6 +7,7 @@ interface FButtonProps {
   text?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
+  isLoading?: boolean;
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   onClick?: () => void;
 }
@@ -15,6 +16,7 @@ const FButton = ({
   type = "primary",
   text = "Botón",
   disabled = false,
+  isLoading = false,
   icon,
   direction = "row",
   onClick,
@@ -22,13 +24,19 @@ const FButton = ({
   return (
     <button
       type="button"
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={onClick}
       style={{ flexDirection: direction }}
       className={`button button--${type}Btn`}
     >
-      {text}
-      {icon}
+      {isLoading ? (
+        <div className="button--loading--spinner"></div>
+      ) : (
+        <>
+          <p>{text}</p>
+          {icon}
+        </>
+      )}
     </button>
   );
 };

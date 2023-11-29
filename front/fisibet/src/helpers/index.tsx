@@ -57,3 +57,49 @@ export const getLabelFromPath = (path: string): string => {
   }
   return label;
 };
+
+export const formatDate = (fecha: string): string => {
+  const fechaObj = new Date(fecha);
+
+  // Opciones para el formato de fecha
+  const opcionesFecha: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  };
+
+  // Opciones para el formato de hora
+  const opcionesHora: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  // Formatear fecha y hora por separado
+  const fechaFormateada = new Intl.DateTimeFormat(
+    "es-ES",
+    opcionesFecha
+  ).format(fechaObj);
+  const horaFormateada = new Intl.DateTimeFormat("es-ES", opcionesHora).format(
+    fechaObj
+  );
+
+  // Retornar la fecha y hora formateada
+  return `${fechaFormateada} ${horaFormateada}`;
+};
+
+export const getStatusByNumber = (idStatus: number): string => {
+  let status = "";
+  switch (idStatus) {
+    case 1:
+      status = "Pendiente";
+
+      break;
+    case 2:
+      status = "Cerrado";
+      break;
+
+    default:
+      break;
+  }
+  return status;
+};

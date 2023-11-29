@@ -20,8 +20,6 @@ const LoginForm = () => {
   };
   return (
     <div className="login--form--container">
-      <strong>Inicia sesión</strong>
-      <br></br>
       <div className="login--form--separator"></div>
       <span className="">o</span>
       <Formik

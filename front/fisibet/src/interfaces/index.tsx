@@ -42,9 +42,43 @@ export interface betCouponReducerTypes {
 
 export interface AddEventFormTypes {
   date: string;
+  type: string;
   league: string;
   teamA: string;
   teamB: string;
   cuoteA: string;
   cuoteB: string;
+}
+
+export interface TicketTypes {
+  amountBet: number;
+  id: number;
+  idAccountUser: number;
+  number: string;
+  registeredOn: string;
+  status: number;
+  totalFee: number;
+  updatedOn: string;
+}
+export interface EventTypes {
+  id: number;
+  name: string;
+  description: string;
+  equipoA: string;
+  equipoB: string;
+  liga: string;
+  fechaHora: string;
+  status: number;
+  bets: [];
+  registeredOn: string;
+  updateOn: string;
+}
+
+export interface CreateEventTypes {
+  equipoA: string;
+  equipoB: string;
+  fechaHora: string;
+  liga: string;
+  payEquipoA: number;
+  payEquipoB: number;
 }

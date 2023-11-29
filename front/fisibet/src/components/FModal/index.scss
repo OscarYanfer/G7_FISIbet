@@ -16,7 +16,14 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    .modal--title {
+      font-size: $gigant-text;
+      margin-bottom: 50px;
+      text-align: center;
+    }
     .modal--content--container {
+      display: flex;
+      flex-direction: column;
       width: 100%;
       border-radius: 10px;
       max-height: calc(100% - 20px);

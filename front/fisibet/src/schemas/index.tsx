@@ -21,6 +21,7 @@ export const registerFormSchema = Yup.object().shape({
 
 export const AddEventFormSchema = Yup.object().shape({
   date: Yup.string().required("Digite una fecha válida"),
+  type: Yup.string().required("Es necesario completar"),
   league: Yup.string().required("Es necesario completar"),
   teamA: Yup.string().required("Es necesario completar"),
   teamB: Yup.string().required("Es necesario completar"),

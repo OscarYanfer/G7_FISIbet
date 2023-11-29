@@ -1,15 +1,87 @@
 "use client";
-import { AddEventForm, FButton, FIconButton } from "@/components";
-import React, { useEffect, useState } from "react";
-import { MdEdit, MdInfo, MdDelete } from "react-icons/md";
+import React, { useState } from "react";
+import {
+  ActionsHub,
+  AddEventForm,
+  FButton,
+  FModal,
+  FStatus,
+} from "@/components";
+import { EventTypes } from "@/interfaces";
+import { formatDate, getStatusByNumber } from "@/helpers";
+import { useQuery } from "@tanstack/react-query";
+import EventsService from "@/api/springboot/events";
+import { Table } from "antd";
 import "./index.scss";
-import FModal from "@/components/FModal";
 
 const EventsPage = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => EventsService.getAllEvents(),
+  });
   const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
-  useEffect(() => {
-    //hacer llamada de la api
-  }, []);
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Equipo W1",
+      dataIndex: "equipoA",
+      key: "equipoA",
+    },
+    {
+      title: "Equipo W2",
+      dataIndex: "equipoB",
+      key: "equipoB",
+    },
+    {
+      title: "Liga",
+      dataIndex: "liga",
+      key: "liga",
+    },
+    {
+      title: "Fecha",
+      dataIndex: "fechaHora",
+      key: "fechaHora",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_: any, { status }: { status: any }) => (
+        <FStatus status={status} />
+      ),
+    },
+    {
+      title: "Creado en",
+      dataIndex: "registeredOn",
+      key: "registeredOn",
+    },
+    {
+      title: "Ultima modificación en",
+      dataIndex: "updateOn",
+      key: "updateOn",
+    },
+    {
+      title: "Acciones",
+      key: "action",
+      render: (_: any, record: any) => (
+        <>
+          <ActionsHub onInfo={() => console.log({ record })} />
+        </>
+      ),
+    },
+  ];
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>Ha ocurrido un error</p>;
+  }
 
   return (
     <>
@@ -17,7 +89,7 @@ const EventsPage = () => {
         <div className="admin--events--page--header">
           <div className="admin--events--page--count">
             <b>Eventos</b>
-            <p>249 total</p>
+            <p>{data?.length} total</p>
           </div>
           <FButton
             text="Añadir +"
@@ -25,69 +97,25 @@ const EventsPage = () => {
             onClick={() => setShowAddEventModal(true)}
           />
         </div>
-        <div className="admin--events--page--table">
-          <div className="admin--events--page--table--header">
-            <input type="checkbox"></input>
-            <span>ID</span>
-            <span>Titulo</span>
-            <span>Fecha</span>
-            <span>Tag</span>
-            <span>Creado en</span>
-            <span>Ultima actualización en</span>
-            <span>Acciones</span>
-          </div>
-          <div className="admin--events--page--table--body">
-            <div className="admin--events--page--table--item">
-              <input type="checkbox"></input>
-              <span>1</span>
-              <span>Sevilla FC vs Arsenal</span>
-              <span>2022-10-08 18:00:00</span>
-              <span>Fútbol</span>
-              <span>2022-10-05 18:56:23</span>
-              <span>2022-10-05 19:00:12</span>
-              <div className="admin--events--page--table--item--actions">
-                <FIconButton icon={<MdEdit />} bgColor="green" />
-                <FIconButton icon={<MdInfo />} bgColor="#19bfe3" />
-                <FIconButton icon={<MdDelete />} bgColor="#ff0000" />
-              </div>
-            </div>
-            <div className="admin--events--page--table--item">
-              <input type="checkbox"></input>
-              <span>1</span>
-              <span>Sevilla FC vs Arsenal</span>
-              <span>2022-10-08 18:00:00</span>
-              <span>Fútbol</span>
-              <span>2022-10-05 18:56:23</span>
-              <span>2022-10-05 19:00:12</span>
-              <div className="admin--events--page--table--item--actions">
-                <FIconButton icon={<MdEdit />} bgColor="green" />
-                <FIconButton icon={<MdInfo />} bgColor="#19bfe3" />
-                <FIconButton icon={<MdDelete />} bgColor="#ff0000" />
-              </div>
-            </div>
-            <div className="admin--events--page--table--item">
-              <input type="checkbox"></input>
-              <span>1</span>
-              <span>Sevilla FC vs Arsenal</span>
-              <span>2022-10-08 18:00:00</span>
-              <span>Fútbol</span>
-              <span>2022-10-05 18:56:23</span>
-              <span>2022-10-05 19:00:12</span>
-              <div className="admin--events--page--table--item--actions">
-                <FIconButton icon={<MdEdit />} bgColor="green" />
-                <FIconButton icon={<MdInfo />} bgColor="#19bfe3" />
-                <FIconButton icon={<MdDelete />} bgColor="#ff0000" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="admin--events--page--pagination"></div>
       </div>
+      <Table
+        pagination={{ pageSize: 10 }}
+        dataSource={data?.map((event: EventTypes) => ({
+          ...event,
+          key: event.id,
+          status: getStatusByNumber(event.status),
+          fechaHora: formatDate(event.fechaHora),
+          registeredOn: formatDate(event.registeredOn),
+          updateOn: formatDate(event.updateOn || event.registeredOn),
+        }))}
+        columns={columns}
+      />
       <FModal
+        title="Agregar evento"
         isOpen={showAddEventModal}
         onClose={() => setShowAddEventModal(false)}
         maxWidth={500}
-        content={<AddEventForm />}
+        content={<AddEventForm onSubmit={() => setShowAddEventModal(false)} />}
       />
     </>
   );
