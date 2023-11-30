@@ -9,7 +9,6 @@ import "./index.scss";
 
 interface AddEventFormProps {
   onSubmit: () => void;
-  initialValues?: AddEventFormTypes;
 }
 
 export const initialValuesLoginForm: AddEventFormTypes = {
@@ -23,7 +22,7 @@ export const initialValuesLoginForm: AddEventFormTypes = {
   cuoteB: "",
 };
 
-const AddEventForm = ({ onSubmit, initialValues }: AddEventFormProps) => {
+const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
   const queryClient = useQueryClient();
   const { mutate: submitEvent, isPending } = useMutation({
     mutationFn: (data: CreateEventTypes) => EventsService.createNewEvent(data),
@@ -48,7 +47,7 @@ const AddEventForm = ({ onSubmit, initialValues }: AddEventFormProps) => {
   return (
     <div className="addevent--form--container">
       <Formik
-        initialValues={initialValues || initialValuesLoginForm}
+        initialValues={initialValuesLoginForm}
         onSubmit={handleSubmitAddEvent}
         validationSchema={AddEventFormSchema}
       >

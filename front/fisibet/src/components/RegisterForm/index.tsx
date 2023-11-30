@@ -3,14 +3,19 @@ import React from "react";
 import { FButton, FInputForm } from "@/components";
 import { Formik } from "formik";
 import { registerFormSchema } from "@/schemas";
-import { RegisterFormTypes } from "@/interfaces";
+import { CreateAccountUser, RegisterFormTypes } from "@/interfaces";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaUser, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useMutation } from "@tanstack/react-query";
+import AccountUserService from "@/api/springboot/account";
 import "./index.scss";
-import Link from "next/link";
 
-const initialValuesLoginForm: RegisterFormTypes = {
+interface RegisterFormProps {
+  onSubmit: () => void;
+}
+
+const initialValuesRegisterForm: RegisterFormTypes = {
   username: "",
   email: "",
   dni: "",
@@ -18,9 +23,22 @@ const initialValuesLoginForm: RegisterFormTypes = {
   repassword: "",
 };
 
-const RegisterForm = () => {
-  const handleSubmitRegister = (values: any) => {
-    console.log("valores", values);
+const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
+  const { mutate: submitAccount, isPending } = useMutation({
+    mutationFn: (data: CreateAccountUser) =>
+      AccountUserService.createNewAccount(data),
+    onSuccess: () => {
+      onSubmit();
+    },
+  });
+  const handleSubmitRegister = (values: RegisterFormTypes) => {
+    const dataToSend = {
+      dni: values.dni,
+      email: values.email,
+      password: values.password,
+      username: values.username,
+    };
+    submitAccount(dataToSend);
   };
 
   return (
@@ -28,7 +46,7 @@ const RegisterForm = () => {
       <div className="register--form--separator"></div>
       <span className="">o</span>
       <Formik
-        initialValues={initialValuesLoginForm}
+        initialValues={initialValuesRegisterForm}
         onSubmit={handleSubmitRegister}
         validationSchema={registerFormSchema}
       >
@@ -71,7 +89,11 @@ const RegisterForm = () => {
                 placeholder="Contraseña"
               />
 
-              <FButton text="Registrarse" onClick={handleSubmit} />
+              <FButton
+                isLoading={isPending}
+                text="Registrarse"
+                onClick={handleSubmit}
+              />
             </>
           );
         }}

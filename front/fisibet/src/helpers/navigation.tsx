@@ -17,6 +17,5 @@ export const routes: { [key: string]: Route } = {
   dashboard: { path: `${routesForFB.admin.path}`, label: "Dashboard" },
   events: { path: `${routesForFB.admin.path}/events`, label: "Eventos" },
   users: { path: `${routesForFB.admin.path}/users`, label: "Usuarios" },
-  coupons: { path: `${routesForFB.admin.path}/coupons`, label: "Cupones" },
   tickets: { path: `${routesForFB.admin.path}/tickets`, label: "Tickets" },
 };
