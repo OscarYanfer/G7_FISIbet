@@ -1,4 +1,5 @@
-export const BASE_URL_BETS_SERVICE = "http://20.127.200.81:9000";
+export const BASE_URL_BETS_SERVICE =
+  "https://4d45-20-127-200-81.ngrok-free.app";
 
 export default class Api {
   static get(URL: string) {
