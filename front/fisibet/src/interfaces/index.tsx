@@ -51,6 +51,13 @@ export interface AddEventFormTypes {
   cuoteB: string;
 }
 
+export interface UpdateAccountTypes {
+  dni: string;
+  email: string;
+  password: string;
+  username: string;
+}
+
 export interface TicketTypes {
   amountBet: number;
   id: number;
@@ -72,21 +79,27 @@ export interface EventTypes {
   status: number;
   bets: [];
   registeredOn: string;
-  updateOn: string;
+  updatedOn: string;
 }
-export interface EventOnTableTypes {
+
+export interface AccountUserTypes {
   id: number;
-  name: string;
-  description: string;
-  equipoA: string;
-  equipoB: string;
-  liga: string;
-  fechaHora: string;
-  status: string;
-  bets: [];
+  username: string;
+  email: string;
+  dni: string;
+  password: string;
+  status: number;
   registeredOn: string;
-  updateOn: string;
+  updatedOn: string;
 }
+
+export interface CreateAccountUser {
+  dni: string;
+  email: string;
+  password: string;
+  username: string;
+}
+
 export interface CreateEventTypes {
   equipoA: string;
   equipoB: string;

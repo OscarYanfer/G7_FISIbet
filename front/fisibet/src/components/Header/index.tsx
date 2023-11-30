@@ -52,7 +52,7 @@ const Header = () => {
         isOpen={showRegisterModal}
         maxWidth={600}
         onClose={() => setShowRegisterModal(false)}
-        content={<RegisterForm />}
+        content={<RegisterForm onSubmit={() => setShowRegisterModal(false)} />}
       />
     </>
   );

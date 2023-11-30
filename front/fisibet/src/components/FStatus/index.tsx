@@ -2,17 +2,18 @@ import React from "react";
 import "./index.scss";
 
 interface FStatusProps {
-  status: "Pendiente" | "Cerrado";
+  status: string;
+  active?: boolean;
 }
 
-const FStatus = ({ status }: FStatusProps) => {
+const FStatus = ({ status, active }: FStatusProps) => {
   return (
     <>
-      {status === "Pendiente" ? (
-        <p className="status status--ongoing">Pendiente</p>
-      ) : (
-        <p className="status status--closed">Cerrado</p>
-      )}
+      <p
+        className={active ? "status status--ongoing" : "status status--closed"}
+      >
+        {status}
+      </p>
     </>
   );
 };

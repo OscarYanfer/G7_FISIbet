@@ -10,7 +10,6 @@ const AdminSideBar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [resize, setResize] = useState<boolean>(false);
-  console.log(pathname);
 
   return (
     <div
@@ -42,13 +41,6 @@ const AdminSideBar = () => {
           >
             <TbUsers />
             <span>{routes.users.label}</span>
-          </li>
-          <li
-            onClick={() => router.push(routes.coupons.path)}
-            className={pathname === routes.coupons.path ? "active" : ""}
-          >
-            <RiCoupon5Line />
-            <span>{routes.coupons.label}</span>
           </li>
           <li
             onClick={() => router.push(routes.tickets.path)}

@@ -1,6 +1,12 @@
-import { BetOnCouponTypes, EventCardTypes, EventTypes } from "@/interfaces";
+import {
+  AccountUserTypes,
+  BetOnCouponTypes,
+  EventCardTypes,
+  EventTypes,
+} from "@/interfaces";
 import { routes } from "./navigation";
-import { ActionsHub, FStatus } from "@/components";
+import { parseISO, addHours, format } from "date-fns";
+import { FStatus } from "@/components";
 
 export const getBetInfo = (
   event: EventCardTypes,
@@ -60,39 +66,22 @@ export const getLabelFromPath = (path: string): string => {
 };
 
 export const formatDate = (fecha: string): string => {
-  const fechaObj = new Date(fecha);
+  const fechaObj = parseISO(fecha);
 
-  // Opciones para el formato de fecha
-  const opcionesFecha: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  };
+  // Ajustar manualmente la diferencia de tiempo para la zona horaria de Perú (5 horas)
+  const fechaPeru = addHours(fechaObj, -5);
 
-  // Opciones para el formato de hora
-  const opcionesHora: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-  };
+  // Formatear la fecha y hora
+  const resultado = format(fechaPeru, "yyyy-MM-dd HH:mm");
 
-  // Formatear fecha y hora por separado
-  const fechaFormateada = new Intl.DateTimeFormat(
-    "es-ES",
-    opcionesFecha
-  ).format(fechaObj);
-  const horaFormateada = new Intl.DateTimeFormat("es-ES", opcionesHora).format(
-    fechaObj
-  );
-
-  // Retornar la fecha y hora formateada
-  return `${fechaFormateada} ${horaFormateada}`;
+  return resultado;
 };
 
-export const getStatusByNumber = (idStatus: number): string => {
+export const getStatusForEvent = (idStatus: number): string => {
   let status = "";
   switch (idStatus) {
     case 1:
-      status = "Pendiente";
+      status = "Abierto";
 
       break;
     case 2:
@@ -104,20 +93,116 @@ export const getStatusByNumber = (idStatus: number): string => {
   }
   return status;
 };
+export const getStatusForAccount = (idStatus: number): string => {
+  let status = "";
+  switch (idStatus) {
+    case 1:
+      status = "Habilitado";
+      break;
+    case 2:
+      status = "Deshabilitado";
+      break;
+    default:
+      break;
+  }
+  return status;
+};
 
-export const transformEventDataForTable = (data: EventTypes[]) => {
-  const newData = data?.map((event) => ({
-    ...event,
-    key: event.id,
-    status: getStatusByNumber(event.status),
-    fechaHora: formatDate(event.fechaHora),
-    registeredOn: formatDate(event.registeredOn),
-    updateOn: formatDate(event.updateOn || event.registeredOn),
-  }));
-  return newData;
+export const getStatusForTicket = (idStatus: number): string => {
+  let status = "";
+  switch (idStatus) {
+    case 1:
+      status = "Pendiente";
+      break;
+    case 2:
+      status = "Concluido";
+      break;
+    default:
+      break;
+  }
+  return status;
+};
+
+//defaultValues for Data
+
+export const defaultEventValues: EventTypes = {
+  equipoA: "",
+  equipoB: "",
+  fechaHora: "",
+  id: 0,
+  liga: "",
+  name: "",
+  registeredOn: "",
+  status: 0,
+  updatedOn: "",
+  description: "",
+  bets: [],
+};
+
+export const defaultAccountUserValues: AccountUserTypes = {
+  id: 0,
+  dni: "",
+  email: "",
+  username: "",
+  password: "",
+  status: 0,
+  registeredOn: "",
+  updatedOn: "",
 };
 
 //tables columns
+
+export const columnsForTickets = [
+  { title: "Id", dataIndex: "id", key: "id" },
+  {
+    title: "Usuario apostador",
+    dataIndex: "idAccountUser",
+    key: "idAccountUser",
+  },
+  {
+    title: "Monto apostado",
+    dataIndex: "amountBet",
+    key: "amountBet",
+    render: (_: any, { amountBet }: { amountBet: number }) => (
+      <p>S/.{amountBet}</p>
+    ),
+  },
+  {
+    title: "Ganancia potencial",
+    dataIndex: "totalFee",
+    key: "TotalFee",
+    render: (_: any, { totalFee }: { totalFee: number }) => (
+      <p>S/.{totalFee}</p>
+    ),
+  },
+
+  {
+    title: "Estado de la apuesta",
+    dataIndex: "status",
+    key: "status",
+    render: (_: any, { status }: { status: number }) => (
+      <FStatus status={getStatusForTicket(status)} active={status === 1} />
+    ),
+  },
+  {
+    title: "Creado en",
+    dataIndex: "registeredOn",
+    key: "registeredOn",
+    render: (_: any, { registeredOn }: { registeredOn: string }) => (
+      <p>{formatDate(registeredOn)}</p>
+    ),
+  },
+  {
+    title: "Ultima modificación en",
+    dataIndex: "updatedOn",
+    key: "updatedOn",
+    render: (
+      _: any,
+      { updatedOn, registeredOn }: { updatedOn: string; registeredOn: string }
+    ) => <p>{formatDate(updatedOn || registeredOn)}</p>,
+  },
+];
+
 export const columnsForEvents = [
   {
     title: "ID",
@@ -148,18 +233,78 @@ export const columnsForEvents = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (_: any, { status }: { status: any }) => (
-      <FStatus status={status} />
+    render: (_: any, { status }: { status: number }) => (
+      <FStatus status={getStatusForEvent(status)} active={status === 1} />
     ),
   },
   {
     title: "Creado en",
     dataIndex: "registeredOn",
     key: "registeredOn",
+    render: (_: any, { registeredOn }: { registeredOn: string }) => (
+      <p>{formatDate(registeredOn)}</p>
+    ),
+  },
+  {
+    title: "Ultima modificación en",
+    dataIndex: "updatedOn",
+    key: "updatedOn",
+    render: (
+      _: any,
+      { updatedOn, registeredOn }: { updatedOn: string; registeredOn: string }
+    ) => <p>{formatDate(updatedOn || registeredOn)}</p>,
+  },
+];
+
+export const columnsForAccountsTable = [
+  {
+    title: "Id",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Usuario",
+    dataIndex: "username",
+    key: "username",
+  },
+  {
+    title: "Correo",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
+    title: "DNI",
+    dataIndex: "dni",
+    key: "dni",
+  },
+  {
+    title: "Contraseña",
+    dataIndex: "password",
+    key: "password",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (_: any, { status }: { status: number }) => (
+      <FStatus status={getStatusForAccount(status)} active={status === 1} />
+    ),
+  },
+  {
+    title: "Registrado en",
+    dataIndex: "registeredOn",
+    key: "registeredOn",
+    render: (_: any, { registeredOn }: { registeredOn: string }) => (
+      <p>{formatDate(registeredOn)}</p>
+    ),
   },
   {
     title: "Ultima modificación en",
     dataIndex: "updateOn",
-    key: "updateOn",
+    key: "updatedOn",
+    render: (
+      _: any,
+      { updatedOn, registeredOn }: { updatedOn: string; registeredOn: string }
+    ) => <p>{formatDate(updatedOn || registeredOn)}</p>,
   },
 ];

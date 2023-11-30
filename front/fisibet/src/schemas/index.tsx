@@ -29,3 +29,11 @@ export const AddEventFormSchema = Yup.object().shape({
   cuoteDraw: Yup.string().required("Digite una cuota válida"),
   cuoteB: Yup.string().required("Digite una cuota válida"),
 });
+
+export const AccountFormSchema = Yup.object().shape({
+  username: Yup.string().required("Es necesario este campo"),
+  email: Yup.string().required("Es necesario este campo"),
+  dni: Yup.string()
+    .required("Es necesario este campo")
+    .test("len", "Digite un DNI válido", (val) => val.length === 8),
+});

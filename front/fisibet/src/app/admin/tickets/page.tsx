@@ -2,8 +2,8 @@
 import React from "react";
 import { Table } from "antd";
 import { TicketTypes } from "@/interfaces";
-import { formatDate, getStatusByNumber } from "@/helpers";
-import { ActionsHub, FStatus } from "@/components";
+import { columnsForTickets } from "@/helpers";
+import { ActionsHub } from "@/components";
 import { useQuery } from "@tanstack/react-query";
 import TicketsService from "@/api/springboot/tickets";
 import "./index.scss";
@@ -14,32 +14,12 @@ const TicketsPage = () => {
     queryFn: () => TicketsService.getAllTickets(),
   });
 
-  const columsForTicketsTable = [
-    { title: "Id", dataIndex: "id", key: "id" },
+  const columns = [
+    ...columnsForTickets,
     {
-      title: "Usuario apostador",
-      dataIndex: "idAccountUser",
-      key: "idAccountUser",
-    },
-    { title: "Monto apostado", dataIndex: "amountBet", key: "amountBet" },
-    { title: "Ganancia potencial", dataIndex: "totalFee", key: "TotalFee" },
-    {
-      title: "Estado de la apuesta",
-      dataIndex: "status",
-      key: "status",
-      render: (_: any, { status }: { status: any }) => (
-        <FStatus status={status} />
-      ),
-    },
-    {
-      title: "Apuesta creada en",
-      dataIndex: "registeredOn",
-      key: "registeredOn",
-    },
-    {
-      title: "Action",
+      title: "Acciones",
       key: "action",
-      render: (_: any, record: any) => (
+      render: (_: any, record: TicketTypes) => (
         <ActionsHub onInfo={() => console.log(record.id)} />
       ),
     },
@@ -54,15 +34,11 @@ const TicketsPage = () => {
     <div>
       <Table
         pagination={{ pageSize: 10 }}
-        columns={columsForTicketsTable}
         dataSource={data?.map((ticket: TicketTypes) => ({
           ...ticket,
           key: ticket.id,
-          status: getStatusByNumber(ticket.status),
-          amountBet: `S/.${ticket.amountBet}`,
-          totalFee: `S/.${ticket.totalFee}`,
-          registeredOn: formatDate(ticket.registeredOn),
         }))}
+        columns={columns}
       />
     </div>
   );

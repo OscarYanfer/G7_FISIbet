@@ -7,8 +7,8 @@ import {
   FModal,
   FConfirmAction,
 } from "@/components";
-import { EventOnTableTypes, EventTypes } from "@/interfaces";
-import { columnsForEvents, transformEventDataForTable } from "@/helpers";
+import { EventTypes } from "@/interfaces";
+import { columnsForEvents, defaultEventValues } from "@/helpers";
 import { useQuery } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
@@ -23,20 +23,19 @@ const EventsPage = () => {
   const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
   const [showDeleteEventModal, setShowDeleteEventModal] =
     useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventTypes | null>(null);
+  const [selectedEvent, setSelectedEvent] =
+    useState<EventTypes>(defaultEventValues);
 
   const columns = [
     ...columnsForEvents,
     {
       title: "Acciones",
       key: "action",
-      render: (_: any, record: EventOnTableTypes) => (
-        <>
-          <ActionsHub
-            onDelete={() => handleDeleteEvent(record.id)}
-            onInfo={() => handleInfoEvent(record.id)}
-          />
-        </>
+      render: (_: any, record: EventTypes) => (
+        <ActionsHub
+          onDelete={() => handleDeleteEvent(record.id)}
+          onInfo={() => handleInfoEvent(record.id)}
+        />
       ),
     },
   ];
@@ -55,7 +54,7 @@ const EventsPage = () => {
     return <p>Loading...</p>;
   }
   if (error) {
-    return <p>Ha ocurrido un error</p>;
+    return <p>Error al obtener la data</p>;
   }
 
   return (
@@ -75,7 +74,10 @@ const EventsPage = () => {
       </div>
       <Table
         pagination={{ pageSize: 10 }}
-        dataSource={transformEventDataForTable(data)}
+        dataSource={data?.map((event: EventTypes) => ({
+          ...event,
+          key: event.id,
+        }))}
         columns={columns}
       />
       <FModal
