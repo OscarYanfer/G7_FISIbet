@@ -4,6 +4,9 @@ package com.microservicio.fisibet.infraestructure.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Evento")
@@ -34,6 +37,14 @@ public class EventModel {
     @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
+    /*@OneToMany(targetEntity = BetModel.class, mappedBy = "id", orphanRemoval = false, fetch = FetchType.LAZY)
+    private Set<BetModel> bets;*/
+
+    /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "id", orphanRemoval = true, targetEntity = BetModel.class)
+    private List<BetModel> bets = new ArrayList<>();*/
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "enterprise")
+    private List<BetModel> bets;
 
     public Integer getId() {
         return id;
@@ -113,5 +124,13 @@ public class EventModel {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<BetModel> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<BetModel> bets) {
+        this.bets = bets;
     }
 }

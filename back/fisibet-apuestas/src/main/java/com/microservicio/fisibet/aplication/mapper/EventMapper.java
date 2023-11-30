@@ -28,4 +28,6 @@ public interface EventMapper {
     EventDto convertUpdateEventRequestToEventDto(UpdateEventRequest updateEventRequest);
     GetEventDto convertEventEntityToGetEventDto(EventEntity eventEntity);
     GetEventResponse convertGetEventDtoToGetEventResponse(GetEventDto getEventDto);
+    EventResponse convertEventDtoToEventResponse(EventDto eventDto);
+
 }

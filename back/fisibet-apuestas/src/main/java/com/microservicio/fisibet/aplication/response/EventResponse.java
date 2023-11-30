@@ -1,6 +1,9 @@
 package com.microservicio.fisibet.aplication.response;
 
+import com.microservicio.fisibet.aplication.dto.BetDto;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventResponse {
     public Integer id;
@@ -13,6 +16,7 @@ public class EventResponse {
     public Integer status;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
+    public List<BetDto> bets;
 
     public Integer getId() {
         return id;
@@ -92,5 +96,13 @@ public class EventResponse {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<BetDto> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<BetDto> bets) {
+        this.bets = bets;
     }
 }

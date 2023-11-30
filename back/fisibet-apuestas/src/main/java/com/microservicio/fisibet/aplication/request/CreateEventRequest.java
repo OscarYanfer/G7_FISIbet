@@ -10,6 +10,7 @@ public class CreateEventRequest {
     public String fechaHora;
     public BigDecimal payEquipoA;
     public BigDecimal payEquipoB;
+    public BigDecimal payEmpate;
 
     public String getEquipoA() {
         return equipoA;
@@ -57,5 +58,13 @@ public class CreateEventRequest {
 
     public void setPayEquipoB(BigDecimal payEquipoB) {
         this.payEquipoB = payEquipoB;
+    }
+
+    public BigDecimal getPayEmpate() {
+        return payEmpate;
+    }
+
+    public void setPayEmpate(BigDecimal payEmpate) {
+        this.payEmpate = payEmpate;
     }
 }

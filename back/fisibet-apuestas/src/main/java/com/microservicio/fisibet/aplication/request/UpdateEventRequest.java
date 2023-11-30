@@ -10,8 +10,10 @@ public class UpdateEventRequest {
     public String fechaHora;
     public BigDecimal payEquipoA;
     public BigDecimal payEquipoB;
+    public BigDecimal payEmpate;
     public Integer betIdEquipoA;
     public Integer betIdEquipoB;
+    public Integer betIdEmpate;
 
     public String getEquipoA() {
         return equipoA;
@@ -75,5 +77,21 @@ public class UpdateEventRequest {
 
     public void setBetIdEquipoB(Integer betIdEquipoB) {
         this.betIdEquipoB = betIdEquipoB;
+    }
+
+    public Integer getBetIdEmpate() {
+        return betIdEmpate;
+    }
+
+    public void setBetIdEmpate(Integer betIdEmpate) {
+        this.betIdEmpate = betIdEmpate;
+    }
+
+    public BigDecimal getPayEmpate() {
+        return payEmpate;
+    }
+
+    public void setPayEmpate(BigDecimal payEmpate) {
+        this.payEmpate = payEmpate;
     }
 }

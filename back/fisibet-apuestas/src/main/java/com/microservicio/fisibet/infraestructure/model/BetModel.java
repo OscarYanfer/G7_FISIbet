@@ -1,9 +1,13 @@
 package com.microservicio.fisibet.infraestructure.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Apuesta")
@@ -32,6 +36,14 @@ public class BetModel {
 
     @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eventId", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
+    private EventModel enterprise;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bet")
+    private List<TicketBetModel> ticketBets;
 
     public Integer getId() {
         return id;
@@ -96,4 +108,5 @@ public class BetModel {
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
+
 }

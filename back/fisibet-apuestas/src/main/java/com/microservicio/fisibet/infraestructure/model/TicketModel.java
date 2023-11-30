@@ -4,6 +4,7 @@ package com.microservicio.fisibet.infraestructure.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "ticket")
@@ -26,6 +27,9 @@ public class TicketModel {
     private LocalDateTime registeredOn;
     @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+    private List<TicketBetModel> ticketBets;
 
     public Integer getId() {
         return id;
@@ -89,5 +93,13 @@ public class TicketModel {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<TicketBetModel> getTicketBets() {
+        return ticketBets;
+    }
+
+    public void setTicketBets(List<TicketBetModel> ticketBets) {
+        this.ticketBets = ticketBets;
     }
 }

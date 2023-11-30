@@ -1,6 +1,9 @@
 package com.microservicio.fisibet.infraestructure.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -27,6 +30,15 @@ public class TicketBetModel {
     @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idTicket", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
+    private TicketModel ticket;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idBet", insertable = false, updatable = false)
+    @Fetch(FetchMode.JOIN)
+    private BetModel bet;
     public Integer getId() {
         return id;
     }
@@ -73,5 +85,21 @@ public class TicketBetModel {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public TicketModel getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(TicketModel ticket) {
+        this.ticket = ticket;
+    }
+
+    public BetModel getBet() {
+        return bet;
+    }
+
+    public void setBet(BetModel bet) {
+        this.bet = bet;
     }
 }

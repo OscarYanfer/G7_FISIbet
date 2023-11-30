@@ -9,6 +9,7 @@ public class TicketBetEntity {
     public Integer status;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
+    public BetEntity bet;
 
     public Integer getId() {
         return id;
@@ -56,5 +57,13 @@ public class TicketBetEntity {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public BetEntity getBet() {
+        return bet;
+    }
+
+    public void setBet(BetEntity bet) {
+        this.bet = bet;
     }
 }

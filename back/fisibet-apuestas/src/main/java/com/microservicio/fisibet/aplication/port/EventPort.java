@@ -9,4 +9,6 @@ public interface EventPort {
     EventEntity registerEvent(EventEntity eventEntity);
     EventEntity updateEventById(EventEntity eventEntity, Integer eventId);
     EventEntity getEventById(Integer id);
+    EventEntity updateStateEventById(Integer id, Integer state);
+
 }

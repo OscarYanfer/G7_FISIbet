@@ -113,7 +113,7 @@ public class EventGraphQLController {
         eventDto.setFechaHora(LocalDateTime.parse(updateEventRequest.fechaHora));
 
         UpdateEventUseCase updateEventUseCase = new UpdateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
-        EventDto eventDtoNew = updateEventUseCase.run(eventDto, id);
+        EventDto eventDtoNew = updateEventUseCase.run(1, id);
 
         BetDto betDto1 = new BetDto();
         betDto1.setId(updateEventRequest.getBetIdEquipoA());

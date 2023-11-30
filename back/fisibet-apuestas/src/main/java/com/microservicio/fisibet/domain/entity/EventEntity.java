@@ -1,8 +1,7 @@
 package com.microservicio.fisibet.domain.entity;
 
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventEntity {
     public Integer id;
@@ -15,6 +14,7 @@ public class EventEntity {
     public Integer status;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
+    public List<BetEntity> bets;
 
     public Integer getId() {
         return id;
@@ -94,5 +94,13 @@ public class EventEntity {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<BetEntity> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<BetEntity> bets) {
+        this.bets = bets;
     }
 }

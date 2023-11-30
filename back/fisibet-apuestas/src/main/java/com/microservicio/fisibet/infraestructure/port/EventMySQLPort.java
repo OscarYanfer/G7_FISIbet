@@ -42,7 +42,15 @@ public class EventMySQLPort implements EventPort {
         eventModel.setFechaHora(eventEntity.getFechaHora());
         eventModel.setLiga(eventEntity.getLiga());
         eventModel.setUpdatedOn(LocalDateTime.now());
-        eventModel.setStatus(1);
+        eventModel.setStatus(eventEntity.getStatus());
+        return this.eventInfraMapper.convertEventModelToEventEntity(this.eventSpringPort.save(eventModel));
+    }
+
+    @Override
+    public EventEntity updateStateEventById(Integer eventId, Integer state) {
+        EventModel eventModel = this.eventSpringPort.findById(eventId).orElse(null);
+        eventModel.setUpdatedOn(LocalDateTime.now());
+        eventModel.setStatus(state);
         return this.eventInfraMapper.convertEventModelToEventEntity(this.eventSpringPort.save(eventModel));
     }
 

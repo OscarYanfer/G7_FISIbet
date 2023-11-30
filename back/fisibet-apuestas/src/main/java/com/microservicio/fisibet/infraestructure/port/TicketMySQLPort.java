@@ -39,13 +39,15 @@ public class TicketMySQLPort implements TicketPort {
 
     @Override
     public TicketEntity getTicketById(Integer id) {
-        TicketModel ticketModel = this.ticketSpringPort.findById(id).orElse(null);
+        //TicketModel ticketModel = this.ticketSpringPort.findById(id).orElse(null);
+        TicketModel ticketModel = this.ticketSpringPort.getTicketById(id);
         return this.ticketInfraMapper.convertTicketModelToTicketEntity(ticketModel);
     }
 
     @Override
     public List<TicketEntity> getTickets() {
-        List<TicketModel> ticketModels = this.ticketSpringPort.findAll();
+        //List<TicketModel> ticketModels = this.ticketSpringPort.findAll();
+        List<TicketModel> ticketModels = this.ticketSpringPort.getTickets();
         return this.ticketInfraMapper.convertTicketModelsToTicketEntities(ticketModels);
     }
 }

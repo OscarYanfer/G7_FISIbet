@@ -2,6 +2,7 @@ package com.microservicio.fisibet.domain.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class TicketEntity {
     public Integer id;
@@ -12,6 +13,7 @@ public class TicketEntity {
     public Integer status;
     public LocalDateTime registeredOn;
     public LocalDateTime updatedOn;
+    public List<TicketBetEntity> ticketBets;
 
     public Integer getId() {
         return id;
@@ -75,5 +77,13 @@ public class TicketEntity {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<TicketBetEntity> getTicketBets() {
+        return ticketBets;
+    }
+
+    public void setTicketBets(List<TicketBetEntity> ticketBets) {
+        this.ticketBets = ticketBets;
     }
 }
