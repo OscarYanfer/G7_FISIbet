@@ -1,31 +1,21 @@
-import { AddEventTypes, CreateEventTypes } from "@/interfaces";
-import React from "react";
+import { EventTypes, UpdateEventTypes } from "@/interfaces";
+import { UpdateEventFormSchema } from "@/schemas";
 import { Formik } from "formik";
-import { AddEventFormSchema } from "@/schemas";
+import React from "react";
 import { FButton, FInputForm, FSelectForm } from "..";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
-import "./index.scss";
 
-interface AddEventFormProps {
+interface UpdateEventFormProps {
   onSubmit: () => void;
+  initialValues: EventTypes;
 }
 
-export const initialValuesLoginForm: AddEventTypes = {
-  date: "",
-  type: "",
-  league: "",
-  teamA: "",
-  teamB: "",
-  cuoteA: "",
-  cuoteDraw: "",
-  cuoteB: "",
-};
-
-const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
+const UpdateEventForm = ({ onSubmit, initialValues }: UpdateEventFormProps) => {
   const queryClient = useQueryClient();
-  const { mutate: submitEvent, isPending } = useMutation({
-    mutationFn: (data: CreateEventTypes) => EventsService.createNewEvent(data),
+  const { mutate: updateEvent, isPending } = useMutation({
+    mutationFn: (data: UpdateEventTypes) =>
+      EventsService.updateEvent(initialValues.id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: (query) => query.queryKey.includes("events"),
@@ -33,23 +23,25 @@ const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
       onSubmit();
     },
   });
-  const handleSubmitAddEvent = (values: AddEventTypes) => {
-    const dataToSend = {
-      equipoA: values.teamA,
-      equipoB: values.teamB,
-      payEquipoA: Number(values.cuoteA),
-      payEquipoB: Number(values.cuoteB),
-      fechaHora: values.date,
-      liga: values.league,
-    };
-    submitEvent(dataToSend);
+  const initialValuesForForm: UpdateEventTypes = {
+    date: initialValues.fechaHora,
+    type: "",
+    teamA: initialValues.equipoA,
+    teamB: initialValues.equipoB,
+    league: initialValues.liga,
+    cuoteA: "",
+    cuoteB: "",
+    cuoteDraw: "",
+  };
+  const handleSubmitUpdateEvent = (values: UpdateEventTypes) => {
+    updateEvent(values);
   };
   return (
-    <div className="addevent--form--container">
+    <div className="update--event--form--container">
       <Formik
-        initialValues={initialValuesLoginForm}
-        onSubmit={handleSubmitAddEvent}
-        validationSchema={AddEventFormSchema}
+        onSubmit={handleSubmitUpdateEvent}
+        validationSchema={UpdateEventFormSchema}
+        initialValues={initialValuesForForm}
       >
         {({ handleSubmit }) => {
           return (
@@ -112,7 +104,7 @@ const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
               </div>
               <FButton
                 isLoading={isPending}
-                text="Crear Evento"
+                text="Actualizar Evento"
                 onClick={handleSubmit}
               />
             </>
@@ -123,4 +115,4 @@ const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
   );
 };
 
-export default AddEventForm;
+export default UpdateEventForm;

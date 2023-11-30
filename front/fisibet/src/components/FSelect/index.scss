@@ -1,8 +1,11 @@
-.confirm--action--container {
-  display: flex;
-  flex-direction: column;
-  .confirm--action--options {
-    display: flex;
-    justify-content: space-between;
+@import "../../../resources/styles/variables.scss";
+
+.select--input--container {
+  select {
+    padding: 10px;
+    border-radius: 10px;
+    option {
+      padding: 10px;
+    }
   }
 }

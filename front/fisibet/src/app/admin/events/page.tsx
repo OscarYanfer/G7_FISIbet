@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
 import "./index.scss";
+import UpdateEventForm from "@/components/UpdateEventForm";
 
 const EventsPage = () => {
   const { data, isLoading, error } = useQuery({
@@ -20,8 +21,12 @@ const EventsPage = () => {
     queryFn: () => EventsService.getAllEvents(),
   });
 
+  console.log("rafa", data);
+
   const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
   const [showDeleteEventModal, setShowDeleteEventModal] =
+    useState<boolean>(false);
+  const [showUpdateEventModal, setShowUpdateEventModal] =
     useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] =
     useState<EventTypes>(defaultEventValues);
@@ -33,22 +38,27 @@ const EventsPage = () => {
       key: "action",
       render: (_: any, record: EventTypes) => (
         <ActionsHub
-          onDelete={() => handleDeleteEvent(record.id)}
-          onInfo={() => handleInfoEvent(record.id)}
+          onDelete={() => handleDeleteEvent(record)}
+          onEdit={() => handleUpdateEvent(record)}
         />
       ),
     },
   ];
 
-  const handleAddEvent = () => {};
-
-  const handleDeleteEvent = (id: number) => {
+  const handleDeleteEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
     setShowDeleteEventModal(true);
   };
 
-  const handleUpdateEvent = () => {};
+  const handleUpdateEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
+    setShowUpdateEventModal(true);
+  };
 
-  const handleInfoEvent = (id: number) => {};
+  const handleInfoEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
+    setShowUpdateEventModal(true);
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -85,9 +95,7 @@ const EventsPage = () => {
         isOpen={showAddEventModal}
         onClose={() => setShowAddEventModal(false)}
         maxWidth={500}
-        content={
-          <AddEventForm onSubmit={() => setShowDeleteEventModal(false)} />
-        }
+        content={<AddEventForm onSubmit={() => setShowAddEventModal(false)} />}
       />
       <FModal
         title="Eliminar evento"
@@ -99,6 +107,18 @@ const EventsPage = () => {
             onReject={() => setShowDeleteEventModal(false)}
             onConfirm={() => console.log("Evento eliminado")}
             description={`Estas a punto de eliminar el evento de la base de datos, ¿Estas seguro de proceder?`}
+          />
+        }
+      />
+      <FModal
+        title="Actualizar evento"
+        isOpen={showUpdateEventModal}
+        onClose={() => setShowUpdateEventModal(false)}
+        maxWidth={500}
+        content={
+          <UpdateEventForm
+            initialValues={selectedEvent}
+            onSubmit={() => setShowUpdateEventModal(false)}
           />
         }
       />

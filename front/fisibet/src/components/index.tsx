@@ -19,3 +19,5 @@ export { default as FStatus } from "./FStatus";
 export { default as ActionsHub } from "./ActionsHub";
 export { default as FConfirmAction } from "./FConfirmAction";
 export { default as UpdateAccountForm } from "./UpdateAccountForm";
+export { default as FSelect } from "./FSelect";
+export { default as FSearch } from "./FSearch";

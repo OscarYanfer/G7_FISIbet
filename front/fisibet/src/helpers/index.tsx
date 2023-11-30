@@ -77,6 +77,19 @@ export const formatDate = (fecha: string): string => {
   return resultado;
 };
 
+export const intersectionArrays = (array: any[]) => {
+  const intersection = array?.reduce(
+    (accumulator: any[], currentArray: any[]) => {
+      return accumulator?.filter((element) =>
+        currentArray.some(
+          (x: any) => JSON.stringify(x) === JSON.stringify(element)
+        )
+      );
+    }
+  );
+  return intersection;
+};
+
 export const getStatusForEvent = (idStatus: number): string => {
   let status = "";
   switch (idStatus) {
@@ -228,6 +241,9 @@ export const columnsForEvents = [
     title: "Fecha",
     dataIndex: "fechaHora",
     key: "fechaHora",
+    render: (_: any, { fechaHora }: { fechaHora: string }) => (
+      <p>{formatDate(fechaHora)}</p>
+    ),
   },
   {
     title: "Status",

@@ -30,6 +30,17 @@ export const AddEventFormSchema = Yup.object().shape({
   cuoteB: Yup.string().required("Digite una cuota válida"),
 });
 
+export const UpdateEventFormSchema = Yup.object().shape({
+  date: Yup.string().required("Digite una fecha válida"),
+  type: Yup.string().required("Es necesario completar"),
+  league: Yup.string().required("Es necesario completar"),
+  teamA: Yup.string().required("Es necesario completar"),
+  teamB: Yup.string().required("Es necesario completar"),
+  cuoteA: Yup.string().required("Digite una cuota válida"),
+  cuoteDraw: Yup.string().required("Digite una cuota válida"),
+  cuoteB: Yup.string().required("Digite una cuota válida"),
+});
+
 export const AccountFormSchema = Yup.object().shape({
   username: Yup.string().required("Es necesario este campo"),
   email: Yup.string().required("Es necesario este campo"),
