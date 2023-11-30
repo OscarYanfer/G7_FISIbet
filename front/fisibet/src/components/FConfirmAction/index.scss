@@ -1,8 +1,12 @@
 .confirm--action--container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  p {
+    text-align: center;
+  }
   .confirm--action--options {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
   }
 }

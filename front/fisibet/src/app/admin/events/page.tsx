@@ -5,10 +5,10 @@ import {
   AddEventForm,
   FButton,
   FModal,
-  FStatus,
+  FConfirmAction,
 } from "@/components";
-import { EventTypes } from "@/interfaces";
-import { formatDate, getStatusByNumber } from "@/helpers";
+import { EventOnTableTypes, EventTypes } from "@/interfaces";
+import { columnsForEvents, transformEventDataForTable } from "@/helpers";
 import { useQuery } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
@@ -19,62 +19,37 @@ const EventsPage = () => {
     queryKey: ["events"],
     queryFn: () => EventsService.getAllEvents(),
   });
+
   const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
+  const [showDeleteEventModal, setShowDeleteEventModal] =
+    useState<boolean>(false);
+  const [selectedEvent, setSelectedEvent] = useState<EventTypes | null>(null);
 
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Equipo W1",
-      dataIndex: "equipoA",
-      key: "equipoA",
-    },
-    {
-      title: "Equipo W2",
-      dataIndex: "equipoB",
-      key: "equipoB",
-    },
-    {
-      title: "Liga",
-      dataIndex: "liga",
-      key: "liga",
-    },
-    {
-      title: "Fecha",
-      dataIndex: "fechaHora",
-      key: "fechaHora",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (_: any, { status }: { status: any }) => (
-        <FStatus status={status} />
-      ),
-    },
-    {
-      title: "Creado en",
-      dataIndex: "registeredOn",
-      key: "registeredOn",
-    },
-    {
-      title: "Ultima modificación en",
-      dataIndex: "updateOn",
-      key: "updateOn",
-    },
+    ...columnsForEvents,
     {
       title: "Acciones",
       key: "action",
-      render: (_: any, record: any) => (
+      render: (_: any, record: EventOnTableTypes) => (
         <>
-          <ActionsHub onInfo={() => console.log({ record })} />
+          <ActionsHub
+            onDelete={() => handleDeleteEvent(record.id)}
+            onInfo={() => handleInfoEvent(record.id)}
+          />
         </>
       ),
     },
   ];
+
+  const handleAddEvent = () => {};
+
+  const handleDeleteEvent = (id: number) => {
+    setShowDeleteEventModal(true);
+  };
+
+  const handleUpdateEvent = () => {};
+
+  const handleInfoEvent = (id: number) => {};
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -100,14 +75,7 @@ const EventsPage = () => {
       </div>
       <Table
         pagination={{ pageSize: 10 }}
-        dataSource={data?.map((event: EventTypes) => ({
-          ...event,
-          key: event.id,
-          status: getStatusByNumber(event.status),
-          fechaHora: formatDate(event.fechaHora),
-          registeredOn: formatDate(event.registeredOn),
-          updateOn: formatDate(event.updateOn || event.registeredOn),
-        }))}
+        dataSource={transformEventDataForTable(data)}
         columns={columns}
       />
       <FModal
@@ -115,7 +83,22 @@ const EventsPage = () => {
         isOpen={showAddEventModal}
         onClose={() => setShowAddEventModal(false)}
         maxWidth={500}
-        content={<AddEventForm onSubmit={() => setShowAddEventModal(false)} />}
+        content={
+          <AddEventForm onSubmit={() => setShowDeleteEventModal(false)} />
+        }
+      />
+      <FModal
+        title="Eliminar evento"
+        isOpen={showDeleteEventModal}
+        onClose={() => setShowDeleteEventModal(false)}
+        maxWidth={400}
+        content={
+          <FConfirmAction
+            onReject={() => setShowDeleteEventModal(false)}
+            onConfirm={() => console.log("Evento eliminado")}
+            description={`Estas a punto de eliminar el evento de la base de datos, ¿Estas seguro de proceder?`}
+          />
+        }
       />
     </>
   );

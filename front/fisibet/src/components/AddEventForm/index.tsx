@@ -19,6 +19,7 @@ export const initialValuesLoginForm: AddEventFormTypes = {
   teamA: "",
   teamB: "",
   cuoteA: "",
+  cuoteDraw: "",
   cuoteB: "",
 };
 
@@ -93,6 +94,13 @@ const AddEventForm = ({ onSubmit, initialValues }: AddEventFormProps) => {
                   regex={/^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/}
                   name="cuoteA"
                   label="Cuota del Equipo A"
+                  placeholder="Ingresa una cuota"
+                />
+                <FInputForm
+                  type="text"
+                  regex={/^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/}
+                  name="cuoteDraw"
+                  label="Cuota del Empate"
                   placeholder="Ingresa una cuota"
                 />
                 <FInputForm

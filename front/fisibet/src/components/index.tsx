@@ -17,3 +17,4 @@ export { default as FSelectForm } from "./FSelectForm";
 export { default as FModal } from "./FModal";
 export { default as FStatus } from "./FStatus";
 export { default as ActionsHub } from "./ActionsHub";
+export { default as FConfirmAction } from "./FConfirmAction";

@@ -47,6 +47,7 @@ export interface AddEventFormTypes {
   teamA: string;
   teamB: string;
   cuoteA: string;
+  cuoteDraw: string;
   cuoteB: string;
 }
 
@@ -73,7 +74,19 @@ export interface EventTypes {
   registeredOn: string;
   updateOn: string;
 }
-
+export interface EventOnTableTypes {
+  id: number;
+  name: string;
+  description: string;
+  equipoA: string;
+  equipoB: string;
+  liga: string;
+  fechaHora: string;
+  status: string;
+  bets: [];
+  registeredOn: string;
+  updateOn: string;
+}
 export interface CreateEventTypes {
   equipoA: string;
   equipoB: string;

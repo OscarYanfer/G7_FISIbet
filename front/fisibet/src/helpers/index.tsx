@@ -1,5 +1,6 @@
-import { BetOnCouponTypes, EventCardTypes } from "@/interfaces";
+import { BetOnCouponTypes, EventCardTypes, EventTypes } from "@/interfaces";
 import { routes } from "./navigation";
+import { ActionsHub, FStatus } from "@/components";
 
 export const getBetInfo = (
   event: EventCardTypes,
@@ -103,3 +104,62 @@ export const getStatusByNumber = (idStatus: number): string => {
   }
   return status;
 };
+
+export const transformEventDataForTable = (data: EventTypes[]) => {
+  const newData = data?.map((event) => ({
+    ...event,
+    key: event.id,
+    status: getStatusByNumber(event.status),
+    fechaHora: formatDate(event.fechaHora),
+    registeredOn: formatDate(event.registeredOn),
+    updateOn: formatDate(event.updateOn || event.registeredOn),
+  }));
+  return newData;
+};
+
+//tables columns
+export const columnsForEvents = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Equipo W1",
+    dataIndex: "equipoA",
+    key: "equipoA",
+  },
+  {
+    title: "Equipo W2",
+    dataIndex: "equipoB",
+    key: "equipoB",
+  },
+  {
+    title: "Liga",
+    dataIndex: "liga",
+    key: "liga",
+  },
+  {
+    title: "Fecha",
+    dataIndex: "fechaHora",
+    key: "fechaHora",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (_: any, { status }: { status: any }) => (
+      <FStatus status={status} />
+    ),
+  },
+  {
+    title: "Creado en",
+    dataIndex: "registeredOn",
+    key: "registeredOn",
+  },
+  {
+    title: "Ultima modificación en",
+    dataIndex: "updateOn",
+    key: "updateOn",
+  },
+];
