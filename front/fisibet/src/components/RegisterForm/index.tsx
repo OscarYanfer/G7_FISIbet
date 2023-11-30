@@ -25,8 +25,6 @@ const RegisterForm = () => {
 
   return (
     <div className="register--form--container">
-      <strong>Registrarse</strong>
-      <br></br>
       <div className="register--form--separator"></div>
       <span className="">o</span>
       <Formik

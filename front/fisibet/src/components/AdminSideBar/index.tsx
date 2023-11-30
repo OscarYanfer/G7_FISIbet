@@ -50,6 +50,13 @@ const AdminSideBar = () => {
             <RiCoupon5Line />
             <span>{routes.coupons.label}</span>
           </li>
+          <li
+            onClick={() => router.push(routes.tickets.path)}
+            className={pathname === routes.tickets.path ? "active" : ""}
+          >
+            <RiCoupon5Line />
+            <span>{routes.tickets.label}</span>
+          </li>
         </ul>
       </div>
       <div

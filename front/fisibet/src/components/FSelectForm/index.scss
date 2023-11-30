@@ -1,0 +1,33 @@
+@import "../../../resources/styles/variables.scss";
+
+.select--form--container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  select {
+    padding: 12px 15px;
+    background-color: #f8f8f8;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: nowrap;
+    option {
+      margin: 10px 0;
+    }
+    &:focus {
+      border-color: $primary-color;
+    }
+  }
+  .select--form--error {
+    color: $text-danger;
+    font-size: 12px;
+    min-height: 14px;
+  }
+}

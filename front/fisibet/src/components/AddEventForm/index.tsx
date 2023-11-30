@@ -1,28 +1,54 @@
-import { AddEventFormTypes } from "@/interfaces";
+import { AddEventFormTypes, CreateEventTypes } from "@/interfaces";
 import React from "react";
 import { Formik } from "formik";
 import { AddEventFormSchema } from "@/schemas";
-import { FButton, FInputForm } from "..";
+import { FButton, FInputForm, FSelectForm } from "..";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import EventsService from "@/api/springboot/events";
 import "./index.scss";
 
-const initialValuesLoginForm: AddEventFormTypes = {
+interface AddEventFormProps {
+  onSubmit: () => void;
+  initialValues?: AddEventFormTypes;
+}
+
+export const initialValuesLoginForm: AddEventFormTypes = {
   date: "",
+  type: "",
   league: "",
   teamA: "",
   teamB: "",
   cuoteA: "",
+  cuoteDraw: "",
   cuoteB: "",
 };
 
-const AddEventForm = () => {
+const AddEventForm = ({ onSubmit, initialValues }: AddEventFormProps) => {
+  const queryClient = useQueryClient();
+  const { mutate: submitEvent, isPending } = useMutation({
+    mutationFn: (data: CreateEventTypes) => EventsService.createNewEvent(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey.includes("events"),
+      });
+      onSubmit();
+    },
+  });
   const handleSubmitAddEvent = (values: AddEventFormTypes) => {
-    console.log("valores", values);
+    const dataToSend = {
+      equipoA: values.teamA,
+      equipoB: values.teamB,
+      payEquipoA: Number(values.cuoteA),
+      payEquipoB: Number(values.cuoteB),
+      fechaHora: values.date,
+      liga: values.league,
+    };
+    submitEvent(dataToSend);
   };
   return (
     <div className="addevent--form--container">
-      <strong>Agregar evento</strong>
       <Formik
-        initialValues={initialValuesLoginForm}
+        initialValues={initialValues || initialValuesLoginForm}
         onSubmit={handleSubmitAddEvent}
         validationSchema={AddEventFormSchema}
       >
@@ -41,6 +67,11 @@ const AddEventForm = () => {
                   name="teamB"
                   label="Equipo B"
                   placeholder="Nombre del equipo"
+                />
+                <FSelectForm
+                  label="Tipo de Evento"
+                  name="type"
+                  defaultOption="--Seleccionar tipo--"
                 />
               </div>
               <div className="form--input--group--double ">
@@ -68,13 +99,23 @@ const AddEventForm = () => {
                 <FInputForm
                   type="text"
                   regex={/^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/}
+                  name="cuoteDraw"
+                  label="Cuota del Empate"
+                  placeholder="Ingresa una cuota"
+                />
+                <FInputForm
+                  type="text"
+                  regex={/^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$/}
                   name="cuoteB"
                   label="Cuota del Equipo B"
                   placeholder="Ingresa una cuota"
                 />
               </div>
-
-              <FButton text="Crear Evento" onClick={handleSubmit} />
+              <FButton
+                isLoading={isPending}
+                text="Crear Evento"
+                onClick={handleSubmit}
+              />
             </>
           );
         }}

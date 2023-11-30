@@ -6,11 +6,6 @@
   align-items: center;
   width: 100%;
   gap: 10px;
-  strong {
-    font-size: $gigant-text;
-    color: $primary-color;
-    text-wrap: nowrap;
-  }
   .login--form--separator {
     border-top: 1px solid #f2f2f2;
     width: 100%;

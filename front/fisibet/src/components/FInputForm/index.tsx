@@ -35,10 +35,11 @@ const FInputForm = ({
   };
   return (
     <div className="input--form--container">
-      <label>{label}</label>
+      <label htmlFor={field.name}>{label}</label>
       <div className="input--form--item">
         {icon && <span className="input--form--icon">{icon}</span>}
         <input
+          id={field.name}
           type={type}
           onChange={(e) => handleChange(e.target.value)}
           placeholder={placeholder}

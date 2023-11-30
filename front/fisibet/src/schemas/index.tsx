@@ -21,9 +21,11 @@ export const registerFormSchema = Yup.object().shape({
 
 export const AddEventFormSchema = Yup.object().shape({
   date: Yup.string().required("Digite una fecha válida"),
+  type: Yup.string().required("Es necesario completar"),
   league: Yup.string().required("Es necesario completar"),
   teamA: Yup.string().required("Es necesario completar"),
   teamB: Yup.string().required("Es necesario completar"),
   cuoteA: Yup.string().required("Digite una cuota válida"),
+  cuoteDraw: Yup.string().required("Digite una cuota válida"),
   cuoteB: Yup.string().required("Digite una cuota válida"),
 });

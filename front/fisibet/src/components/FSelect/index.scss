@@ -1,0 +1,8 @@
+.confirm--action--container {
+  display: flex;
+  flex-direction: column;
+  .confirm--action--options {
+    display: flex;
+    justify-content: space-between;
+  }
+}

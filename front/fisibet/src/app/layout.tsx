@@ -1,6 +1,8 @@
 "use client";
 import { Providers } from "@/store/provider";
 import "./globals.scss";
+import { ApolloWrapper } from "./lib/apollo-wrapper";
+import TanstackProvider from "@/components/Providers/TanstackProvider";
 
 export default function RootLayout({
   children,
@@ -9,8 +11,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </head>
       <Providers>
-        <body>{children}</body>
+        <ApolloWrapper>
+          <TanstackProvider>
+            <body>{children}</body>
+          </TanstackProvider>
+        </ApolloWrapper>
       </Providers>
     </html>
   );

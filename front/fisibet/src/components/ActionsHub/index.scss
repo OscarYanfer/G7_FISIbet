@@ -1,0 +1,25 @@
+@import "../../../resources/styles/variables.scss";
+.actions--hub--container {
+  display: flex;
+  gap: 10px;
+  .hub {
+    padding: 5px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    svg {
+      color: white;
+      font-size: $regular-icon;
+    }
+    &--info {
+      background-color: rgb(32, 203, 209);
+    }
+    &--edit {
+      background-color: rgb(9, 184, 24);
+    }
+    &--delete {
+      background-color: rgb(231, 17, 17);
+    }
+  }
+}
