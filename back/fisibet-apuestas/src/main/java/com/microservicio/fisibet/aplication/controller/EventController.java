@@ -85,6 +85,21 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping(path = "/getevento/{id}")
+    public @ResponseBody ResponseEntity<BaseResponse<GetEventResponse>> getEvent(@PathVariable Integer idEvento) throws GenericException {
+        System.out.println("LOGGGG");
+        GetEventUseCase getEventUseCase = new GetEventUseCase(connectionMySQLPort, eventMySQLPort, eventMapper);
+        GetEventDto getEventDto = getEventUseCase.run(idEvento);
+
+        GetEventResponse getEventResponse = this.eventMapper.convertGetEventDtoToGetEventResponse(getEventDto);
+
+        BaseResponse response = new BaseResponse();
+        response.setMessage("Evento id: " + idEvento);
+        response.setContent(getEventResponse);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<BaseResponse<List<GetEventResponse>>> getEvents() throws GenericException {
         GetEventsUseCase getEventsUseCase = new GetEventsUseCase(connectionMySQLPort, eventMySQLPort, eventMapper);
