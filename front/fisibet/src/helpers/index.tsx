@@ -1,6 +1,7 @@
 import {
   AccountUserTypes,
   BetOnCouponTypes,
+  BetTypes,
   EventCardTypes,
   EventTypes,
 } from "@/interfaces";
@@ -77,6 +78,19 @@ export const formatDate = (fecha: string): string => {
   return resultado;
 };
 
+export const intersectionArrays = (array: any[]) => {
+  const intersection = array?.reduce(
+    (accumulator: any[], currentArray: any[]) => {
+      return accumulator?.filter((element) =>
+        currentArray.some(
+          (x: any) => JSON.stringify(x) === JSON.stringify(element)
+        )
+      );
+    }
+  );
+  return intersection;
+};
+
 export const getStatusForEvent = (idStatus: number): string => {
   let status = "";
   switch (idStatus) {
@@ -121,6 +135,14 @@ export const getStatusForTicket = (idStatus: number): string => {
       break;
   }
   return status;
+};
+
+export const getBetByResult = (
+  event: EventTypes,
+  betResult: string
+): BetTypes => {
+  const betObject = event?.bets?.filter((bet) => bet?.name === betResult);
+  return betObject[0];
 };
 
 //defaultValues for Data
@@ -228,6 +250,9 @@ export const columnsForEvents = [
     title: "Fecha",
     dataIndex: "fechaHora",
     key: "fechaHora",
+    render: (_: any, { fechaHora }: { fechaHora: string }) => (
+      <p>{formatDate(fechaHora)}</p>
+    ),
   },
   {
     title: "Status",

@@ -1,11 +1,22 @@
 "use client";
 import AccountUserService from "@/api/springboot/account";
-import { ActionsHub, FModal, UpdateAccountForm } from "@/components";
-import { columnsForAccountsTable, defaultAccountUserValues } from "@/helpers";
+import {
+  ActionsHub,
+  FModal,
+  FSearch,
+  FSelect,
+  UpdateAccountForm,
+} from "@/components";
+import {
+  columnsForAccountsTable,
+  defaultAccountUserValues,
+  intersectionArrays,
+} from "@/helpers";
 import { AccountUserTypes } from "@/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import React, { useState } from "react";
+import "./index.scss";
 
 const UsersPage = () => {
   const { data, isLoading, error } = useQuery({
@@ -14,10 +25,38 @@ const UsersPage = () => {
   });
 
   const [showUpdateAccount, setShowUpdateAccount] = useState<boolean>(false);
-
   const [selectedAccount, setSelectedAccount] = useState<AccountUserTypes>(
     defaultAccountUserValues
   );
+  const [selectedFilter, setSelectedFilter] = useState<string>("username");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
+
+  const filterByQuery = () => {
+    if (query) {
+      const dataForQuery = data.filter((account: AccountUserTypes) =>
+        String(account[selectedFilter])
+          .toLocaleLowerCase()
+          .includes(query.toLocaleLowerCase())
+      );
+      return dataForQuery;
+    } else {
+      return data;
+    }
+  };
+  const filterByStatus = () => {
+    if (selectedStatus) {
+      const dataForStatus = data?.filter(
+        (account: AccountUserTypes) => account.status === Number(selectedStatus)
+      );
+      return dataForStatus;
+    } else {
+      return data;
+    }
+  };
+  const filteredData = () => {
+    return intersectionArrays([filterByQuery(), filterByStatus()]);
+  };
 
   const columns = [
     ...columnsForAccountsTable,
@@ -34,7 +73,6 @@ const UsersPage = () => {
     setShowUpdateAccount(true);
   };
 
-
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -42,12 +80,37 @@ const UsersPage = () => {
     return <p>Ha ocurrido un error</p>;
   }
 
-  
   return (
     <div>
+      <div className="user--page--admin--filters">
+        <FSelect
+          value={selectedFilter}
+          onChange={(value) => setSelectedFilter(value)}
+          options={[
+            { label: "Usuario", value: "username" },
+            { label: "Id", value: "id" },
+            { label: "Correo", value: "email" },
+            { label: "DNI", value: "dni" },
+          ]}
+        />
+        <FSearch
+          placeholder={`Buscar por ${selectedFilter}`}
+          value={query}
+          onChange={(value) => setQuery(value)}
+        />
+        <FSelect
+          options={[
+            { label: "Habilitado", value: "1" },
+            { label: "Deshabilitado", value: "2" },
+          ]}
+          value={selectedStatus}
+          onChange={(value) => setSelectedStatus(value)}
+          defaultValue="---Filtrar por estado ---"
+        />
+      </div>
       <Table
         pagination={{ pageSize: 10 }}
-        dataSource={data?.map((account: AccountUserTypes) => ({
+        dataSource={filteredData()?.map((account: AccountUserTypes) => ({
           ...account,
           key: account.id,
         }))}

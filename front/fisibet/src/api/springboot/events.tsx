@@ -1,4 +1,4 @@
-import { CreateEventTypes } from "@/interfaces";
+import { CreateEventTypes, UpdateEventTypes } from "@/interfaces";
 import Api, { BASE_URL_BETS_SERVICE } from ".";
 
 export default class EventsService {
@@ -8,7 +8,7 @@ export default class EventsService {
       const rspJson = await rsp.json();
       return rspJson.content;
     } catch (error) {
-      throw new Error("Error al obtener datos");
+      throw new Error("Error al obtener eventos");
     }
   }
   static async createNewEvent(data: CreateEventTypes) {
@@ -17,7 +17,16 @@ export default class EventsService {
       const rspJson = await rsp.json();
       return rspJson.message;
     } catch (error) {
-      throw error;
+      throw new Error("Error al crear evento");
+    }
+  }
+  static async updateEvent(id: number, data: UpdateEventTypes) {
+    try {
+      const rsp = await Api.put(`${BASE_URL_BETS_SERVICE}/event/${id}`, data);
+      const rspJson = await rsp.json();
+      return rspJson.message;
+    } catch (error) {
+      throw new Error("Error al actualizar evento");
     }
   }
 }

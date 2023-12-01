@@ -40,7 +40,7 @@ export interface betCouponReducerTypes {
   bets: BetOnCouponTypes[];
 }
 
-export interface AddEventFormTypes {
+export interface AddEventTypes {
   date: string;
   type: string;
   league: string;
@@ -49,6 +49,40 @@ export interface AddEventFormTypes {
   cuoteA: string;
   cuoteDraw: string;
   cuoteB: string;
+}
+
+export interface UpdateEventFormTypes {
+  date: string;
+  type: string;
+  league: string;
+  teamA: string;
+  teamB: string;
+  cuoteA: string;
+  cuoteDraw: string;
+  cuoteB: string;
+}
+export interface UpdateEventTypes {
+  betIdEmpate: number;
+  betIdEquipoA: number;
+  betIdEquipoB: number;
+  equipoA: string;
+  equipoB: string;
+  fechaHora: string;
+  liga: string;
+  payEmpate: number;
+  payEquipoA: number;
+  payEquipoB: number;
+}
+
+export interface BetTypes {
+  description: string;
+  eventId: number;
+  id: number;
+  name: string;
+  pay: number; // cuota...;
+  registeredOn: string;
+  status: number;
+  updatedOn: string;
 }
 
 export interface UpdateAccountTypes {
@@ -77,9 +111,10 @@ export interface EventTypes {
   liga: string;
   fechaHora: string;
   status: number;
-  bets: [];
+  bets: BetTypes[];
   registeredOn: string;
   updatedOn: string;
+  [key: string]: number | string | BetTypes[];
 }
 
 export interface AccountUserTypes {
@@ -91,6 +126,7 @@ export interface AccountUserTypes {
   status: number;
   registeredOn: string;
   updatedOn: string;
+  [key: string]: number | string;
 }
 
 export interface CreateAccountUser {

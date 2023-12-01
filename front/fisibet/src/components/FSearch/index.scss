@@ -1,0 +1,24 @@
+@import "../../../resources/styles/variables.scss";
+
+.search--input--container {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  input {
+    background: transparent;
+    padding: 0 10px;
+  }
+  span {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background-color: $primary-color;
+
+    svg {
+      font-size: $regular-icon;
+      color: white;
+    }
+  }
+}

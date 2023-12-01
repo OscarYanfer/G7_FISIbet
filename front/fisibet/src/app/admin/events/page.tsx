@@ -6,13 +6,20 @@ import {
   FButton,
   FModal,
   FConfirmAction,
+  FSelect,
+  FSearch,
 } from "@/components";
 import { EventTypes } from "@/interfaces";
-import { columnsForEvents, defaultEventValues } from "@/helpers";
+import {
+  columnsForEvents,
+  defaultEventValues,
+  intersectionArrays,
+} from "@/helpers";
 import { useQuery } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
 import "./index.scss";
+import UpdateEventForm from "@/components/UpdateEventForm";
 
 const EventsPage = () => {
   const { data, isLoading, error } = useQuery({
@@ -20,11 +27,18 @@ const EventsPage = () => {
     queryFn: () => EventsService.getAllEvents(),
   });
 
+  console.log("rafa", data);
+
   const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
   const [showDeleteEventModal, setShowDeleteEventModal] =
     useState<boolean>(false);
+  const [showUpdateEventModal, setShowUpdateEventModal] =
+    useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] =
     useState<EventTypes>(defaultEventValues);
+  const [selectedFilter, setSelectedFilter] = useState<string>("liga");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
   const columns = [
     ...columnsForEvents,
@@ -33,22 +47,53 @@ const EventsPage = () => {
       key: "action",
       render: (_: any, record: EventTypes) => (
         <ActionsHub
-          onDelete={() => handleDeleteEvent(record.id)}
-          onInfo={() => handleInfoEvent(record.id)}
+          onDelete={() => handleDeleteEvent(record)}
+          onEdit={() => handleUpdateEvent(record)}
         />
       ),
     },
   ];
 
-  const handleAddEvent = () => {};
+  const filterByQuery = () => {
+    if (query) {
+      const dataForQuery = data.filter((event: EventTypes) =>
+        String(event[selectedFilter])
+          .toLocaleLowerCase()
+          .includes(query.toLocaleLowerCase())
+      );
+      return dataForQuery;
+    } else {
+      return data;
+    }
+  };
+  const filterByStatus = () => {
+    if (selectedStatus) {
+      const dataForStatus = data?.filter(
+        (account: EventTypes) => account.status === Number(selectedStatus)
+      );
+      return dataForStatus;
+    } else {
+      return data;
+    }
+  };
+  const filteredData = () => {
+    return intersectionArrays([filterByQuery(), filterByStatus()]);
+  };
 
-  const handleDeleteEvent = (id: number) => {
+  const handleDeleteEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
     setShowDeleteEventModal(true);
   };
 
-  const handleUpdateEvent = () => {};
+  const handleUpdateEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
+    setShowUpdateEventModal(true);
+  };
 
-  const handleInfoEvent = (id: number) => {};
+  const handleInfoEvent = (event: EventTypes) => {
+    setSelectedEvent(event);
+    setShowUpdateEventModal(true);
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -58,7 +103,7 @@ const EventsPage = () => {
   }
 
   return (
-    <>
+    <div className="admin--events--page--main--container">
       <div className="admin--events--page--container">
         <div className="admin--events--page--header">
           <div className="admin--events--page--count">
@@ -72,9 +117,33 @@ const EventsPage = () => {
           />
         </div>
       </div>
+      <div className="event--page--admin--filters">
+        <FSelect
+          value={selectedFilter}
+          onChange={(value) => setSelectedFilter(value)}
+          options={[
+            { label: "Liga", value: "liga" },
+            { label: "Id", value: "id" },
+          ]}
+        />
+        <FSearch
+          placeholder={`Buscar por ${selectedFilter}`}
+          value={query}
+          onChange={(value) => setQuery(value)}
+        />
+        <FSelect
+          options={[
+            { label: "Abierto", value: "1" },
+            { label: "Cerrado", value: "2" },
+          ]}
+          value={selectedStatus}
+          onChange={(value) => setSelectedStatus(value)}
+          defaultValue="---Filtrar por estado ---"
+        />
+      </div>
       <Table
         pagination={{ pageSize: 10 }}
-        dataSource={data?.map((event: EventTypes) => ({
+        dataSource={filteredData()?.map((event: EventTypes) => ({
           ...event,
           key: event.id,
         }))}
@@ -85,9 +154,7 @@ const EventsPage = () => {
         isOpen={showAddEventModal}
         onClose={() => setShowAddEventModal(false)}
         maxWidth={500}
-        content={
-          <AddEventForm onSubmit={() => setShowDeleteEventModal(false)} />
-        }
+        content={<AddEventForm onSubmit={() => setShowAddEventModal(false)} />}
       />
       <FModal
         title="Eliminar evento"
@@ -102,7 +169,19 @@ const EventsPage = () => {
           />
         }
       />
-    </>
+      <FModal
+        title="Actualizar evento"
+        isOpen={showUpdateEventModal}
+        onClose={() => setShowUpdateEventModal(false)}
+        maxWidth={500}
+        content={
+          <UpdateEventForm
+            initialValues={selectedEvent}
+            onSubmit={() => setShowUpdateEventModal(false)}
+          />
+        }
+      />
+    </div>
   );
 };
 
