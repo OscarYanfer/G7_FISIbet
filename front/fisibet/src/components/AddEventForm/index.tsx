@@ -39,6 +39,7 @@ const AddEventForm = ({ onSubmit }: AddEventFormProps) => {
       equipoB: values.teamB,
       payEquipoA: Number(values.cuoteA),
       payEquipoB: Number(values.cuoteB),
+      payEmpate: Number(values.cuoteDraw),
       fechaHora: values.date,
       liga: values.league,
     };

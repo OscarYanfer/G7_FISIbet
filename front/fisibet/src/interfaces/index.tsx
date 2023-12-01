@@ -51,7 +51,7 @@ export interface AddEventTypes {
   cuoteB: string;
 }
 
-export interface UpdateEventTypes {
+export interface UpdateEventFormTypes {
   date: string;
   type: string;
   league: string;
@@ -60,6 +60,18 @@ export interface UpdateEventTypes {
   cuoteA: string;
   cuoteDraw: string;
   cuoteB: string;
+}
+export interface UpdateEventTypes {
+  betIdEmpate: number;
+  betIdEquipoA: number;
+  betIdEquipoB: number;
+  equipoA: string;
+  equipoB: string;
+  fechaHora: string;
+  liga: string;
+  payEmpate: number;
+  payEquipoA: number;
+  payEquipoB: number;
 }
 
 export interface BetTypes {
@@ -102,6 +114,7 @@ export interface EventTypes {
   bets: BetTypes[];
   registeredOn: string;
   updatedOn: string;
+  [key: string]: number | string | BetTypes[];
 }
 
 export interface AccountUserTypes {

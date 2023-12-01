@@ -1,6 +1,7 @@
 import {
   AccountUserTypes,
   BetOnCouponTypes,
+  BetTypes,
   EventCardTypes,
   EventTypes,
 } from "@/interfaces";
@@ -134,6 +135,14 @@ export const getStatusForTicket = (idStatus: number): string => {
       break;
   }
   return status;
+};
+
+export const getBetByResult = (
+  event: EventTypes,
+  betResult: string
+): BetTypes => {
+  const betObject = event?.bets?.filter((bet) => bet?.name === betResult);
+  return betObject[0];
 };
 
 //defaultValues for Data

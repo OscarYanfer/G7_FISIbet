@@ -55,8 +55,6 @@ const UsersPage = () => {
     }
   };
   const filteredData = () => {
-    console.log("query", filterByQuery());
-    console.log("status", filterByStatus());
     return intersectionArrays([filterByQuery(), filterByStatus()]);
   };
 

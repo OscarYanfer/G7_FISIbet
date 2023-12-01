@@ -6,9 +6,15 @@ import {
   FButton,
   FModal,
   FConfirmAction,
+  FSelect,
+  FSearch,
 } from "@/components";
 import { EventTypes } from "@/interfaces";
-import { columnsForEvents, defaultEventValues } from "@/helpers";
+import {
+  columnsForEvents,
+  defaultEventValues,
+  intersectionArrays,
+} from "@/helpers";
 import { useQuery } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
@@ -30,6 +36,9 @@ const EventsPage = () => {
     useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] =
     useState<EventTypes>(defaultEventValues);
+  const [selectedFilter, setSelectedFilter] = useState<string>("liga");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
   const columns = [
     ...columnsForEvents,
@@ -44,6 +53,32 @@ const EventsPage = () => {
       ),
     },
   ];
+
+  const filterByQuery = () => {
+    if (query) {
+      const dataForQuery = data.filter((event: EventTypes) =>
+        String(event[selectedFilter])
+          .toLocaleLowerCase()
+          .includes(query.toLocaleLowerCase())
+      );
+      return dataForQuery;
+    } else {
+      return data;
+    }
+  };
+  const filterByStatus = () => {
+    if (selectedStatus) {
+      const dataForStatus = data?.filter(
+        (account: EventTypes) => account.status === Number(selectedStatus)
+      );
+      return dataForStatus;
+    } else {
+      return data;
+    }
+  };
+  const filteredData = () => {
+    return intersectionArrays([filterByQuery(), filterByStatus()]);
+  };
 
   const handleDeleteEvent = (event: EventTypes) => {
     setSelectedEvent(event);
@@ -68,7 +103,7 @@ const EventsPage = () => {
   }
 
   return (
-    <>
+    <div className="admin--events--page--main--container">
       <div className="admin--events--page--container">
         <div className="admin--events--page--header">
           <div className="admin--events--page--count">
@@ -82,9 +117,33 @@ const EventsPage = () => {
           />
         </div>
       </div>
+      <div className="event--page--admin--filters">
+        <FSelect
+          value={selectedFilter}
+          onChange={(value) => setSelectedFilter(value)}
+          options={[
+            { label: "Liga", value: "liga" },
+            { label: "Id", value: "id" },
+          ]}
+        />
+        <FSearch
+          placeholder={`Buscar por ${selectedFilter}`}
+          value={query}
+          onChange={(value) => setQuery(value)}
+        />
+        <FSelect
+          options={[
+            { label: "Abierto", value: "1" },
+            { label: "Cerrado", value: "2" },
+          ]}
+          value={selectedStatus}
+          onChange={(value) => setSelectedStatus(value)}
+          defaultValue="---Filtrar por estado ---"
+        />
+      </div>
       <Table
         pagination={{ pageSize: 10 }}
-        dataSource={data?.map((event: EventTypes) => ({
+        dataSource={filteredData()?.map((event: EventTypes) => ({
           ...event,
           key: event.id,
         }))}
@@ -122,7 +181,7 @@ const EventsPage = () => {
           />
         }
       />
-    </>
+    </div>
   );
 };
 
