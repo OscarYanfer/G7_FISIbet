@@ -3,10 +3,9 @@ package com.microservicio.fisibet.aplication.controller;
 import com.microservicio.fisibet.aplication.dto.*;
 import com.microservicio.fisibet.aplication.mapper.BetMapper;
 import com.microservicio.fisibet.aplication.mapper.EventMapper;
-import com.microservicio.fisibet.aplication.port.ConnectionPort;
-import com.microservicio.fisibet.aplication.request.CreateBetRequest;
 import com.microservicio.fisibet.aplication.request.CreateEventRequest;
 import com.microservicio.fisibet.aplication.request.UpdateEventRequest;
+import com.microservicio.fisibet.aplication.request.UpdateStatusDisabled;
 import com.microservicio.fisibet.aplication.response.*;
 import com.microservicio.fisibet.aplication.usecase.*;
 import com.microservicio.fisibet.domain.exception.GenericException;
@@ -111,7 +110,7 @@ public class EventController {
         eventDto.setFechaHora(LocalDateTime.parse(request.fechaHora));
 
         UpdateEventUseCase updateEventUseCase = new UpdateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
-        EventDto eventDtoNew = null;//updateEventUseCase.run(eventDto, id);
+        EventDto eventDtoNew = updateEventUseCase.run(eventDto, id);
 
         BetDto betDto1 = new BetDto();
         betDto1.setId(request.getBetIdEquipoA());
@@ -150,22 +149,22 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<BaseResponse<EventResponse>> updateStateEvent(
             @PathVariable Integer id,
-            @Validated @RequestBody Integer state
+            @Validated @RequestBody UpdateStatusDisabled request
     ) throws GenericException, IOException {
 
         EventDto eventDto = new EventDto();
         eventDto.setId(id);
-        eventDto.setStatus(state);
+        eventDto.setStatus(request.getState());
 
-        UpdateEventUseCase updateEventUseCase = new UpdateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
-        EventDto eventDtoNew = updateEventUseCase.run(state, id);
+        UpdateStateEventUseCase updateStateEventUseCase = new UpdateStateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
+        EventDto eventDtoNew = updateStateEventUseCase.run(request.getState(), id);
 
         UpdateBetUseCase updateBetUseCase = new UpdateBetUseCase(connectionMySQLPort, betMapper, betMySQLPort);
 
         for (BetDto bet: eventDtoNew.getBets()) {
             BetDto betDto = bet;
             betDto.setUpdatedOn(LocalDateTime.now());
-            betDto.setStatus(state);
+            betDto.setStatus(request.getState());
             updateBetUseCase.run(betDto);
         }
 

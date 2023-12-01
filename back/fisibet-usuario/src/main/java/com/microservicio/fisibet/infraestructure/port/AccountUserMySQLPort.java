@@ -6,7 +6,10 @@ import com.microservicio.fisibet.domain.entity.AccountUserEventEntity;
 import com.microservicio.fisibet.infraestructure.mapper.AccountUserInfraMapper;
 import com.microservicio.fisibet.infraestructure.model.AccountUserEvent;
 import com.microservicio.fisibet.infraestructure.model.AccountUserModel;
+import com.microservicio.fisibet.infraestructure.model.WalletEvent;
+import com.microservicio.fisibet.infraestructure.model.WalletModel;
 import com.microservicio.fisibet.infraestructure.port.spring.AccountUserSpringPort;
+import com.microservicio.fisibet.infraestructure.port.spring.WalletSpringPort;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +22,16 @@ public class AccountUserMySQLPort implements AccountUserPort {
     private AccountUserSpringPort accountUserSpringPort;
     private AccountUserInfraMapper accountUserInfraMapper;
     private KafkaTemplate<String, Object> kafkaTemplate;
+    private WalletSpringPort walletSpringPort;
 
     public AccountUserMySQLPort(AccountUserSpringPort accountUserSpringPort,
                                 AccountUserInfraMapper accountUserInfraMapper,
-                                KafkaTemplate kafkaTemplate){
+                                KafkaTemplate kafkaTemplate,
+                                WalletSpringPort walletSpringPort){
         this.accountUserInfraMapper = accountUserInfraMapper;
         this.accountUserSpringPort = accountUserSpringPort;
         this.kafkaTemplate = kafkaTemplate;
+        this.walletSpringPort = walletSpringPort;
     }
 
     @Override
@@ -33,8 +39,18 @@ public class AccountUserMySQLPort implements AccountUserPort {
         accountUserEntity.setStatus(1);
         accountUserEntity.setRegisteredOn(LocalDateTime.now());
         AccountUserModel accountUserModelNew = this.accountUserSpringPort.save(this.accountUserInfraMapper.convertAccountUserEntityToAccountUserModel(accountUserEntity));
+        WalletModel walletModel = new WalletModel();
+        walletModel.setAccountNumber(String.valueOf(200000+accountUserModelNew.getId()));
+        walletModel.setState(1);
+        walletModel.setRegisteredOn(LocalDateTime.now());
+
         AccountUserEvent accountUserEvent1 = new AccountUserEvent("CreateAccountUser", accountUserModelNew);
+        WalletModel walletModel1 = this.walletSpringPort.save(walletModel);
+        accountUserModelNew.setWallet(walletModel1);
         kafkaTemplate.send("account-user-topic", accountUserEvent1);
+
+        WalletEvent walletEvent = new WalletEvent("CreateWallet", walletModel1);
+        kafkaTemplate.send("wallet-topic", walletEvent);
         return this.accountUserInfraMapper.convertAccountUserModelToAccountUserEntity(accountUserModelNew);
     }
 

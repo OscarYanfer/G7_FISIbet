@@ -1,5 +1,8 @@
 package com.microservicio.fisibet.aplication.response;
 
+import com.microservicio.fisibet.aplication.dto.WalletDto;
+import com.microservicio.fisibet.domain.entity.WalletEntity;
+
 import java.time.LocalDateTime;
 
 public class AccountUserResponse {
@@ -11,6 +14,7 @@ public class AccountUserResponse {
     private Integer status;
     private LocalDateTime registeredOn;
     private LocalDateTime updatedOn;
+    private WalletDto wallet;
 
     public Integer getId() {
         return id;
@@ -74,5 +78,13 @@ public class AccountUserResponse {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public WalletDto getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(WalletDto wallet) {
+        this.wallet = wallet;
     }
 }

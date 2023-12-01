@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-public interface SessionUserSpingPort extends JpaRepository<SessionUserModel, Long> {
+public interface SessionUserSpringPort extends JpaRepository<SessionUserModel, Long> {
     @Query(value = "SELECT DISTINCT * FROM session_user WHERE username = :username ", nativeQuery = true)
     SessionUserModel getSessionUserByName(@Param("username") String username);
     @Modifying(clearAutomatically = true)

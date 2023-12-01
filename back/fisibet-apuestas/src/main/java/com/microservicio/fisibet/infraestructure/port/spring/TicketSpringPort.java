@@ -1,6 +1,7 @@
 package com.microservicio.fisibet.infraestructure.port.spring;
 
 import com.microservicio.fisibet.infraestructure.model.EventModel;
+import com.microservicio.fisibet.infraestructure.model.TicketBetModel;
 import com.microservicio.fisibet.infraestructure.model.TicketModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,11 @@ public interface TicketSpringPort extends JpaRepository<TicketModel, Integer> {
             //" INNER JOIN apuesta ON ticketapuesta.id_bet = apuesta.id" +
             " WHERE ticket.status = 1 AND ticket.id = :id ", nativeQuery = true)
     TicketModel getTicketById(@Param("id") Integer id);
+
+    @Query(value = "SELECT DISTINCT ticket.* FROM evento " +
+            "    INNER JOIN apuesta ON evento.id = apuesta.event_id " +
+            "    INNER JOIN ticketapuesta ON ticketapuesta.id_bet = apuesta.id " +
+            "    INNER JOIN ticket ON ticketapuesta.id_ticket = ticket.id " +
+            "    WHERE evento.id = :eventId AND ticket.status = 1 ", nativeQuery = true)
+    List<TicketModel> getTicketsByEventId(@Param("eventId") Integer eventId);
 }

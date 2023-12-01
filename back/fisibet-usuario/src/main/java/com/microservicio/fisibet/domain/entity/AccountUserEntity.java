@@ -11,7 +11,7 @@ public class AccountUserEntity {
     private Integer status;
     private LocalDateTime registeredOn;
     private LocalDateTime updatedOn;
-
+    private WalletEntity wallet;
     public Integer getId() {
         return id;
     }
@@ -74,5 +74,13 @@ public class AccountUserEntity {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public WalletEntity getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(WalletEntity wallet) {
+        this.wallet = wallet;
     }
 }

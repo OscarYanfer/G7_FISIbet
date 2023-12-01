@@ -29,6 +29,10 @@ public class AccountUserModel {
     @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    private WalletModel wallet;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +95,13 @@ public class AccountUserModel {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public WalletModel getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(WalletModel wallet) {
+        this.wallet = wallet;
     }
 }

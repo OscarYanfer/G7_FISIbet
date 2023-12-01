@@ -4,10 +4,10 @@ import com.microservicio.fisibet.aplication.dto.EventDto;
 import com.microservicio.fisibet.aplication.mapper.EventMapper;
 import com.microservicio.fisibet.aplication.port.ConnectionPort;
 import com.microservicio.fisibet.aplication.port.EventPort;
-import com.microservicio.fisibet.domain.entity.EventEntity;
 import com.microservicio.fisibet.domain.exception.ErrorLevel;
 import com.microservicio.fisibet.domain.exception.ErrorStatus;
 import com.microservicio.fisibet.domain.exception.GenericException;
+
 
 public class UpdateStateEventUseCase {
     private final ConnectionPort connectionPort;
@@ -15,16 +15,16 @@ public class UpdateStateEventUseCase {
     private final EventPort eventPort;
 
     public UpdateStateEventUseCase(ConnectionPort connectionPort, EventMapper eventMapper,
-                              EventPort eventPort){
+                                   EventPort eventPort){
         this.connectionPort = connectionPort;
         this.eventMapper = eventMapper;
         this.eventPort = eventPort;
     }
 
-    public EventDto run(EventDto request, Integer eventId) throws GenericException {
+    public EventDto run(Integer state, Integer eventId) throws GenericException {
         try{
             this.connectionPort.begin();
-            EventDto eventDto = updateEvent(request, eventId);
+            EventDto eventDto = updateEvent(state, eventId);
             this.connectionPort.commit();{
             }
             return eventDto;
@@ -42,8 +42,8 @@ public class UpdateStateEventUseCase {
         }
     }
 
-    private EventDto updateEvent(EventDto request, Integer eventId){
-        EventEntity eventEntity = this.eventMapper.convertEventDtoToEventEntity(request);
-        return this.eventMapper.convertEventDtoToEventEntity(this.eventPort.updateEventById(eventEntity, eventId));
+    private EventDto updateEvent(Integer state, Integer eventId){
+        return this.eventMapper.convertEventDtoToEventEntity(this.eventPort.updateStateEventById(eventId,state));
     }
+
 }

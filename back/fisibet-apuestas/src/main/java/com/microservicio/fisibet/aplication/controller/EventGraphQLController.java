@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -112,8 +111,8 @@ public class EventGraphQLController {
         EventDto eventDto = this.eventMapper.convertUpdateEventRequestToEventDto(updateEventRequest);
         eventDto.setFechaHora(LocalDateTime.parse(updateEventRequest.fechaHora));
 
-        UpdateEventUseCase updateEventUseCase = new UpdateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
-        EventDto eventDtoNew = updateEventUseCase.run(1, id);
+        UpdateStateEventUseCase updateStateEventUseCase = new UpdateStateEventUseCase(connectionMySQLPort, eventMapper, eventMySQLPort);
+        EventDto eventDtoNew = updateStateEventUseCase.run(1, id);
 
         BetDto betDto1 = new BetDto();
         betDto1.setId(updateEventRequest.getBetIdEquipoA());

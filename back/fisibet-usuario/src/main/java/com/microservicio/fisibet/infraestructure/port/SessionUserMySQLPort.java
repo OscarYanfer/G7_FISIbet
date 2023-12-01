@@ -1,13 +1,12 @@
 package com.microservicio.fisibet.infraestructure.port;
 
-import com.microservicio.fisibet.aplication.dto.AuthDto;
 import com.microservicio.fisibet.aplication.port.SessionUserPort;
 import com.microservicio.fisibet.domain.entity.SessionUserEntity;
 import com.microservicio.fisibet.infraestructure.mapper.SessionUserInfraMapper;
 import com.microservicio.fisibet.infraestructure.model.AccountUserModel;
 import com.microservicio.fisibet.infraestructure.model.SessionUserModel;
 import com.microservicio.fisibet.infraestructure.port.spring.AccountUserSpringPort;
-import com.microservicio.fisibet.infraestructure.port.spring.SessionUserSpingPort;
+import com.microservicio.fisibet.infraestructure.port.spring.SessionUserSpringPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,13 @@ public class SessionUserMySQLPort implements SessionUserPort {
     @Autowired
     private SessionUserInfraMapper sessionUserInfraMapper;
     @Autowired
-    private SessionUserSpingPort sessionUserSpingPort;
+    private SessionUserSpringPort sessionUserSpringPort;
     @Autowired
     private AccountUserSpringPort accountUserSpringPort;
 
     @Override
     public SessionUserEntity login(SessionUserEntity sessionUserEntity) {
-        SessionUserModel sessionUserModel = this.sessionUserSpingPort.getSessionUserByName(sessionUserEntity.getUsername());
+        SessionUserModel sessionUserModel = this.sessionUserSpringPort.getSessionUserByName(sessionUserEntity.getUsername());
         if(sessionUserModel == null){
             AccountUserModel accountUserModel = this.accountUserSpringPort.getAccountUserByName(sessionUserEntity.getUsername());
             SessionUserModel sessionUserModel1 = this.sessionUserInfraMapper.convertAccountUserModelToSessionUserModel(accountUserModel);
@@ -31,7 +30,7 @@ public class SessionUserMySQLPort implements SessionUserPort {
             sessionUserModel1.setProfile("cliente");
             sessionUserModel1.setRegisteredOn(LocalDateTime.now());
             sessionUserModel1.setUpdatedOn(null);
-            sessionUserModel = this.sessionUserSpingPort.save(sessionUserModel1);
+            sessionUserModel = this.sessionUserSpringPort.save(sessionUserModel1);
 
             return this.sessionUserInfraMapper.convertSessionUserModelToSessionUserEntity(sessionUserModel);
         }
@@ -40,12 +39,12 @@ public class SessionUserMySQLPort implements SessionUserPort {
         }
         sessionUserModel.setConectado(1);
         sessionUserModel.setUpdatedOn(LocalDateTime.now());
-        SessionUserModel sessionUserModel1 = this.sessionUserSpingPort.save(sessionUserModel);
+        SessionUserModel sessionUserModel1 = this.sessionUserSpringPort.save(sessionUserModel);
         return this.sessionUserInfraMapper.convertSessionUserModelToSessionUserEntity(sessionUserModel1);
     }
 
     @Override
     public Integer disconnectUsers() {
-        return this.sessionUserSpingPort.disconnectSessionUsers();
+        return this.sessionUserSpringPort.disconnectSessionUsers();
     }
 }

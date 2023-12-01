@@ -4,20 +4,33 @@ import com.microservicio.fisibet.aplication.port.EventPort;
 import com.microservicio.fisibet.domain.entity.EventEntity;
 import com.microservicio.fisibet.infraestructure.mapper.EventInfraMapper;
 import com.microservicio.fisibet.infraestructure.model.EventModel;
+import com.microservicio.fisibet.infraestructure.model.TicketBetModel;
+import com.microservicio.fisibet.infraestructure.model.TicketModel;
 import com.microservicio.fisibet.infraestructure.port.spring.EventSpringPort;
+import com.microservicio.fisibet.infraestructure.port.spring.TicketBetSpringPort;
+import com.microservicio.fisibet.infraestructure.port.spring.TicketSpringPort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class EventMySQLPort implements EventPort {
     private EventSpringPort eventSpringPort;
     private EventInfraMapper eventInfraMapper;
+    private TicketBetSpringPort ticketBetSpringPort;
+    private TicketSpringPort ticketSpringPort;
+
     public EventMySQLPort(EventSpringPort eventSpringPort,
-                          EventInfraMapper eventInfraMapper){
+                          EventInfraMapper eventInfraMapper,
+                          TicketBetSpringPort ticketBetSpringPort,
+                          TicketSpringPort ticketSpringPort){
         this.eventSpringPort = eventSpringPort;
         this.eventInfraMapper = eventInfraMapper;
+        this.ticketBetSpringPort = ticketBetSpringPort;
+        this.ticketSpringPort = ticketSpringPort;
     }
     @Override
     public List<EventEntity> GetEventsEnabled() {
@@ -42,7 +55,7 @@ public class EventMySQLPort implements EventPort {
         eventModel.setFechaHora(eventEntity.getFechaHora());
         eventModel.setLiga(eventEntity.getLiga());
         eventModel.setUpdatedOn(LocalDateTime.now());
-        eventModel.setStatus(eventEntity.getStatus());
+        eventModel.setStatus(1);
         return this.eventInfraMapper.convertEventModelToEventEntity(this.eventSpringPort.save(eventModel));
     }
 
@@ -51,6 +64,34 @@ public class EventMySQLPort implements EventPort {
         EventModel eventModel = this.eventSpringPort.findById(eventId).orElse(null);
         eventModel.setUpdatedOn(LocalDateTime.now());
         eventModel.setStatus(state);
+
+        if(state == 3){
+            List<TicketBetModel> ticketBetModels = this.ticketBetSpringPort.getTicketBetsByBetId(eventId);
+            for (TicketBetModel item : ticketBetModels) {
+                item.setStatus(state);
+                item.setUpdatedOn(LocalDateTime.now());
+                TicketBetModel ticketBetModel = this.ticketBetSpringPort.save(item);
+            }
+
+            List<TicketModel> ticketModels = this.ticketSpringPort.getTicketsByEventId(eventId);
+            for (TicketModel item : ticketModels) {
+                List<Integer> status = new ArrayList<Integer>();
+                for (TicketBetModel x: item.getTicketBets()) {
+                    status.add(x.getStatus());
+                }
+
+                Boolean isEqual = this.validEqualsElementsList(status);
+
+                if(isEqual){
+                    item.setStatus(state);
+                    item.setUpdatedOn(LocalDateTime.now());
+                    this.ticketSpringPort.save(item);
+
+
+                }
+            }
+        }
+
         return this.eventInfraMapper.convertEventModelToEventEntity(this.eventSpringPort.save(eventModel));
     }
 
@@ -60,5 +101,14 @@ public class EventMySQLPort implements EventPort {
                 () -> new RuntimeException(String.format("Evento %s no encontrado",id))
         );
         return this.eventInfraMapper.convertEventModelToEventEntity(eventModel);
+    }
+
+    public boolean validEqualsElementsList(List<Integer> arr){
+        for (int i = 0; i < arr.size(); i++) {
+            if(!arr.get(i).equals(3)){
+                return false;
+            }
+        }
+        return true;
     }
 }
