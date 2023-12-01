@@ -5,10 +5,12 @@ interface FConfirmActionProps {
   description?: string;
   onConfirm?: () => void;
   onReject?: () => void;
+  isLoading?: boolean;
 }
 
 const FConfirmAction = ({
   description,
+  isLoading,
   onConfirm,
   onReject,
 }: FConfirmActionProps) => {
@@ -17,7 +19,7 @@ const FConfirmAction = ({
       {description && <p>{description}</p>}
       <div className="confirm--action--options">
         <FButton onClick={onReject} text="Cancelar" type="primary--inner" />
-        <FButton onClick={onConfirm} text="Confirmar" type="primary" />
+        <FButton isLoading={isLoading} onClick={onConfirm} text="Confirmar" type="primary" />
       </div>
     </div>
   );

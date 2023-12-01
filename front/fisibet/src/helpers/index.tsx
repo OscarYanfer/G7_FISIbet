@@ -94,9 +94,11 @@ export const intersectionArrays = (array: any[]) => {
 export const getStatusForEvent = (idStatus: number): string => {
   let status = "";
   switch (idStatus) {
+    case 0:
+      status = "Inhabilitado";
+      break;
     case 1:
       status = "Abierto";
-
       break;
     case 2:
       status = "Cerrado";

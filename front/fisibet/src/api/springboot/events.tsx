@@ -29,4 +29,16 @@ export default class EventsService {
       throw new Error("Error al actualizar evento");
     }
   }
+  static async disableEvent(id: number) {
+    try {
+      const rsp = await Api.put(`${BASE_URL_BETS_SERVICE}/event/disable/${id}`, {
+        state: 0,
+      });
+      const rspJson = await rsp.json();
+      console.log("rsp",rspJson)
+      return rspJson.message;
+    } catch (error) {
+      throw new Error("Error al deshabilitar evento");
+    }
+  }
 }

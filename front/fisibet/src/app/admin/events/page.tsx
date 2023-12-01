@@ -15,16 +15,26 @@ import {
   defaultEventValues,
   intersectionArrays,
 } from "@/helpers";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import EventsService from "@/api/springboot/events";
 import { Table } from "antd";
 import "./index.scss";
 import UpdateEventForm from "@/components/UpdateEventForm";
 
 const EventsPage = () => {
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["events"],
     queryFn: () => EventsService.getAllEvents(),
+  });
+  const { mutate: disableEvent, isPending } = useMutation({
+    mutationFn: (id: number) => EventsService.disableEvent(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey.includes("events"),
+      });
+      setShowDeleteEventModal(false);
+    },
   });
 
   console.log("rafa", data);
@@ -86,11 +96,6 @@ const EventsPage = () => {
   };
 
   const handleUpdateEvent = (event: EventTypes) => {
-    setSelectedEvent(event);
-    setShowUpdateEventModal(true);
-  };
-
-  const handleInfoEvent = (event: EventTypes) => {
     setSelectedEvent(event);
     setShowUpdateEventModal(true);
   };
@@ -163,8 +168,9 @@ const EventsPage = () => {
         maxWidth={400}
         content={
           <FConfirmAction
+            isLoading={isPending}
             onReject={() => setShowDeleteEventModal(false)}
-            onConfirm={() => console.log("Evento eliminado")}
+            onConfirm={() => disableEvent(selectedEvent.id)}
             description={`Estas a punto de eliminar el evento de la base de datos, ¿Estas seguro de proceder?`}
           />
         }
