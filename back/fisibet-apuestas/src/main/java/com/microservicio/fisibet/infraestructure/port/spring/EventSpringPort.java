@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface EventSpringPort extends JpaRepository<EventModel, Integer> {
     @Query(value = "SELECT DISTINCT evento.* FROM evento " +
-            "INNER JOIN apuesta ON evento.id = apuesta.event_id WHERE evento.status = 1 ", nativeQuery = true)
+            "INNER JOIN apuesta ON evento.id = apuesta.event_id ", nativeQuery = true)
     List<EventModel> getEventsEnabled();
 
 
