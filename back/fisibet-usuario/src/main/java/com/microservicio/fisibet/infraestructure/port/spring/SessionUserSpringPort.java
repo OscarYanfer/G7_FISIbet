@@ -8,17 +8,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface SessionUserSpringPort extends JpaRepository<SessionUserModel, Long> {
-    @Query(value = "SELECT DISTINCT * FROM session_user WHERE username = :username ", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT * FROM sessionuser WHERE username = :username ", nativeQuery = true)
     SessionUserModel getSessionUserByName(@Param("username") String username);
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "UPDATE session_user " +
+    @Query(value = "UPDATE sessionuser " +
             "SET conectado = 1 " +
             "WHERE username = :username ", nativeQuery = true)
     Integer connectSessionUser(@Param("username") String username);
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "UPDATE session_user " +
+    @Query(value = "UPDATE sessionuser " +
             "SET conectado = 0 WHERE conectado = 1 ", nativeQuery = true)
     Integer disconnectSessionUsers();
 }
