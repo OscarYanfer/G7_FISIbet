@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "sessionUser")
+@Table(name = "sessionuser")
 public class SessionUserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
