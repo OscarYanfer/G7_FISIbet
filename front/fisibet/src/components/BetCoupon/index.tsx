@@ -9,8 +9,9 @@ import { FaHeartBroken } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducerTypes } from "@/interfaces";
 import { getTotalCuoteFromCoupon } from "@/helpers";
-import { clearBetsFromCoupon } from "@/store/slice";
+
 import "./index.scss";
+import { clearBetsFromCoupon } from "@/redux/actions/couponActions";
 
 const BetCoupon = () => {
   const [amountValue, setAmountValue] = useState<string>("");
@@ -60,7 +61,7 @@ const BetCoupon = () => {
               <div className="bet--coupon--buttons">
                 <FIconButton icon={<MdSettings />} />
                 <FIconButton
-                  onClick={() => dispatch(clearBetsFromCoupon([]))}
+                  onClick={() => dispatch(clearBetsFromCoupon())}
                   icon={<RiDeleteBin5Fill />}
                 />
               </div>

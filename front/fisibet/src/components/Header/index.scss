@@ -12,11 +12,11 @@
   .header--cta--container {
     display: flex;
     align-items: center;
-    button {
+    gap: 10px;
+    .button {
       text-wrap: nowrap;
-      border: none;
     }
-    span {
+    .button span {
       background-color: white;
       width: 1px;
       height: 35px;

@@ -3,13 +3,20 @@ import React from "react";
 import { FButton, FInputForm } from "@/components";
 import { Formik } from "formik";
 import { registerFormSchema } from "@/schemas";
-import { CreateAccountUser, RegisterFormTypes } from "@/interfaces";
+import {
+  CreateAccountUser,
+  LoginFormTypes,
+  RegisterFormTypes,
+} from "@/interfaces";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaUser, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useMutation } from "@tanstack/react-query";
 import AccountUserService from "@/api/springboot/account";
 import "./index.scss";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/redux/actions/authTokenActions";
 
 interface RegisterFormProps {
   onSubmit: () => void;
@@ -24,13 +31,32 @@ const initialValuesRegisterForm: RegisterFormTypes = {
 };
 
 const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
+  const dispatch = useDispatch();
+
+  // const { mutate: loginAccount, isPending: loadingLogin } = useMutation({
+  //   mutationFn: (data: LoginFormTypes) => AccountUserService.loginAccount(data),
+  //   onSuccess: (response) => {
+  //     dispatch(setToken(response.id));
+  //   },
+  // });
+
   const { mutate: submitAccount, isPending } = useMutation({
     mutationFn: (data: CreateAccountUser) =>
       AccountUserService.createNewAccount(data),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log({ response });
+      // loginAccount({
+      //   username: response?.username,
+      //   password: response?.password,
+      // });
+      toast.success("Registro exitoso");
       onSubmit();
     },
+    onError: () => {
+      toast.error("Hubo un error al crear cuenta");
+    },
   });
+
   const handleSubmitRegister = (values: RegisterFormTypes) => {
     const dataToSend = {
       dni: values.dni,

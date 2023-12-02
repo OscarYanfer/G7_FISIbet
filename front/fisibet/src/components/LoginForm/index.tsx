@@ -8,15 +8,37 @@ import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import "./index.scss";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
+import AccountUserService from "@/api/springboot/account";
+import { toast } from "react-toastify";
+import { setToken } from "@/redux/actions/authTokenActions";
+
+interface LoginFormProps {
+  onSubmit: () => void;
+}
 
 const initialValuesLoginForm: LoginFormTypes = {
-  email: "",
+  username: "",
   password: "",
 };
 
-const LoginForm = () => {
+const LoginForm = ({ onSubmit }: LoginFormProps) => {
+  const dispatch = useDispatch();
+  const { mutate: loginAccount, isPending } = useMutation({
+    mutationFn: (data: LoginFormTypes) => AccountUserService.loginAccount(data),
+    onSuccess: (response) => {
+      dispatch(setToken(response.id));
+      onSubmit();
+      toast.success("Inicio de sesión exitoso");
+    },
+    onError: (error) => {
+      toast.error(`Error al iniciar sesión`);
+    },
+  });
+
   const handleSubmitLogin = (values: any) => {
-    console.log("valores", values);
+    loginAccount(values);
   };
   return (
     <div className="login--form--container">
@@ -31,11 +53,11 @@ const LoginForm = () => {
           return (
             <>
               <FInputForm
-                type="email"
+                type="text"
                 icon={<FaUser />}
-                name="email"
-                label="Correo electrónico"
-                placeholder="Email"
+                name="username"
+                label="Nombre de usuario"
+                placeholder="Usuario"
               />
               <FInputForm
                 type="password"
@@ -44,7 +66,11 @@ const LoginForm = () => {
                 label="Contraseña"
                 placeholder="Contraseña"
               />
-              <FButton text="Iniciar sesión" onClick={handleSubmit} />
+              <FButton
+                isLoading={isPending}
+                text="Iniciar sesión"
+                onClick={handleSubmit}
+              />
             </>
           );
         }}

@@ -7,6 +7,8 @@ import {
 } from "react-icons/md";
 import { BetCoupon, DropDownOption, EventList } from "@/components";
 import "./index.scss";
+import { useQuery } from "@tanstack/react-query";
+import EventsService from "@/api/springboot/events";
 
 const sportTypes = [
   {
@@ -20,6 +22,19 @@ const sportTypes = [
 
 const HomePage = () => {
   const [sportType, setSportType] = useState<string>(sportTypes[0].name);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => EventsService.getAllEvents(),
+  });
+
+  console.log({ data });
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>Error al obtener la data</p>;
+  }
+
   return (
     <div className="home--page--container page--container">
       <div className="home--page--left--side">
@@ -64,7 +79,7 @@ const HomePage = () => {
               );
             })}
         </div>
-        <EventList />
+        <EventList data={data} />
       </div>
       <BetCoupon />
     </div>

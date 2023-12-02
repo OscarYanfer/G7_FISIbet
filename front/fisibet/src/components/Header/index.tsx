@@ -1,15 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import "./index.scss";
-import { FButton, LoginForm, RegisterForm } from "@/components";
+import { FButton, LoginForm, RegisterForm, UserHub } from "@/components";
 import LogoFisibet from "../../../public/images/logofisibet.svg";
 import Image from "next/image";
 import Link from "next/link";
 import FModal from "../FModal";
+import { useSelector } from "react-redux";
+import { RootReducerTypes } from "@/interfaces";
 
 const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showRegisterModal, setShowRegisterModal] = useState<boolean>(false);
+  const authToken = useSelector((state: RootReducerTypes) => state.authToken);
+  console.log("acaa", authToken);
   return (
     <>
       <nav className="header--container">
@@ -28,16 +32,24 @@ const Header = () => {
           </ul>
         </div>
         <div className="header--cta--container">
-          <FButton
-            onClick={() => setShowLoginModal(true)}
-            text="Iniciar sesión"
-          />
-          <span></span>
-          <FButton
-            onClick={() => setShowRegisterModal(true)}
-            type="primary--inner"
-            text="Registrarse"
-          />
+          {authToken?.authToken?.id ? (
+            <UserHub userId={authToken?.authToken?.id} />
+          ) : (
+            <>
+              <FButton
+                onClick={() => setShowLoginModal(true)}
+                text="Iniciar sesión"
+                border={false}
+              />
+              <span></span>
+              <FButton
+                onClick={() => setShowRegisterModal(true)}
+                type="primary--inner"
+                text="Registrarse"
+                border={false}
+              />
+            </>
+          )}
         </div>
       </nav>
       <FModal
@@ -45,7 +57,7 @@ const Header = () => {
         isOpen={showLoginModal}
         maxWidth={500}
         onClose={() => setShowLoginModal(false)}
-        content={<LoginForm />}
+        content={<LoginForm onSubmit={() => setShowLoginModal(false)} />}
       />
       <FModal
         title="Registrarse"

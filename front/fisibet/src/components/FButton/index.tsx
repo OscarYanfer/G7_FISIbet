@@ -10,13 +10,15 @@ interface FButtonProps {
   isLoading?: boolean;
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   onClick?: () => void;
+  border?: boolean;
 }
 
 const FButton = ({
   type = "primary",
-  text = "Botón",
+  text = "",
   disabled = false,
   isLoading = false,
+  border = true,
   icon,
   direction = "row",
   onClick,
@@ -26,14 +28,17 @@ const FButton = ({
       type="button"
       disabled={disabled || isLoading}
       onClick={onClick}
-      style={{ flexDirection: direction }}
+      style={{
+        flexDirection: direction,
+        borderWidth: border === false ? "0px" : "",
+      }}
       className={`button button--${type}Btn`}
     >
       {isLoading ? (
         <div className="button--loading--spinner"></div>
       ) : (
         <>
-          <p>{text}</p>
+          {text && <p>{text}</p>}
           {icon}
         </>
       )}
