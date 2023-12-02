@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\microservicio",
+    "\\src\\main\\java\\com\\microservicio\\fisibet",
+    "\\src\\main\\java\\com\\microservicio\\fisibet\\aplication",
+    "\\src\\main\\java\\com\\microservicio\\fisibet\\aplication\\dto",
+    "\\src\\main\\resources",
+    "\\src\\main\\resources\\graphql"
+  ],
+  "SelectedNode": "\\src\\main\\resources\\graphql\\schema.graphqls",
+  "PreviewInSolutionExplorer": false
+}

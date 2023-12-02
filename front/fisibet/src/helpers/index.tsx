@@ -201,7 +201,7 @@ export const defaultAccountUserValues: AccountUserTypes = {
 export const columnsForTickets = [
   { title: "Id", dataIndex: "id", key: "id" },
   {
-    title: "Usuario apostador",
+    title: "ID Usuario apostador",
     dataIndex: "idAccountUser",
     key: "idAccountUser",
   },

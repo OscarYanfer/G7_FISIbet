@@ -112,6 +112,7 @@ export interface TicketTypes {
   status: number;
   totalFee: number;
   updatedOn: string;
+  [key: string]: number | string;
 }
 export interface EventTypes {
   id: number;
