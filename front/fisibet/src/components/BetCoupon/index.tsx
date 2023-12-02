@@ -7,15 +7,27 @@ import { AiOutlineClose } from "react-icons/ai";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaHeartBroken } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { RootReducerTypes } from "@/interfaces";
+import { CreateTicketTypes, RootReducerTypes } from "@/interfaces";
 import { getTotalCuoteFromCoupon } from "@/helpers";
 
 import "./index.scss";
 import { clearBetsFromCoupon } from "@/redux/actions/couponActions";
+import { useMutation } from "@tanstack/react-query";
+import TicketsService from "@/api/springboot/tickets";
+import { toast } from "react-toastify";
 
 const BetCoupon = () => {
+  const disptach = useDispatch();
+  const { mutate: createTicket, isPending } = useMutation({
+    mutationFn: (data: CreateTicketTypes) => TicketsService.createTicket(data),
+    onSuccess: () => {
+      toast.success("Registro exitoso");
+      dispatch(clearBetsFromCoupon());
+    },
+  });
   const [amountValue, setAmountValue] = useState<string>("");
   const [showCoupon, setShowCoupon] = useState<boolean>(true);
+  const currentUser = useSelector((state: RootReducerTypes) => state.authToken);
   const coupon = useSelector((state: RootReducerTypes) => state.coupon);
   const dispatch = useDispatch();
 
@@ -35,13 +47,28 @@ const BetCoupon = () => {
     }
   };
 
+  const handleCreateTicket = () => {
+    const bets: number[] = coupon.bets.map((bet) => bet.id);
+    if (currentUser?.authToken.id) {
+      const ticketInfo = {
+        amountBet: Number(amountValue),
+        idAccountUser: currentUser?.authToken.id && currentUser.authToken.id,
+        totalFee: getTotalCuoteFromCoupon(coupon.bets) * Number(amountValue),
+        betIds: bets,
+      };
+      createTicket(ticketInfo);
+    } else {
+      toast.info("Es necesario iniciar sesión");
+    }
+  };
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  console.log({ amountValue });
   return (
     <>
       <AnimatePresence>
@@ -105,7 +132,12 @@ const BetCoupon = () => {
                         </b>
                       </div>
                       <div className="bet--coupon--bet--button">
-                        <FButton text="Terminar apuesta" />
+                        <FButton
+                          isLoading={isPending}
+                          onClick={handleCreateTicket}
+                          text="Terminar apuesta"
+                          disabled={Number(amountValue) > 0 ? false : true}
+                        />
                       </div>
                     </div>
                   </div>

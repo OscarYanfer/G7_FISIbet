@@ -33,6 +33,13 @@ export interface BetOnCouponTypes {
   date: string;
 }
 
+export interface CreateTicketTypes {
+  amountBet: number;
+  idAccountUser: number;
+  totalFee: number;
+  betIds: number[];
+}
+
 export interface RootReducerTypes {
   coupon: betCouponReducerTypes;
   authToken?: authTokenReducerTypes;
