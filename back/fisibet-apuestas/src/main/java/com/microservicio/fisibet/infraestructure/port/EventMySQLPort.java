@@ -3,12 +3,12 @@ package com.microservicio.fisibet.infraestructure.port;
 import com.microservicio.fisibet.aplication.port.EventPort;
 import com.microservicio.fisibet.domain.entity.EventEntity;
 import com.microservicio.fisibet.infraestructure.mapper.EventInfraMapper;
-import com.microservicio.fisibet.infraestructure.model.EventModel;
-import com.microservicio.fisibet.infraestructure.model.TicketBetModel;
-import com.microservicio.fisibet.infraestructure.model.TicketModel;
+import com.microservicio.fisibet.infraestructure.model.*;
 import com.microservicio.fisibet.infraestructure.port.spring.EventSpringPort;
 import com.microservicio.fisibet.infraestructure.port.spring.TicketBetSpringPort;
 import com.microservicio.fisibet.infraestructure.port.spring.TicketSpringPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,20 +18,17 @@ import java.util.stream.Stream;
 
 @Service
 public class EventMySQLPort implements EventPort {
+    @Autowired
     private EventSpringPort eventSpringPort;
+    @Autowired
     private EventInfraMapper eventInfraMapper;
+    @Autowired
     private TicketBetSpringPort ticketBetSpringPort;
+    @Autowired
     private TicketSpringPort ticketSpringPort;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public EventMySQLPort(EventSpringPort eventSpringPort,
-                          EventInfraMapper eventInfraMapper,
-                          TicketBetSpringPort ticketBetSpringPort,
-                          TicketSpringPort ticketSpringPort){
-        this.eventSpringPort = eventSpringPort;
-        this.eventInfraMapper = eventInfraMapper;
-        this.ticketBetSpringPort = ticketBetSpringPort;
-        this.ticketSpringPort = ticketSpringPort;
-    }
     @Override
     public List<EventEntity> GetEventsEnabled() {
         List<EventModel> eventModels = this.eventSpringPort.getEventsEnabled();
@@ -85,9 +82,12 @@ public class EventMySQLPort implements EventPort {
                 if(isEqual){
                     item.setStatus(state);
                     item.setUpdatedOn(LocalDateTime.now());
-                    this.ticketSpringPort.save(item);
-
-
+                    TicketModel ticketModelNew = this.ticketSpringPort.save(item);
+                    PayEvent payEvent = new PayEvent();
+                    payEvent.setEventType("Pagar");
+                    payEvent.setAccountId(item.getIdAccountUser());
+                    payEvent.setTotalFee(item.getTotalFee());
+                    this.kafkaTemplate.send("pay-topic", payEvent);
                 }
             }
         }

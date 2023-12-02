@@ -24,7 +24,7 @@ public class AccountUserMySQLPort implements AccountUserPort {
         return this.accountUserInfraMapper.convertAccountUserModelsToAccountUserEntities(accountUserModels);
     }
 
-    @KafkaListener(topics = "account-user-topic", groupId = "Group1003",containerFactory = "accountListener")
+    @KafkaListener(topics = "account-user-topic", groupId = "Group1003",containerFactory = "apuestasListener")
     public void processProductEvents(AccountUserEvent accountUserEvent){
         AccountUserModel accountUserModel = accountUserEvent.getAccountUser();
         System.out.println("Recepcionando: "+accountUserModel.toString());

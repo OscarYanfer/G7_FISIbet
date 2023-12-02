@@ -4,11 +4,9 @@ import com.microservicio.fisibet.aplication.port.AccountUserPort;
 import com.microservicio.fisibet.domain.entity.AccountUserEntity;
 import com.microservicio.fisibet.domain.entity.AccountUserEventEntity;
 import com.microservicio.fisibet.infraestructure.mapper.AccountUserInfraMapper;
-import com.microservicio.fisibet.infraestructure.model.AccountUserEvent;
-import com.microservicio.fisibet.infraestructure.model.AccountUserModel;
-import com.microservicio.fisibet.infraestructure.model.WalletEvent;
-import com.microservicio.fisibet.infraestructure.model.WalletModel;
+import com.microservicio.fisibet.infraestructure.model.*;
 import com.microservicio.fisibet.infraestructure.port.spring.AccountUserSpringPort;
+import com.microservicio.fisibet.infraestructure.port.spring.SessionUserSpringPort;
 import com.microservicio.fisibet.infraestructure.port.spring.WalletSpringPort;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -23,15 +21,18 @@ public class AccountUserMySQLPort implements AccountUserPort {
     private AccountUserInfraMapper accountUserInfraMapper;
     private KafkaTemplate<String, Object> kafkaTemplate;
     private WalletSpringPort walletSpringPort;
+    private SessionUserSpringPort sessionUserSpringPort;
 
     public AccountUserMySQLPort(AccountUserSpringPort accountUserSpringPort,
                                 AccountUserInfraMapper accountUserInfraMapper,
                                 KafkaTemplate kafkaTemplate,
-                                WalletSpringPort walletSpringPort){
+                                WalletSpringPort walletSpringPort,
+                                SessionUserSpringPort sessionUserSpringPort){
         this.accountUserInfraMapper = accountUserInfraMapper;
         this.accountUserSpringPort = accountUserSpringPort;
         this.kafkaTemplate = kafkaTemplate;
         this.walletSpringPort = walletSpringPort;
+        this.sessionUserSpringPort = sessionUserSpringPort;
     }
 
     @Override
@@ -43,6 +44,17 @@ public class AccountUserMySQLPort implements AccountUserPort {
         walletModel.setAccountNumber(String.valueOf(200000+accountUserModelNew.getId()));
         walletModel.setState(1);
         walletModel.setRegisteredOn(LocalDateTime.now());
+
+        SessionUserModel sessionUserModel = new SessionUserModel();
+        sessionUserModel.setId(accountUserModelNew.getId());
+        sessionUserModel.setUsername(accountUserModelNew.getUsername());
+        sessionUserModel.setEmail(accountUserModelNew.getEmail());
+        sessionUserModel.setPassword(accountUserEntity.getPassword());
+        sessionUserModel.setConectado(0);
+        sessionUserModel.setProfile("cliente");
+        sessionUserModel.setRegisteredOn(accountUserModelNew.getRegisteredOn());
+
+        SessionUserModel sessionUserModel1 = this.sessionUserSpringPort.save(sessionUserModel);
 
         AccountUserEvent accountUserEvent1 = new AccountUserEvent("CreateAccountUser", accountUserModelNew);
         WalletModel walletModel1 = this.walletSpringPort.save(walletModel);

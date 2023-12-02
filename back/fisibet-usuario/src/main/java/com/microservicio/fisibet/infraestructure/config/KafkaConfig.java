@@ -16,8 +16,8 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@EnableKafka
 @Configuration
+@EnableKafka
 public class KafkaConfig
 {
 	@Bean
@@ -27,10 +27,9 @@ public class KafkaConfig
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
-
+	
 
 	@Bean
 	public KafkaTemplate<String, Object> kafkaTemplate()
@@ -38,7 +37,8 @@ public class KafkaConfig
 		return new KafkaTemplate<>(producerFactory());
 	}
 
-	public static final String GROUP_ID = "Group1003";
+
+	public static final String GROUP_ID = "msUsuarios";
 
 	@Bean
 	public ConsumerFactory<String, Object> consumerFactory()
@@ -57,7 +57,7 @@ public class KafkaConfig
 
 	// Creating a Listener
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, Object> apuestasListener()
+	public ConcurrentKafkaListenerContainerFactory<String, Object> userListener()
 	{
 		ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
