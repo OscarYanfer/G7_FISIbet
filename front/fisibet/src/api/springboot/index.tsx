@@ -14,14 +14,14 @@ export default class Api {
       body: JSON.stringify(data),
     });
   }
-  static put(URL: string, data: any) {
+  static put(URL: string, data?: any) {
     return fetch(URL, {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: data && JSON.stringify(data),
     });
   }
 }

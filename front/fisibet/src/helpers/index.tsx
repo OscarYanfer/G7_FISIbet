@@ -9,18 +9,20 @@ import { routes } from "./navigation";
 import { parseISO, addHours, format } from "date-fns";
 import { FStatus } from "@/components";
 
+import es from "date-fns/locale/es";
+
 export const getBetInfo = (
-  event: EventCardTypes,
+  event: EventTypes,
   result: "W1" | "W2" | "Empate",
   resultCuote: number
 ): BetOnCouponTypes => {
-  const { id, league, teamA, teamB, date } = event;
+  const { id, liga, equipoA, equipoB, fechaHora } = event;
   return {
     id,
-    league,
-    teamA,
-    teamB,
-    date,
+    league: liga,
+    teamA: equipoA,
+    teamB: equipoB,
+    date: fechaHora,
     result,
     resultCuote,
   };
@@ -147,6 +149,18 @@ export const getBetByResult = (
   return betObject[0];
 };
 
+export const getDayAndMonthofDate = (fechaStr: string) => {
+  const fecha = new Date(fechaStr);
+  const fechaFormateada = format(fecha, "dd LLL", { locale: es });
+  return fechaFormateada;
+};
+
+export const getHourAndMinuteOfDate = (fechaStr: string) => {
+  const fecha = parseISO(fechaStr);
+  const horaYMinutoFormateados = format(fecha, "h:mm a");
+  return horaYMinutoFormateados;
+};
+
 //defaultValues for Data
 
 export const defaultEventValues: EventTypes = {
@@ -172,6 +186,14 @@ export const defaultAccountUserValues: AccountUserTypes = {
   status: 0,
   registeredOn: "",
   updatedOn: "",
+  wallet: {
+    accountNumber: "",
+    id: 0,
+    registeredOn: "",
+    saldo: 0,
+    state: 0,
+    updateOn: "",
+  },
 };
 
 //tables columns
@@ -179,7 +201,7 @@ export const defaultAccountUserValues: AccountUserTypes = {
 export const columnsForTickets = [
   { title: "Id", dataIndex: "id", key: "id" },
   {
-    title: "Usuario apostador",
+    title: "ID Usuario apostador",
     dataIndex: "idAccountUser",
     key: "idAccountUser",
   },
@@ -253,7 +275,11 @@ export const columnsForEvents = [
     dataIndex: "fechaHora",
     key: "fechaHora",
     render: (_: any, { fechaHora }: { fechaHora: string }) => (
-      <p>{formatDate(fechaHora)}</p>
+      <p>
+        {getDayAndMonthofDate(fechaHora) +
+          " - " +
+          getHourAndMinuteOfDate(fechaHora)}
+      </p>
     ),
   },
   {

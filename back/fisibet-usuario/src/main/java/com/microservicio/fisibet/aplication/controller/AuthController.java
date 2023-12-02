@@ -2,14 +2,19 @@ package com.microservicio.fisibet.aplication.controller;
 
 import com.microservicio.fisibet.aplication.dto.AccountUserDto;
 import com.microservicio.fisibet.aplication.dto.AuthDto;
+import com.microservicio.fisibet.aplication.dto.SessionUserDto;
 import com.microservicio.fisibet.aplication.mapper.SessionUserMapper;
 import com.microservicio.fisibet.aplication.request.AccountUserRequest;
 import com.microservicio.fisibet.aplication.request.AuthRequest;
+import com.microservicio.fisibet.aplication.request.UpdateAccountUserRequest;
 import com.microservicio.fisibet.aplication.response.AccountUserResponse;
 import com.microservicio.fisibet.aplication.response.AuthResponse;
 import com.microservicio.fisibet.aplication.response.BaseResponse;
+import com.microservicio.fisibet.aplication.response.SessionUserResponse;
+import com.microservicio.fisibet.aplication.usecase.CloseSessionUseCase;
 import com.microservicio.fisibet.aplication.usecase.CreateAccountUserUseCase;
 import com.microservicio.fisibet.aplication.usecase.LoginUseCase;
+import com.microservicio.fisibet.aplication.usecase.UpdateAccountUserUseCase;
 import com.microservicio.fisibet.domain.exception.GenericException;
 import com.microservicio.fisibet.infraestructure.port.ConnectionMySQLPort;
 import com.microservicio.fisibet.infraestructure.port.SessionUserMySQLPort;
@@ -56,5 +61,23 @@ public class AuthController {
         }
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "closesession/{username}")
+    public @ResponseBody ResponseEntity<BaseResponse<AccountUserResponse>>
+    closeSession(@PathVariable String username ) throws GenericException {
+
+
+        CloseSessionUseCase useCase = new CloseSessionUseCase(sessionUserMySQLPort, sessionUserMapper, connectionMySQLPort);
+
+        SessionUserDto sessionUserDto = useCase.run(username);
+
+        SessionUserResponse sessionUserResponse = this.sessionUserMapper.convertSessionUserDtoToSessionUserResponse(sessionUserDto);
+
+        BaseResponse response = new BaseResponse();
+        response.setMessage("Se ha cerrado sesion exitosamente");
+        response.setContent(sessionUserResponse);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

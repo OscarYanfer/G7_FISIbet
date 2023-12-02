@@ -47,4 +47,14 @@ public class SessionUserMySQLPort implements SessionUserPort {
     public Integer disconnectUsers() {
         return this.sessionUserSpringPort.disconnectSessionUsers();
     }
+
+    @Override
+    public SessionUserEntity closeSession(String username) {
+        SessionUserModel model = this.sessionUserSpringPort.getSessionUserByName(username);
+        model.setConectado(0);
+        model.setUpdatedOn(LocalDateTime.now());
+        SessionUserModel model1 = this.sessionUserSpringPort.save(model);
+
+        return this.sessionUserInfraMapper.convertSessionUserModelToSessionUserEntity(model1);
+    }
 }

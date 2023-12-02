@@ -1,5 +1,5 @@
 export interface LoginFormTypes {
-  email: string;
+  username: string;
   password: string;
 }
 export interface RegisterFormTypes {
@@ -33,11 +33,22 @@ export interface BetOnCouponTypes {
   date: string;
 }
 
+export interface CreateTicketTypes {
+  amountBet: number;
+  idAccountUser: number;
+  totalFee: number;
+  betIds: number[];
+}
+
 export interface RootReducerTypes {
   coupon: betCouponReducerTypes;
+  authToken?: authTokenReducerTypes;
 }
 export interface betCouponReducerTypes {
   bets: BetOnCouponTypes[];
+}
+export interface authTokenReducerTypes {
+  authToken: { id: number | null };
 }
 
 export interface AddEventTypes {
@@ -101,6 +112,7 @@ export interface TicketTypes {
   status: number;
   totalFee: number;
   updatedOn: string;
+  [key: string]: number | string;
 }
 export interface EventTypes {
   id: number;
@@ -117,16 +129,26 @@ export interface EventTypes {
   [key: string]: number | string | BetTypes[];
 }
 
-export interface AccountUserTypes {
+export interface WalletUserTypes {
+  accountNumber: string;
   id: number;
-  username: string;
-  email: string;
-  dni: string;
-  password: string;
-  status: number;
   registeredOn: string;
+  saldo: number;
+  state: number;
+  updateOn: string;
+}
+
+export interface AccountUserTypes {
+  dni: string;
+  email: string;
+  id: number;
+  password: string;
+  registeredOn: string;
+  status: number;
   updatedOn: string;
-  [key: string]: number | string;
+  username: string;
+  wallet: WalletUserTypes;
+  [key: string]: number | string | WalletUserTypes;
 }
 
 export interface CreateAccountUser {

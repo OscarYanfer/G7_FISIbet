@@ -1,8 +1,9 @@
 "use client";
-import { Providers } from "@/store/provider";
 import "./globals.scss";
-import { ApolloWrapper } from "./lib/apollo-wrapper";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import TanstackProvider from "@/components/Providers/TanstackProvider";
+import { ReduxProvider } from "@/redux/provider";
 
 export default function RootLayout({
   children,
@@ -11,13 +12,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Providers>
-        <ApolloWrapper>
-          <TanstackProvider>
-            <body>{children}</body>
-          </TanstackProvider>
-        </ApolloWrapper>
-      </Providers>
+      <body>
+        <TanstackProvider>
+          <ReduxProvider>
+            <>
+              {children}
+              <ToastContainer />
+            </>
+          </ReduxProvider>
+        </TanstackProvider>
+      </body>
     </html>
   );
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import "./index.scss";
 import { EventCard } from "..";
+import { EventTypes } from "@/interfaces";
 
 interface EventListProps {
-  //eventList
+  data: EventTypes[];
 }
 
 const eventListFakeData = [
@@ -45,11 +46,11 @@ const eventListFakeData = [
   },
 ];
 
-const EventList = () => {
+const EventList = ({ data }: EventListProps) => {
   return (
     <div className="event--bets--list">
-      {eventListFakeData &&
-        eventListFakeData.map((event) => {
+      {data &&
+        data?.map((event) => {
           return <EventCard key={event.id} eventData={event} />;
         })}
     </div>

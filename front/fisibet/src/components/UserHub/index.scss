@@ -1,0 +1,27 @@
+@import "../../../resources/styles/variables.scss";
+.userhub--container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .button {
+    padding: 10px 2px;
+  }
+}
+.refill--form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .refill--input {
+    display: flex;
+    align-items: center;
+
+    p {
+      flex: 1;
+    }
+    input {
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      padding: 10px 5px;
+    }
+  }
+}

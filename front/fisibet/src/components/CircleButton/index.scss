@@ -1,0 +1,79 @@
+@import "../../../resources/styles/variables.scss";
+
+.circle--button--container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &--primary {
+    background-color: $primary-color;
+  }
+  &--secondary {
+    background-color: $secondary-color;
+  }
+  &--tertiary {
+    background-color: $tertiary-color;
+  }
+  &--quartery {
+    background-color: $quartery-color;
+  }
+  &--white {
+    background-color: $white--color;
+  }
+  .circle--button--icon {
+    background: transparent;
+    display: flex;
+    align-items: center;
+
+    svg {
+      font-size: $big-icon;
+    }
+    &--primary {
+      svg {
+        color: $primary-color;
+      }
+    }
+    &--secondary {
+      svg {
+        color: $secondary-color;
+      }
+    }
+    &--tertiary {
+      svg {
+        color: $tertiary-color;
+      }
+    }
+    &--quartery {
+      svg {
+        color: $quartery-color;
+      }
+    }
+    &--white {
+      svg {
+        color: $white--color;
+      }
+    }
+  }
+  .circle--button--text {
+    color: white;
+    font-size: $small-text;
+  }
+  cursor: pointer;
+  &.loading {
+    animation: skeleton-loading 1s linear infinite alternate;
+    pointer-events: none;
+    .circle--button--icon,
+    .circle--button--text {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 10%); /* Ajusta la luminosidad aquí */
+  }
+  100% {
+    background-color: hsl(200, 20%, 15%); /* Ajusta la luminosidad aquí */
+  }
+}
