@@ -67,7 +67,10 @@ const TicketsPage = () => {
         <FSelect
           value={selectedFilter}
           onChange={(value) => setSelectedFilter(value)}
-          options={[{ label: "Id", value: "id" }]}
+          options={[
+            { label: "Id", value: "id" },
+            { label: "Id de Usuario", value: "idAccountUser" },
+          ]}
         />
         <FSearch
           placeholder={`Buscar por ${selectedFilter}`}
