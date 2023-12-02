@@ -7,4 +7,6 @@ public interface SessionUserPort {
     SessionUserEntity login(SessionUserEntity sessionUserEntity);
 
     Integer disconnectUsers();
+
+    SessionUserEntity closeSession(String username);
 }

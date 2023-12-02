@@ -1,28 +1,16 @@
-package com.microservicio.fisibet.infraestructure.model;
+package com.microservicio.fisibet.aplication.response;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "sessionuser")
-public class SessionUserModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class SessionUserResponse {
+
     private Integer id;
-    @Column(name = "username")
     private String username;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
-    @Column(name = "conectado")
     private Integer conectado;
-    @Column(name = "profile")
     private String profile;
-    @Column(name = "registeredOn")
     private LocalDateTime registeredOn;
-    @Column(name = "updatedOn")
     private LocalDateTime updatedOn;
 
     public Integer getId() {
@@ -65,6 +53,14 @@ public class SessionUserModel {
         this.conectado = conectado;
     }
 
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     public LocalDateTime getRegisteredOn() {
         return registeredOn;
     }
@@ -81,11 +77,4 @@ public class SessionUserModel {
         this.updatedOn = updatedOn;
     }
 
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
 }
