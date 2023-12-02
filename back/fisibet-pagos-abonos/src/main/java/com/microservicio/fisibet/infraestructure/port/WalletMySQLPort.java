@@ -18,8 +18,8 @@ public class WalletMySQLPort implements WalletPort {
         return null;
     }
 
-    @KafkaListener(topics = "wallet-topic", groupId = "msAbonoPago",containerFactory = "abonoPagoListener")
+    /*@KafkaListener(topics = "wallet-topic", groupId = "msAbonoPago",containerFactory = "abonoPagoListener")
     public void processWalletEvents(WalletEvent walletEvent){
         this.walletSpringPort.save(walletEvent.getWalletModel());
-    }
+    }*/
 }
